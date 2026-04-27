@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "toposwarm-lazyown": {
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/toposwarm_lazyown_orchestrator.py",
+        "--mcp"
+      ],
+      "env": {
+        "LAZYOWN_DIR": "${env:LAZYOWN_DIR}",
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    }
+  },
+  "permissions": {
+    "allow": [
+      "Bash(python toposwarm_lazyown_orchestrator.py*)",
+      "Bash(python topo_swarm_agent.py*)",
+      "Bash(python toposwarm_infer.py*)",
+      "Bash(python toposwarm_hybrid.py*)",
+      "Bash(git *)"
+    ]
+  }
+}
