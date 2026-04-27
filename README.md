@@ -42,6 +42,10 @@ Pass-2 generation  ──→  final NL answer
 | `toposwarm_infer.py` | Inference engine with built-in tools (weather, search, calc, datetime, translate, news) |
 | `toposwarm_hybrid.py` | Router + external language backend (TinyStories / custom checkpoint) |
 | `toposwarm_lazyown_orchestrator.py` | **LazyOwn MCP integration** — routes NL pentesting prompts to LazyOwn tools |
+| `lazyown_dataset_generator.py` | Rich ToolBench-format dataset: 422 examples across all 80 LazyOwn tools |
+| `toposwarm_continual_trainer.py` | **EWC + Experience Replay** continual learning — fine-tune without catastrophic forgetting |
+| `skills/toposwarm.md` | Operator guide loaded as MCP context |
+| `.claude/settings.json` | MCP server registration for Claude Code |
 
 ---
 
@@ -141,17 +145,60 @@ Add to `.claude/settings.json`:
 
 ---
 
-## Fine-tuning on LazyOwn traces
+## Continual Learning — EWC + Experience Replay
 
-The router ships with a 34-example ToolBench-format dataset covering all major LazyOwn tool categories. Running `--finetune` trains one additional epoch (LR=3e-5) on top of the existing checkpoint — no retraining from scratch needed.
+The recommended way to fine-tune TopoSwarm on LazyOwn without losing ToolBench generalisation.
+
+### Strategy
+
+Two complementary techniques run together every training step:
+
+| Technique | What it does | Why |
+|---|---|---|
+| **EWC** (Elastic Weight Consolidation) | Computes Fisher diagonal on ToolBench; adds quadratic penalty `λ/2·Σ F_i·(θ_i−θ*_i)²` | Anchors weights critical for weather/calc/search routing |
+| **Experience Replay** | 20% of every batch = real ToolBench samples | Exact gradient signal from the original task distribution |
+| **LR = 2e-5** | 15× lower than pretraining (3e-4) | Conservative updates preserve existing representations |
+
+### Quick start
 
 ```bash
-# Generate dataset then fine-tune in one shot
-python toposwarm_lazyown_orchestrator.py --gen-dataset
-python toposwarm_lazyown_orchestrator.py --finetune
+# Full pipeline in one command
+python toposwarm_continual_trainer.py --full
+
+# Step by step
+python toposwarm_continual_trainer.py --gen-dataset      # 422 LazyOwn examples
+python toposwarm_continual_trainer.py --compute-fisher   # Fisher diagonal on ToolBench
+python toposwarm_continual_trainer.py --train            # EWC + Replay fine-tuning
+python toposwarm_continual_trainer.py --eval             # routing accuracy on both datasets
+
+# Tune the anti-forgetting strength
+python toposwarm_continual_trainer.py --full --ewc-lambda 600 --replay-ratio 0.25
 ```
 
-The dataset format is compatible with the main `topo_swarm_agent.py` training pipeline, so you can mix LazyOwn traces with ToolBench data for continual learning.
+### Dataset
+
+`lazyown_dataset_generator.py` generates **422 ToolBench-format examples** across all 80 LazyOwn MCP tools:
+
+```bash
+python lazyown_dataset_generator.py --stats
+```
+
+```
+Total examples : 422   Unique tools : 80
+
+By domain:
+  Security/Intel        74    Security/Report       53
+  Security/Config       38    Security/Execution    37
+  Security/C2           36    Security/Hive         32
+  Security/Events       26    Security/Automation   25
+  Security/Agents       24    Security/Autonomous   21
+```
+
+Each tool has 5–10 phrasings covering: expert language, beginner language, Spanish, context-aware post-action prompts (`"vsftpd exploit worked, I have a shell — dump credentials"`), and multi-step chain examples (`recon → exploit → creds → AD → report`).
+
+### Why EWC over LoRA?
+
+LoRA adds rank-decomposed adapters and freezes base weights — ideal for 7B+ transformers. For a 2M-param model trained from scratch, EWC achieves the same "protect original weights" goal via a loss penalty with zero architectural overhead. Combined with replay, it outperforms LoRA on small custom models.
 
 ---
 
