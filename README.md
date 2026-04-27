@@ -171,4 +171,8 @@ lupa         # LazyOwn core dependency
 
 ## License
 
-GPL v3 — Gris Iscomeback
+AGPL v3 — Gris Iscomeback
+
+## Wiki
+
+[https://deepwiki.com/grisuno/toposwarm](https://deepwiki.com/grisuno/toposwarm)
