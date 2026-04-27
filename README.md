@@ -176,3 +176,31 @@ AGPL v3 — Gris Iscomeback
 ## Wiki
 
 [https://deepwiki.com/grisuno/toposwarm](https://deepwiki.com/grisuno/toposwarm)
+
+## Previous work
+
+### TopoGPT2
+
+[https://github.com/grisuno/TopoGPT2](https://github.com/grisuno/TopoGPT2)
+
+### Algorithmic Induction via Structural Weight Transfer
+
+- [https://doi.org/10.5281/zenodo.18072858](https://doi.org/10.5281/zenodo.18072858)
+
+### From Boltzmann Stochasticity to Hamiltonian Integrability: Emergence of Topological Crystals and Synthetic Planck Constants
+
+- [https://doi.org/10.5281/zenodo.18407920](https://doi.org/10.5281/zenodo.18407920)
+
+### The Dirac Discrete Crystal
+
+- [https://doi.org/10.5281/zenodo.18810160](https://doi.org/10.5281/zenodo.18810160)
+
+### Schrödinger Topological Crystallization: Phase Space Discovery in Hamiltonian Neural Networks
+
+- [https://doi.org/10.5281/zenodo.18725428](https://doi.org/10.5281/zenodo.18725428)
+
+### Constraint Preservation in a Neural Quantum Simulator
+
+- [https://doi.org/10.5281/zenodo.18795537](https://doi.org/10.5281/zenodo.18795537)
+
+  
