@@ -171,4 +171,4 @@ lupa         # LazyOwn core dependency
 
 ## License
 
-GPL v3 — Gris Iscomeback `<grisiscomeback@gmail.com>`
+GPL v3 — Gris Iscomeback
