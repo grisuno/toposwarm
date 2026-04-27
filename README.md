@@ -184,7 +184,7 @@ AGPL v3 — Gris Iscomeback
 
 ### TopoGPT2
 
-[https://github.com/grisuno/TopoGPT2](https://github.com/grisuno/TopoGPT2)
+- [https://github.com/grisuno/TopoGPT2](https://github.com/grisuno/TopoGPT2)
 
 ### Algorithmic Induction via Structural Weight Transfer
 
