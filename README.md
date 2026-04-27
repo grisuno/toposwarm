@@ -1,5 +1,8 @@
 # TopoSwarm
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18072858.svg)](https://doi.org/10.5281/zenodo.18072858)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 **A micro-scale quaternionic toroidal swarm agent for tool-use reasoning.**
 
 Trained in 3 epochs on ToolBench with low loss. The router is crystallised and can be extended to any tool domain — including offensive security via the [LazyOwn MCP](https://github.com/grisuno/LazyOwn) integration.
@@ -204,3 +207,7 @@ AGPL v3 — Gris Iscomeback
 - [https://doi.org/10.5281/zenodo.18795537](https://doi.org/10.5281/zenodo.18795537)
 
   
+
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white) ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white) [![License: AGPL v3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y2Z73AV)
