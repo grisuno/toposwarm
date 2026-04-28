@@ -1093,9 +1093,18 @@ class TopoSwarmModel(nn.Module):
             tgt_clip = targets[:, :S_clip]
             # Causal LM: predict position t+1 from positions 0..t
             # logits[:, :-1, :] predicts targets[:, 1:]
+            tgt_shifted = tgt_clip[:, 1:].contiguous()
+            # Preserve -100 (ignore_index) — only clamp valid token ids.
+            # clamp(0, ...) would silently corrupt -100 masking used by the
+            # continual trainer for tool-token-focused loss.
+            tgt_shifted = torch.where(
+                tgt_shifted < 0,
+                tgt_shifted,
+                tgt_shifted.clamp(0, self.cfg.VOCAB_SIZE - 1),
+            )
             lm_loss = _chunked_ce(
                 logits[:, :-1, :].contiguous(),
-                tgt_clip[:, 1:].contiguous().clamp(0, self.cfg.VOCAB_SIZE - 1),
+                tgt_shifted,
                 self.cfg.CHUNKED_CE_CHUNK_SIZE,
             )
             out["loss"] = (

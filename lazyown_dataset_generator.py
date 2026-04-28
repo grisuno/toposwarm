@@ -253,6 +253,7 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
 
     # ── Core execution ───────────────────────────────────────────────────────
     "lazyown_run_command": [
+        # direct command
         ("Run the lazynmap command against the target",                   "lazynmap"),
         ("Execute 'set rhost 10.10.11.78' then lazynmap",                 "set rhost 10.10.11.78\nlazynmap"),
         ("Run lazyown command: gobuster on the web server",               "set rhost 10.10.11.78\nlazygobuster"),
@@ -263,6 +264,29 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Use lazyown to run a full port scan",                           "lazynmap"),
         ("Run lazybrute to brute force SSH",                              "lazybrute"),
         ("Ejecuta lazymetasploit para buscar exploits",                   "lazymsf"),
+        # question form
+        ("How do I run a port scan with LazyOwn?",                        "lazynmap"),
+        ("What command scans the target for open ports?",                 "lazynmap"),
+        ("How can I enumerate web directories on the target?",            "lazygobuster"),
+        # contextual / scenario
+        ("Box is up on HTB, time to port scan",                           "lazynmap"),
+        ("Just added the target, need to enumerate services",             "lazynmap"),
+        ("I found port 80 open, enumerate the web server now",           "lazywebscan"),
+        ("After setting rhost, run the full scan suite",                  "lazynmap"),
+        ("Target is a Windows box, run SMB enumeration",                  "lazysmbscan"),
+        # casual / shorthand
+        ("nmap the box",                                                  "lazynmap"),
+        ("quick scan target",                                             "lazynmap"),
+        ("gobuster it",                                                   "lazygobuster"),
+        ("smb enum",                                                      "lazysmbscan"),
+        ("brute force ssh on the target",                                 "lazybrute"),
+        # expert / CTF
+        ("service detection + OS fingerprint on scope host",              "lazynmap"),
+        ("full TCP scan then web fuzzing pipeline",                       "lazynmap"),
+        ("run enum4linux against the domain controller",                  "lazyenum4linux"),
+        # beginner
+        ("I need to find what services are running on the target",        "lazynmap"),
+        ("Help me see which ports are open",                              "lazynmap"),
     ],
     "lazyown_discover_commands": [
         ("What LazyOwn commands are available for recon?",                "recon"),
@@ -273,6 +297,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Show lateral movement commands",                                "lateral"),
         ("What commands help with credential dumping?",                   "creds"),
         ("List all available LazyOwn commands",                           ""),
+        ("Which commands does LazyOwn have for AD attacks?",              "lateral"),
+        ("Show tools available for web exploitation",                     "exploit"),
+        ("¿Qué herramientas hay para post-explotación?",                 "post"),
+        ("I want to see all commands grouped by phase",                   ""),
+        ("What can LazyOwn do for persistence?",                          "post"),
+        ("List exfiltration commands",                                    "post"),
+        ("Commands for active directory enumeration?",                    "enum"),
     ],
     "lazyown_command_help": [
         ("How do I use the lazynmap command?",                            "lazynmap"),
@@ -281,6 +312,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Explain the lazymsf command",                                   "lazymsf"),
         ("Show documentation for lazywebscan",                            "lazywebscan"),
         ("How does the bloodhound command work in lazyown?",              "lazybloodhound"),
+        ("What arguments does lazysmb take?",                             "lazysmbscan"),
+        ("Explain how lazywpscan works",                                  "lazywpscan"),
+        ("How to use lazyenum4linux?",                                    "lazyenum4linux"),
+        ("Show me the help for lazyburp",                                 "lazyburp"),
+        ("What does lazysniff do?",                                       "lazysniff"),
+        ("Usage for lazyreverse command",                                 "lazyreverse"),
+        ("Explain lazykerberoast",                                        "lazykerberoast"),
     ],
     "lazyown_phase_guide": [
         ("Guide me through the reconnaissance phase",                     "recon"),
@@ -290,6 +328,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Guía completa para la fase de escalada de privilegios",         "privesc"),
         ("What is the complete workflow for lateral movement?",           "lateral"),
         ("Walk me through credential attacks step by step",               "creds"),
+        ("I'm new to HTB, explain the recon phase",                       "recon"),
+        ("What do I do first when I start a pentest?",                    "recon"),
+        ("Methodology for initial access phase",                          "exploit"),
+        ("How to do privilege escalation step by step?",                  "privesc"),
+        ("Guide for Active Directory attacks",                            "lateral"),
+        ("Pasos para comprometer un dominio de AD",                       "lateral"),
+        ("Full kill chain methodology guide",                             "recon"),
+        ("What order should I follow: recon, enum, exploit?",             "recon"),
     ],
     "lazyown_bridge_suggest": [
         ("Suggest the best command for SMB enumeration in the recon phase", "recon smb enum"),
@@ -298,6 +344,15 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Recommend a command for lateral movement using captured creds",   "lateral creds"),
         ("Which LazyOwn command handles Kerberoasting?",                    "exploit kerberoasting"),
         ("Best tool for AD enumeration with valid credentials",             "enum ad creds"),
+        ("What should I use to test for SMB relay?",                        "exploit smb relay"),
+        ("Recommend a command for web directory fuzzing",                   "recon web fuzz"),
+        ("Best command for LDAP enumeration on the DC",                     "enum ldap ad"),
+        ("Which command dumps credentials from LSASS?",                     "post cred dump"),
+        ("What tool does lateral movement via WMI?",                        "lateral wmi"),
+        ("Best command for AS-REP roasting?",                               "exploit asrep"),
+        ("Suggest a command to find writable SMB shares",                   "recon smb shares"),
+        ("What LazyOwn command handles DCSync?",                            "exploit dcsync"),
+        ("Recommend tool for web vulnerability scanning",                   "recon web vuln"),
     ],
 
     # ── Configuration ────────────────────────────────────────────────────────
@@ -309,6 +364,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("¿Cuál es la configuración actual?",                             ""),
         ("Display all LazyOwn parameters",                                ""),
         ("What is the current target configuration?",                     ""),
+        ("Print current payload configuration",                           ""),
+        ("Show me what rhost is set to",                                  ""),
+        ("What's currently configured in LazyOwn?",                       ""),
+        ("Check the current lhost and lport settings",                    ""),
+        ("Muéstrame la configuración actual de LazyOwn",                  ""),
+        ("What domain is configured?",                                    ""),
+        ("Read payload.json",                                             ""),
+        ("Show all variables: rhost, lhost, port, user, password",        ""),
     ],
     "lazyown_set_config": [
         ("Set the target host to 10.10.11.78",                            "rhost=10.10.11.78"),
@@ -321,6 +384,16 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Set the username to administrator",                             "user=administrator"),
         ("Set the password to Password123",                               "passw=Password123"),
         ("Configure the attack platform as windows",                      "os_id=windows"),
+        ("Update rhost to the new target IP",                             "rhost=10.10.11.200"),
+        ("Change the listener port to 9001",                              "lport=9001"),
+        ("Set target to 10.10.10.5",                                      "rhost=10.10.10.5"),
+        ("Configura el puerto de escucha en 443",                         "lport=443"),
+        ("Set user to root and passw to toor",                            "user=root"),
+        ("Update the callback IP to my VPN address",                      "lhost=10.10.14.5"),
+        ("Set domain to htb.local",                                       "domain=htb.local"),
+        ("Change the wordlist to seclist passwords",                      "wordlist=/usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt"),
+        ("Configure OS to linux",                                         "os_id=linux"),
+        ("rhost 10.10.11.78",                                             "rhost=10.10.11.78"),
     ],
     "lazyown_auto_populate": [
         ("Auto-populate the configuration from the nmap scan",            ""),
@@ -328,6 +401,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Extract services from nmap and configure LazyOwn",              ""),
         ("Auto-fill domain and OS from the scan results",                 ""),
         ("Rellena automáticamente la configuración desde el escaneo",     ""),
+        ("Parse the scan results and update config",                      ""),
+        ("Automatically configure LazyOwn from nmap XML output",         ""),
+        ("Fill in rhost, ports, and OS from the scan",                    ""),
+        ("After nmap scan, auto-configure the payload",                   ""),
+        ("Detect OS and services from nmap and set config",               ""),
+        ("Auto-detect target OS and open ports",                          ""),
+        ("Let LazyOwn read the nmap output and configure itself",         ""),
     ],
     "lazyown_session_init": [
         ("Initialize the session and give me a sitrep",                   ""),
@@ -338,6 +418,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Session start — give me the situation report",                  ""),
         ("What has been discovered so far?",                              ""),
         ("Load session context before starting work",                     ""),
+        ("Show me the full situation report",                             ""),
+        ("Initialize engagement session and brief me",                    ""),
+        ("Morning brief — what is the engagement status?",                ""),
+        ("Start the session and give me a full situational overview",     ""),
+        ("Beginning shift handover — show me everything discovered",      ""),
+        ("Dame el reporte de situación actual",                           ""),
+        ("Begin session and show current state of all targets",           ""),
     ],
     "lazyown_session_state": [
         ("What is the current session state?",                            ""),
@@ -345,6 +432,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Give me the aggregated session context",                        ""),
         ("What ports and creds have been found so far?",                  ""),
         ("Estado actual de la sesión",                                    ""),
+        ("Current phase and next objectives?",                            ""),
+        ("What stage of the engagement are we in?",                       ""),
+        ("Show me everything the session knows right now",                ""),
+        ("Session context: hosts, creds, phase",                          ""),
+        ("What is the current operational context?",                      ""),
+        ("Give me the session snapshot",                                  ""),
     ],
 
     # ── Targets ──────────────────────────────────────────────────────────────
@@ -356,6 +449,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Añade 10.10.10.5 a los objetivos",                              "10.10.10.5"),
         ("Track host 10.10.11.78 with tag web",                           "10.10.11.78"),
         ("Add 10.10.11.78 with status active",                            "10.10.11.78"),
+        ("Put 192.168.1.50 in my target list",                            "192.168.1.50"),
+        ("Track the domain controller at 10.10.11.1",                     "10.10.11.1"),
+        ("Add the web server 10.10.11.100 to targets",                    "10.10.11.100"),
+        ("Scope in 10.10.11.78",                                          "10.10.11.78"),
+        ("New box found: add 172.16.0.10 to target tracking",             "172.16.0.10"),
+        ("Register the newly discovered host",                            "10.10.11.78"),
+        ("Agrega el servidor web como objetivo",                          "10.10.11.78"),
     ],
     "lazyown_list_targets": [
         ("List all targets in scope",                                     ""),
@@ -364,6 +464,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Display all registered targets",                                ""),
         ("¿Qué objetivos tenemos en el scope?",                           ""),
         ("Show all targets and their discovery status",                   ""),
+        ("What machines are we tracking?",                                ""),
+        ("Give me the full target inventory",                             ""),
+        ("Which hosts have we added to scope?",                           ""),
+        ("List all IPs in the engagement scope",                          ""),
+        ("Show targets with open ports discovered",                       ""),
+        ("Muéstrame todos los objetivos registrados",                     ""),
     ],
     "lazyown_set_active_target": [
         ("Set 10.10.11.78 as the active target",                          "10.10.11.78"),
@@ -371,6 +477,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Make 10.10.11.1 the current target",                            "10.10.11.1"),
         ("Activate target 10.10.11.78",                                   "10.10.11.78"),
         ("Cambia al objetivo 10.10.10.5",                                 "10.10.10.5"),
+        ("Focus on the domain controller now",                            "10.10.11.1"),
+        ("Switch to the web server target",                               "10.10.11.78"),
+        ("Change the active target to the new box",                       "10.10.11.200"),
+        ("Select 10.10.11.78 as the primary target",                      "10.10.11.78"),
+        ("Now working on 192.168.1.50",                                   "192.168.1.50"),
+        ("Make 10.10.11.1 my current rhost",                              "10.10.11.1"),
+        ("I want to attack 10.10.11.78 now",                              "10.10.11.78"),
     ],
 
     # ── C2 / Sessions ────────────────────────────────────────────────────────
@@ -381,6 +494,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Get connected agents from C2 server",                          ""),
         ("¿Qué implantes están activos?",                                 ""),
         ("Display beacon status",                                         ""),
+        ("Which compromised hosts are calling back?",                     ""),
+        ("Show me all the active C2 agents",                              ""),
+        ("List implants currently connected",                             ""),
+        ("How many beacons do we have?",                                  ""),
+        ("C2 beacon inventory",                                           ""),
+        ("Show connected shells and beacons",                             ""),
+        ("¿Cuántos beacons están conectados?",                            ""),
+        ("Which machines have an active C2 channel?",                     ""),
     ],
     "lazyown_c2_command": [
         ("Send whoami to all beacons",                                    "whoami"),
@@ -390,6 +511,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Tasking: execute 'cat /etc/passwd' on Linux beacon",           "cat /etc/passwd"),
         ("Send 'systeminfo' to Windows beacon",                           "systeminfo"),
         ("Task beacon to dump local user hashes",                         "hashdump"),
+        ("Run id on the beacon",                                          "id"),
+        ("Execute uname -a on compromised Linux host",                    "uname -a"),
+        ("Run 'net group \"Domain Admins\"' via C2",                      "net group \"Domain Admins\" /domain"),
+        ("Task all beacons to run ifconfig",                              "ifconfig"),
+        ("Send dir command to Windows implant",                           "dir C:\\"),
+        ("Mandar whoami a todos los implantes",                            "whoami"),
+        ("Run ps aux on the Linux beacon",                                "ps aux"),
+        ("Execute netstat on compromised host",                           "netstat -an"),
     ],
     "lazyown_c2_status": [
         ("Is the C2 server running?",                                     ""),
@@ -397,12 +526,25 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("C2 dashboard status",                                           ""),
         ("Is the command and control infrastructure up?",                 ""),
         ("¿Está funcionando el servidor C2?",                             ""),
+        ("Ping the C2 server",                                            ""),
+        ("Is the team server online?",                                    ""),
+        ("Check if the C2 listener is active",                            ""),
+        ("C2 health check",                                               ""),
+        ("Is the command server reachable?",                              ""),
+        ("Verify C2 connectivity",                                        ""),
+        ("¿Está activo el servidor de comando y control?",                ""),
     ],
     "lazyown_run_api": [
         ("Run 'id' on the C2 host via REST API",                          "id"),
         ("Execute 'uname -a' through the C2 API",                        "uname -a"),
         ("Call the LazyOwn API to run a command",                        "whoami"),
         ("Use the REST API to check running processes",                   "ps aux"),
+        ("Run a shell command via the LazyOwn REST API",                  "hostname"),
+        ("API call to execute command on C2 host",                        "cat /etc/passwd"),
+        ("HTTP API: run 'df -h' on server",                               "df -h"),
+        ("REST call to check C2 host network config",                     "ip addr"),
+        ("Execute via API: netstat -an",                                  "netstat -an"),
+        ("Run curl command through LazyOwn API",                         "curl localhost:8080"),
     ],
     "lazyown_list_sessions": [
         ("List all session files",                                        ""),
@@ -410,6 +552,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("What files are in the sessions directory?",                     ""),
         ("List exfiltrated data and logs",                                ""),
         ("¿Qué hay en la carpeta sessions?",                              ""),
+        ("Show me all session artefacts",                                 ""),
+        ("List captured outputs in sessions folder",                      ""),
+        ("What data has been collected in sessions/?",                    ""),
+        ("Show session directory contents",                               ""),
+        ("What logs and captures do we have?",                            ""),
+        ("List session files from this engagement",                       ""),
     ],
     "lazyown_read_session_file": [
         ("Read the credentials.txt session file",                         "credentials.txt"),
@@ -417,12 +565,21 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Read the latest session log",                                   "session.log"),
         ("Open the captured hash file",                                   "hashes.txt"),
         ("Read the exfiltrated /etc/passwd",                              "etc_passwd.txt"),
+        ("Show the contents of the loot file",                            "loot.txt"),
+        ("Read the BloodHound output",                                    "bloodhound_output.json"),
+        ("Open the Kerb ticket file",                                     "ticket.ccache"),
+        ("Read the captured SAM database",                                "sam.txt"),
+        ("Show me the web scan results file",                             "gobuster_10.10.11.78.txt"),
     ],
     "lazyown_c2_profile": [
         ("List available C2 profiles",                                    "list"),
         ("Show the current malleable C2 profile",                         "show"),
         ("Set C2 beacon sleep to 30 seconds",                             "set sleep=30"),
         ("Which C2 profiles are available?",                              "list"),
+        ("Change beacon jitter to 20%",                                   "set jitter=20"),
+        ("Show current beacon configuration",                             "show"),
+        ("Select stealthy C2 profile",                                    "set profile=stealthy"),
+        ("What malleable profiles are loaded?",                           "list"),
     ],
 
     # ── Modules / plugins ────────────────────────────────────────────────────
@@ -432,24 +589,48 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Show available exploit modules",                                ""),
         ("¿Qué módulos tiene LazyOwn?",                                   ""),
         ("Display all LazyOwn tools and scripts",                        ""),
+        ("What attack scripts are installed?",                            ""),
+        ("Show all Python modules in LazyOwn",                            ""),
+        ("List every script in the modules folder",                       ""),
+        ("What auxiliary modules does LazyOwn have?",                     ""),
+        ("Show LazyOwn module list",                                      ""),
+        ("¿Cuántos módulos hay disponibles?",                             ""),
+        ("I want to see all available LazyOwn modules",                   ""),
     ],
     "lazyown_list_addons": [
         ("List all installed addons",                                     ""),
         ("What addons are available in LazyOwn?",                        ""),
         ("Show enabled addons",                                           ""),
         ("¿Qué addons hay disponibles?",                                  ""),
+        ("Show all YAML-defined addons",                                  ""),
+        ("Which addons are currently enabled?",                           ""),
+        ("List external tool integrations",                               ""),
+        ("What third-party tools has LazyOwn integrated?",                ""),
+        ("Show addon repository list",                                    ""),
+        ("¿Qué herramientas externas están integradas?",                  ""),
     ],
     "lazyown_list_plugins": [
         ("List all Lua plugins",                                          ""),
         ("Show available LazyOwn plugins",                                ""),
         ("What Lua scripts are installed?",                               ""),
         ("¿Qué plugins están disponibles?",                               ""),
+        ("Display all LazyOwn Lua extensions",                            ""),
+        ("Which plugins are loaded?",                                     ""),
+        ("Show plugin inventory",                                         ""),
+        ("List available Lua automation scripts",                         ""),
+        ("What custom plugins does LazyOwn have?",                        ""),
     ],
     "lazyown_create_addon": [
         ("Create a new addon for impacket from GitHub",                   "https://github.com/fortra/impacket.git"),
         ("Add a new addon for Certipy",                                   "https://github.com/ly4k/Certipy.git"),
         ("Create addon for Responder tool",                               "https://github.com/lgandx/Responder.git"),
         ("Integrate a new tool from GitHub into LazyOwn",                 "https://github.com/user/tool.git"),
+        ("Install BloodHound as a LazyOwn addon",                         "https://github.com/BloodHoundAD/BloodHound.git"),
+        ("Add ligolo-ng as a new addon",                                  "https://github.com/nicocha30/ligolo-ng.git"),
+        ("Wrap this GitHub tool into a LazyOwn addon",                    "https://github.com/dirkjanm/mitm6.git"),
+        ("Create addon for CrackMapExec",                                 "https://github.com/Porchetta-Industries/CrackMapExec.git"),
+        ("Integrate hashcat as an addon",                                 "https://github.com/hashcat/hashcat.git"),
+        ("Add new GitHub tool to LazyOwn tool catalog",                   "https://github.com/skelsec/pypykatz.git"),
     ],
 
     # ── Intelligence / research ──────────────────────────────────────────────
@@ -464,6 +645,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Search for pass-the-hash techniques",                           "pass the hash NTLM"),
         ("Look up BloodHound attack paths",                               "BloodHound attack paths"),
         ("Research golden ticket attack",                                 "golden ticket Kerberos"),
+        ("Find info about AS-REP roasting",                               "AS-REP roasting"),
+        ("Search for PrintNightmare exploit",                             "PrintNightmare CVE-2021-34527"),
+        ("Research LLMNR poisoning methodology",                          "LLMNR NBT-NS poisoning"),
+        ("Look up techniques for bypassing AV",                           "AV evasion techniques"),
+        ("Busca información sobre ataques de relay NTLM",                 "NTLM relay attack"),
+        ("Research how to exploit log4j remotely",                        "log4j RCE CVE-2021-44228"),
+        ("Find persistence mechanisms for Windows",                       "Windows persistence techniques"),
+        ("Search for lateral movement using WMI",                         "WMI lateral movement"),
     ],
     "lazyown_recommend_next": [
         ("What should be the next step?",                                 ""),
@@ -474,6 +663,15 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Suggest what to do after finding SMB signing disabled",         ""),
         ("What is the best next move after getting initial access?",      ""),
         ("Recommend next steps after privilege escalation",               ""),
+        ("I got a shell, what should I do next?",                         ""),
+        ("Found a web server, what do I enumerate next?",                 ""),
+        ("Just completed recon phase, what's next?",                      ""),
+        ("After finding port 445 open, what to do?",                      ""),
+        ("Got domain user creds, recommend next step",                    ""),
+        ("Tengo acceso inicial, ¿qué hago ahora?",                       ""),
+        ("What's the highest priority action after this finding?",        ""),
+        ("Suggest 3 actions based on current session state",              ""),
+        ("AI: best move from current engagement state",                   ""),
     ],
     "lazyown_c2_vuln_analysis": [
         ("Analyze vulnerabilities on 10.10.11.78",                        "10.10.11.78"),
@@ -484,6 +682,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Análisis de vulnerabilidades del objetivo",                     "10.10.11.78"),
         ("Check if EternalBlue applies to the target",                    "MS17-010 EternalBlue"),
         ("Assess the attack surface on 10.10.11.78",                     "10.10.11.78"),
+        ("Is this OpenSSH version vulnerable?",                           "OpenSSH 7.4"),
+        ("Find exploits for the discovered services",                     "10.10.11.78"),
+        ("Vuln scan the target and identify attack paths",                "10.10.11.78"),
+        ("What weaknesses does this Windows version have?",               "Windows Server 2019"),
+        ("Check for known CVEs on port 8080",                             "10.10.11.78:8080"),
+        ("Analyze the Samba version for exploits",                        "Samba 4.13.2"),
+        ("¿Qué CVEs afectan a esta versión de Apache?",                   "Apache 2.4.49"),
+        ("Find attack vectors for the discovered services",               "10.10.11.78"),
     ],
     "lazyown_c2_redop": [
         ("Plan a full red team operation on 10.10.11.78",                 "full compromise 10.10.11.78"),
@@ -491,6 +697,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Plan lateral movement after initial access",                    "lateral movement post-access"),
         ("Design a full attack chain for Active Directory",               "AD full compromise"),
         ("Create operation plan: from recon to domain admin",             "recon to domain admin"),
+        ("Build an OPSEC-safe attack plan",                               "OPSEC-safe domain compromise"),
+        ("Plan multi-phase red team campaign",                            "multi-phase campaign 10.10.11.78"),
+        ("Design covert persistent access strategy",                      "persistent covert access"),
+        ("Create TTPs for full domain compromise",                        "domain compromise TTPs"),
+        ("Plan the operation: initial access, privesc, lateral, exfil",   "full kill chain corp.local"),
+        ("Red team operation plan: compromise DC silently",               "stealth DC compromise"),
     ],
     "lazyown_c2_adversary": [
         ("Emulate APT29 adversary techniques",                            "APT29"),
@@ -498,6 +710,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Run MITRE ATT&CK technique T1003 (credential dumping)",         "T1003"),
         ("Emulate ransomware operator TTPs",                              "ransomware operator"),
         ("Apply FIN7 adversary playbook",                                 "FIN7"),
+        ("Simulate APT28 attack patterns",                                "APT28"),
+        ("Run Cobalt Strike-style TTPs",                                  "Cobalt Strike TTPs"),
+        ("Emulate nation-state actor techniques",                         "nation-state APT"),
+        ("Apply MITRE ATT&CK T1078 (valid accounts) technique",          "T1078"),
+        ("Simulate TA505 financial crime TTPs",                           "TA505"),
+        ("Emulate human operators post-breach behavior",                  "post-breach operator"),
     ],
     "lazyown_c2_script": [
         ("Generate a SMB relay exploit script",                           "SMB relay attack"),
@@ -505,6 +723,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Generate a Python reverse shell",                               "Python reverse shell"),
         ("Create a Kerberoasting script",                                 "Kerberoasting extraction"),
         ("Write a DCSync script using impacket",                          "DCSync impacket"),
+        ("Generate a bash one-liner reverse shell",                       "bash reverse shell"),
+        ("Write a Python script to enumerate SMB shares",                 "SMB share enumeration Python"),
+        ("Create a PowerShell AMSI bypass script",                        "AMSI bypass PowerShell"),
+        ("Generate a credential harvesting script for Windows",           "Windows credential harvesting"),
+        ("Write an LDAP enumeration script",                              "LDAP enumeration script"),
+        ("Create a BloodHound data collection script",                    "BloodHound collection"),
     ],
     "lazyown_threat_model": [
         ("Build a threat model for the current session",                  ""),
@@ -512,17 +736,31 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Map discovered TTPs to MITRE framework",                        ""),
         ("Create threat model from session data",                         ""),
         ("¿Cuál es el modelo de amenazas del engagement?",               ""),
+        ("Produce ATT&CK threat model based on findings",                 ""),
+        ("Map our attack to the MITRE ATT&CK matrix",                    ""),
+        ("Generate a threat intel report from session",                   ""),
+        ("Build adversary profile from discovered TTPs",                  ""),
+        ("What MITRE techniques have we used so far?",                    ""),
     ],
     "lazyown_playbook_generate": [
         ("Generate an attack playbook for 10.10.11.78",                   "10.10.11.78"),
         ("Create MITRE ATT&CK grounded playbook",                         "10.10.11.78"),
         ("Build playbook for domain compromise",                          "corp.local"),
         ("Generate pentest playbook for target",                          "10.10.11.78"),
+        ("Create step-by-step attack playbook",                           "10.10.11.78"),
+        ("Generate operator playbook for this engagement",                "10.10.11.78"),
+        ("Build YAML playbook for AD compromise",                         "corp.local"),
+        ("Create structured attack plan as playbook",                     "10.10.11.78"),
+        ("Generate automated attack playbook",                            "10.10.11.78"),
     ],
     "lazyown_playbook_run": [
         ("Execute the generated playbook",                                "playbook_10.10.11.78.yaml"),
         ("Run the attack playbook step by step",                          "playbook_corp.local.yaml"),
         ("Start playbook execution",                                      "playbook.yaml"),
+        ("Run the generated pentest playbook",                            "playbook_10.10.11.78.yaml"),
+        ("Execute playbook against the target",                           "playbook.yaml"),
+        ("Start automated playbook on 10.10.11.78",                       "playbook_10.10.11.78.yaml"),
+        ("Run the AD compromise playbook",                                "playbook_corp.local.yaml"),
     ],
     "lazyown_cve_search": [
         ("Search CVEs for Apache 2.4.49",                                 "apache 2.4.49"),
@@ -531,6 +769,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("What CVEs affect Samba 4.13?",                                  "samba 4.13"),
         ("Search NVD for Windows 10 vulnerabilities",                     "windows 10"),
         ("Busca CVEs para log4j 2.14",                                    "log4j 2.14"),
+        ("NVD lookup: IIS 6.0 vulnerabilities",                           "iis 6.0"),
+        ("Search CVE database for PHP 8.0",                               "php 8.0"),
+        ("Find CVEs for Tomcat 9.0.0",                                    "tomcat 9.0.0"),
+        ("CVE search for MySQL 5.7",                                      "mysql 5.7"),
+        ("What vulnerabilities does nginx 1.14 have?",                    "nginx 1.14"),
+        ("Search NVD: Drupal 7 vulnerabilities",                          "drupal 7"),
+        ("Look up CVEs for ProFTPD 1.3.5",                                "proftpd 1.3.5"),
     ],
     "lazyown_searchsploit": [
         ("Search for vsftpd 2.3.4 exploits",                             "vsftpd 2.3.4"),
@@ -540,6 +785,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Find exploits for MySQL 5.5",                                   "MySQL 5.5"),
         ("Busca exploits para PHP 5.2",                                   "PHP 5.2"),
         ("Search for SMB exploits in MSF",                                "SMB Windows"),
+        ("Find exploit code for ProFTPD",                                 "ProFTPD"),
+        ("Search ExploitDB for WordPress plugin vulnerabilities",         "WordPress plugin"),
+        ("Find public exploits for OpenSSH 7.2",                         "OpenSSH 7.2"),
+        ("Look up Metasploit modules for Samba",                          "Samba"),
+        ("Search for Shellshock exploit",                                 "Shellshock bash"),
+        ("Find exploit for Drupal 7 (Drupalgeddon)",                      "Drupal 7"),
+        ("Search for Struts 2 RCE exploit",                               "Struts 2 RCE"),
+        ("Exploit lookup: Tomcat AJP file inclusion",                     "Tomcat AJP"),
     ],
     "lazyown_llm_ask": [
         ("Ask the LLM how to escalate privileges on Linux",               "how to escalate privileges on Linux"),
@@ -548,6 +801,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("LLM: how to extract credentials from LSASS?",                  "extract credentials LSASS"),
         ("Pregunta al LLM cómo hacer pass-the-hash",                     "pass-the-hash NTLM"),
         ("Ask AI to reason about the best lateral movement technique",    "best lateral movement technique"),
+        ("Use deepseek to find the best exploit path",                    "find best exploit path for 10.10.11.78"),
+        ("Ask Groq: how to do AS-REP roasting?",                          "AS-REP roasting Active Directory"),
+        ("LLM question: how to bypass UAC on Windows 10?",               "bypass UAC Windows 10"),
+        ("Ask the AI: what is the best persistence mechanism for Linux?", "Linux persistence mechanisms"),
+        ("Groq: analyze this error message from the target",              "analyze error: permission denied on /etc/shadow"),
+        ("Ask AI: how to enumerate LDAP without authentication?",         "unauthenticated LDAP enumeration"),
+        ("LLM: explain what this PowerShell one-liner does",             "explain PowerShell command"),
+        ("Ask AI about OPSEC considerations for this attack",            "OPSEC for credential dumping"),
     ],
 
     # ── Memory / RAG ─────────────────────────────────────────────────────────
@@ -556,6 +817,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Update the RAG index with new session data",                    ""),
         ("Incrementally index sessions/ into ChromaDB",                   ""),
         ("Re-index all captured data",                                    ""),
+        ("Add all session artefacts to the vector database",             ""),
+        ("Index new findings into ChromaDB",                              ""),
+        ("Update knowledge base with latest session data",                ""),
+        ("Sync session files to the RAG database",                        ""),
+        ("Index all captured outputs for semantic search",                ""),
+        ("Add new loot to the vector store",                              ""),
+        ("Rebuild the RAG index from all sessions",                       ""),
     ],
     "lazyown_rag_query": [
         ("Search session data for SMB credentials",                       "SMB credentials"),
@@ -564,17 +832,33 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("What do we know about domain controllers?",                     "domain controller"),
         ("Search for captured NTLM hashes",                               "NTLM hashes"),
         ("Find any previous findings on port 445",                        "port 445 SMB"),
+        ("Search session memory for admin credentials",                   "admin credentials"),
+        ("Have we found any database passwords?",                         "database passwords"),
+        ("What did we discover about the web server?",                    "web server findings"),
+        ("Search memory for Kerberos tickets",                            "Kerberos tickets"),
+        ("Find all SMB share enumeration results",                        "SMB shares"),
+        ("Query vector store for previous domain findings",               "domain findings"),
     ],
     "lazyown_memory_recall": [
         ("Recall past commands run against 10.10.11.78",                  "10.10.11.78"),
         ("What commands have been executed previously?",                  "previous commands"),
         ("Show episodic memory for nmap scans",                           "nmap"),
         ("Recall credential dumping results",                             "credential dumping"),
+        ("What happened during the last session?",                        "last session"),
+        ("Show me all past actions on the target",                        "10.10.11.78"),
+        ("Recall previous web enumeration results",                       "web enumeration"),
+        ("What scans did we run before?",                                 "previous scans"),
+        ("Show history of commands run on the target",                    "command history"),
+        ("What tools have been used so far?",                             "tool usage history"),
     ],
     "lazyown_memory_store": [
         ("Save this nmap result to episodic memory",                      "nmap -sV 10.10.11.78 → ports 22,80,443"),
         ("Store the discovered SMB credentials",                          "Found credentials admin:Password123"),
         ("Add this finding to memory: RCE via log4j",                    "RCE via log4j on 10.10.11.78"),
+        ("Save finding to memory: domain admin hash found",               "Domain admin NTLM hash: aad3b..."),
+        ("Store this SQL injection finding in memory",                    "SQLi on /login.php parameter id"),
+        ("Save privilege escalation path to memory",                      "SUID binary /usr/bin/python3"),
+        ("Remember this lateral movement path",                           "Pass-the-hash to DC via SMB"),
     ],
 
     # ── Reporting ────────────────────────────────────────────────────────────
@@ -587,6 +871,13 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Full operational briefing",                                     ""),
         ("Aggregate all campaign data into one report",                   ""),
         ("What has been accomplished in this engagement?",                ""),
+        ("Full status dump: all objectives, findings, creds",             ""),
+        ("Brief me on everything discovered in this campaign",            ""),
+        ("Master report from all campaign state files",                   ""),
+        ("Campaign summary: from recon to current state",                 ""),
+        ("Resumen completo de la campaña de pentesting",                  ""),
+        ("What is the current engagement progress?",                      ""),
+        ("Full campaign intelligence dump",                               ""),
     ],
     "lazyown_c2_notes": [
         ("Add a note: found SMB signing disabled",                        "Found SMB signing disabled on 10.10.11.78"),
@@ -594,6 +885,11 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Append to notes: domain admin achieved",                       "Domain admin achieved via DCSync"),
         ("Show all operator notes",                                       ""),
         ("Clear old notes",                                               "clear"),
+        ("Add finding to ops notes: open port 2049 NFS",                 "NFS port 2049 open on 10.10.11.78"),
+        ("Write note: found writable SMB share",                          "Writable share: //10.10.11.78/data"),
+        ("Read the current operational log",                              ""),
+        ("Note: BloodHound found DA path via AS-REP roasting",           "AS-REP → DA path via corp.local"),
+        ("Update notes with this critical finding",                       "RCE on web server via deserialization"),
     ],
     "lazyown_credentials": [
         ("Show all captured credentials",                                 ""),
@@ -603,6 +899,15 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("¿Qué credenciales hemos capturado?",                           ""),
         ("Show NTLM hashes from the session",                             ""),
         ("List all found usernames and passwords",                        ""),
+        ("Give me the loot: all creds and hashes",                        ""),
+        ("What passwords have we recovered?",                             ""),
+        ("Show me all the usernames and hashes found",                    ""),
+        ("List captured service account credentials",                     ""),
+        ("What logins have we compromised?",                              ""),
+        ("Show all clear-text passwords found",                           ""),
+        ("Credential inventory from all captures",                        ""),
+        ("¿Qué hashes y contraseñas tenemos?",                           ""),
+        ("Display all found credentials from session",                    ""),
     ],
     "lazyown_report_update": [
         ("Update the pentest report with new findings",                   "RCE via log4j on 10.10.11.78:8080"),
@@ -610,6 +915,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Write up the credential dumping finding",                       "Dumped NTLM hashes via secretsdump"),
         ("Update report: found EternalBlue vulnerable host",              "MS17-010 vulnerable: 10.10.11.78"),
         ("Add SMB relay attack to report",                               "SMB relay → NTLM capture"),
+        ("Document this critical finding in the report",                  "RCE on Apache 2.4.49"),
+        ("Add privilege escalation to report",                            "SUID escalation to root via python3"),
+        ("Update pentest report with lateral movement finding",           "Pass-the-hash to 10.10.11.1"),
+        ("Write finding: unauthenticated RCE on port 8080",              "Unauthenticated RCE: CVE-2021-41773"),
+        ("Add this to the deliverable report",                            "Domain admin achieved 14:32 UTC"),
+        ("Update final report with persistence finding",                  "Persistence via scheduled task"),
     ],
     "lazyown_campaign_lessons": [
         ("Show lessons learned from this campaign",                       ""),
@@ -617,6 +928,11 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Read the campaign lessons",                                     ""),
         ("Show retrospective findings",                                   ""),
         ("¿Qué lecciones aprendimos en esta campaña?",                   ""),
+        ("What worked and what didn't in this engagement?",               ""),
+        ("Campaign retrospective: top findings",                          ""),
+        ("What should we do differently next time?",                      ""),
+        ("Show tactical lessons from this operation",                     ""),
+        ("Read the post-engagement lessons",                              ""),
     ],
     "lazyown_timeline": [
         ("Generate the attack timeline",                                  ""),
@@ -624,29 +940,57 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Create a chronological account of the attack",                  ""),
         ("Timeline of the engagement",                                    ""),
         ("¿Cuál es la línea de tiempo del ataque?",                      ""),
+        ("Give me a timestamp-ordered account of the attack",             ""),
+        ("Generate narrative timeline for the report",                    ""),
+        ("Create attack timeline from initial recon to domain admin",     ""),
+        ("Chronological event log of the engagement",                     ""),
+        ("Show what happened and when during the campaign",               ""),
+        ("Build a timeline for the executive report",                     ""),
     ],
     "lazyown_generate_report": [
         ("Auto-generate the pentest report",                              ""),
         ("Generate a full Markdown pentest report",                       ""),
         ("Create report from session artefacts",                          ""),
         ("Build the final engagement report",                             ""),
+        ("Generate the final deliverable report",                         ""),
+        ("Create a professional pentest report",                          ""),
+        ("Write the full report from all collected data",                 ""),
+        ("Auto-build the engagement report",                              ""),
+        ("Generate executive summary + technical report",                 ""),
+        ("Produce final pentest deliverable",                             ""),
     ],
     "lazyown_misp_export": [
         ("Export findings as a MISP event",                               ""),
         ("Generate MISP-compatible threat intelligence",                  ""),
         ("Export IoCs and TTPs to MISP format",                           ""),
+        ("Create MISP event from campaign findings",                      ""),
+        ("Export threat intel to MISP",                                   ""),
+        ("Generate MISP-compatible IoC export",                           ""),
+        ("Share findings via MISP event",                                 ""),
+        ("Export TTPs and indicators to MISP platform",                   ""),
     ],
     "lazyown_eval_quality": [
         ("Show LLM decision quality report",                              ""),
         ("How accurate has the AI routing been?",                         ""),
         ("Display success rate and MITRE tactic coverage",                ""),
         ("Evaluate the quality of previous AI decisions",                 ""),
+        ("Rate the AI agent's decision quality",                          ""),
+        ("Show me how well the routing decisions have worked",            ""),
+        ("Quality metrics for AI-assisted decisions",                     ""),
+        ("How many AI recommendations were correct?",                     ""),
+        ("Show routing and decision accuracy report",                     ""),
     ],
     "lazyown_collab_publish": [
         ("Broadcast: found domain admin credentials",                     "Found domain admin credentials"),
         ("Share finding with all operators: RCE on port 8080",           "RCE found on port 8080"),
         ("Publish alert: EternalBlue vulnerable host discovered",         "EternalBlue vulnerable: 10.10.11.78"),
         ("Send finding to team: NTLM hashes captured",                   "NTLM hashes captured from 10.10.11.78"),
+        ("Notify all operators of this critical finding",                 "Admin credentials found"),
+        ("Broadcast to team: got domain admin",                           "Domain admin achieved at 15:42"),
+        ("Share this with all operators via SSE",                         "New target discovered: 10.10.11.100"),
+        ("Push finding to all team members",                              "SQLi on login page"),
+        ("Broadcast alert: got foothold on target",                       "Foothold via log4j on 10.10.11.78"),
+        ("Announce to team: captured DA hash",                            "DA hash captured via DCSync"),
     ],
 
     # ── Events / policy ──────────────────────────────────────────────────────
@@ -656,29 +1000,56 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Are there any pending events?",                                 ""),
         ("Show latest detection events",                                  ""),
         ("¿Hay eventos nuevos de detección?",                             ""),
+        ("Get new alerts from the event engine",                          ""),
+        ("Check if any detections have fired",                            ""),
+        ("Read the latest events",                                        ""),
+        ("Poll for new alerts",                                           ""),
+        ("Any new triggers or alerts?",                                   ""),
+        ("Show me the pending event queue",                               ""),
+        ("Check detection engine for new events",                         ""),
     ],
     "lazyown_ack_event": [
         ("Acknowledge event evt_001",                                     "evt_001"),
         ("Mark event 42 as processed",                                    "42"),
         ("Dismiss the RCE alert",                                         "evt_rce_001"),
+        ("Acknowledge all pending events",                                "all"),
+        ("Mark the privilege escalation alert as handled",                "evt_privesc_001"),
+        ("Dismiss false positive event",                                  "evt_002"),
+        ("Acknowledge and close event 15",                                "15"),
+        ("Mark event as resolved",                                        "evt_003"),
     ],
     "lazyown_add_rule": [
         ("Add detection rule for RCE events",                             "pattern=shell event_type=critical"),
         ("Create rule: trigger alert on privilege escalation commands",   "pattern=sudo event_type=high"),
         ("Add event rule for credential access",                          "pattern=mimikatz event_type=critical"),
         ("Create detection for lateral movement",                         "pattern=psexec event_type=high"),
+        ("Add rule to detect Kerberoasting",                              "pattern=kerberoast event_type=critical"),
+        ("Create alert rule for BloodHound usage",                        "pattern=bloodhound event_type=high"),
+        ("Add detection for DCSync activity",                             "pattern=dcsync event_type=critical"),
+        ("Create rule: alert on new beacon check-in",                     "pattern=beacon event_type=medium"),
     ],
     "lazyown_list_event_rules": [
         ("List all detection rules",                                      ""),
         ("Show active event rules",                                       ""),
         ("What detection rules are configured?",                          ""),
         ("Display all event detection policies",                          ""),
+        ("Show all configured alerts",                                    ""),
+        ("What rules are active in the event engine?",                    ""),
+        ("List detection policies",                                       ""),
+        ("Show me all the alerting rules",                                ""),
+        ("Display rule catalog",                                          ""),
     ],
     "lazyown_heartbeat_status": [
         ("Is the LazyOwn heartbeat running?",                             ""),
         ("Check if the heartbeat process is alive",                       ""),
         ("Heartbeat health check",                                        ""),
         ("Is the event engine online?",                                   ""),
+        ("Is the daemon process alive?",                                  ""),
+        ("Check LazyOwn process health",                                  ""),
+        ("Is the background process running?",                            ""),
+        ("Heartbeat ping",                                                ""),
+        ("¿Está vivo el proceso de heartbeat?",                          ""),
+        ("Health check for LazyOwn services",                             ""),
     ],
     "lazyown_policy_status": [
         ("Show policy engine status",                                     ""),
@@ -686,6 +1057,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Display rules of engagement compliance",                        ""),
         ("Policy engine: next recommended actions",                       ""),
         ("¿Cuál es el estado de la política de ataque?",                 ""),
+        ("Show ROE policy status",                                        ""),
+        ("Policy summary: what is allowed?",                              ""),
+        ("What actions are currently authorized by policy?",              ""),
+        ("Display engagement policy constraints",                         ""),
+        ("Show the policy engine recommendations",                        ""),
+        ("What does the ROE allow me to do now?",                         ""),
     ],
 
     # ── Automation ───────────────────────────────────────────────────────────
@@ -695,6 +1072,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Run the auto-loop until domain admin is achieved",              "10.10.11.78"),
         ("Start continuous automated attack",                             "10.10.11.78"),
         ("Inicia el bucle de ataque automático",                          "10.10.11.78"),
+        ("Launch auto-loop targeting 192.168.1.100",                      "192.168.1.100"),
+        ("Enable the autonomous attack automation",                       "10.10.11.78"),
+        ("Start the policy-guided attack loop",                           "10.10.11.78"),
+        ("Run LazyOwn on autopilot against the target",                   "10.10.11.78"),
+        ("Begin automated pentest loop",                                  "10.10.11.78"),
+        ("Start autonomous operation against this host",                  "10.10.11.78"),
+        ("Turn on auto-attack mode",                                      "10.10.11.78"),
+        ("Pon en marcha el modo autónomo contra el objetivo",             "10.10.11.78"),
     ],
     "lazyown_inject_objective": [
         ("Inject objective: achieve domain admin",                        "achieve domain admin on corp.local"),
@@ -702,6 +1087,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Inject goal: find and exploit SQLi on web app",                "find and exploit SQL injection"),
         ("New objective: dump all NTLM hashes",                           "dump all NTLM hashes"),
         ("Inyecta objetivo: escalar privilegios a root",                  "escalate privileges to root"),
+        ("Add task: establish persistence on 10.10.11.78",               "establish persistence on 10.10.11.78"),
+        ("Inject new mission: exfiltrate sensitive documents",            "exfiltrate sensitive documents"),
+        ("Add objective: compromise the mail server",                     "compromise mail server 10.10.11.50"),
+        ("New goal for daemon: move laterally to the DC",                 "lateral movement to domain controller"),
+        ("Inject: disable Windows Defender on target",                    "disable Windows Defender"),
+        ("New objective: find database credentials",                      "find and extract database credentials"),
     ],
     "lazyown_next_objective": [
         ("What is the next objective to work on?",                        ""),
@@ -709,12 +1100,23 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Get the next pending attack objective",                         ""),
         ("What objective should be tackled next?",                        ""),
         ("¿Cuál es el próximo objetivo?",                                 ""),
+        ("What is the highest priority task?",                            ""),
+        ("Show pending objectives queue",                                 ""),
+        ("What should the daemon attack next?",                           ""),
+        ("Next mission in the objective queue",                           ""),
+        ("What is the current priority objective?",                       ""),
+        ("Display next objective from the queue",                         ""),
     ],
     "lazyown_read_prompt": [
         ("Read the LazyOwn developer reference",                          ""),
         ("Show the LazyOwn architecture reference",                       ""),
         ("Load the prompt.md documentation",                              ""),
         ("Get the full tool and command reference",                       ""),
+        ("Show me the LazyOwn command catalog",                           ""),
+        ("Read the full tool documentation",                              ""),
+        ("Display the prompt reference file",                             ""),
+        ("What does prompt.md contain?",                                  ""),
+        ("Load developer documentation",                                  ""),
     ],
     "lazyown_soul": [
         ("Read the agent soul and campaign objectives",                   ""),
@@ -722,6 +1124,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Update agent soul with new campaign objective",                 "achieve stealth domain admin"),
         ("What are the hard stops in the soul file?",                     ""),
         ("¿Cuál es el alma del agente?",                                  ""),
+        ("Show the agent's mission, values, and hard limits",             ""),
+        ("Read current soul configuration",                               ""),
+        ("What is the agent's primary directive?",                        ""),
+        ("Show agent soul: identity, mission, constraints",               ""),
+        ("Update soul: new campaign is financial crime simulation",       "financial crime simulation"),
+        ("What are the agent's red lines?",                               ""),
     ],
 
     # ── Agents ───────────────────────────────────────────────────────────────
@@ -733,6 +1141,14 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Delegate web application testing to AI agent",                 "test web application on 10.10.11.78:80"),
         ("Launch autonomous agent for credential dumping",               "dump credentials from 10.10.11.78"),
         ("Run agent to perform full recon and report",                    "full recon and report on 10.10.11.78"),
+        ("Send an AI sub-agent to test for SQLi",                         "test for SQL injection on 10.10.11.78"),
+        ("Delegate BloodHound enumeration to an agent",                  "BloodHound AD enumeration on corp.local"),
+        ("Run a sub-agent to brute force the login page",                 "brute force login on 10.10.11.78:80"),
+        ("Launch agent to test for command injection",                    "test command injection on web app"),
+        ("Start AI agent for full web application scan",                  "full web scan on 10.10.11.78:443"),
+        ("Delegate kerberoasting to autonomous agent",                    "Kerberoast accounts in corp.local"),
+        ("Run agent: find all paths to domain admin",                     "find domain admin paths in corp.local"),
+        ("Let an agent handle the privilege escalation",                  "find and exploit privesc on 10.10.11.78"),
     ],
     "lazyown_agent_status": [
         ("Check the status of agent agent_001",                           "agent_001"),
@@ -740,24 +1156,50 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Show agent progress and current action",                        ""),
         ("How many iterations has the agent completed?",                  ""),
         ("¿Cómo va el agente autónomo?",                                  ""),
+        ("Is the sub-agent finished yet?",                                ""),
+        ("Show the current step of the running agent",                    ""),
+        ("How far along is the agent?",                                   ""),
+        ("Agent progress report",                                         ""),
+        ("Is agent_001 still working?",                                   "agent_001"),
+        ("Check if the web testing agent has finished",                   ""),
+        ("What is the agent currently doing?",                            ""),
     ],
     "lazyown_agent_result": [
         ("Get the result from agent agent_001",                           "agent_001"),
         ("Read the agent's final answer",                                 ""),
         ("Show what the agent discovered",                                ""),
         ("Agent output: what did it find?",                               ""),
+        ("Get findings from the completed agent",                         ""),
+        ("Read the agent report",                                         ""),
+        ("Show me what the sub-agent found",                              ""),
+        ("Agent is done — show the results",                              ""),
+        ("Retrieve the agent's output",                                   ""),
+        ("What did agent_001 discover?",                                  "agent_001"),
     ],
     "lazyown_list_agents": [
         ("List all running and completed agents",                         ""),
         ("Show recent sub-agents",                                        ""),
         ("What agents are active?",                                       ""),
         ("¿Qué agentes están corriendo?",                                 ""),
+        ("Show the agent inventory",                                      ""),
+        ("List all sub-agents and their status",                          ""),
+        ("What AI agents have been spawned?",                             ""),
+        ("Show me all running and past agents",                           ""),
+        ("Agent registry: who is running what?",                          ""),
+        ("List active and completed sub-agents",                          ""),
     ],
     "lazyown_groq_agent": [
         ("Spawn a Groq agent for Active Directory enumeration",           "enumerate Active Directory"),
         ("Run a Groq agent with all LazyOwn tools",                       "full recon and exploit 10.10.11.78"),
         ("Start Ollama agent for privilege escalation",                   "find and exploit privesc paths"),
         ("Launch Groq agent to enumerate SMB shares",                     "enumerate SMB shares on 10.10.11.78"),
+        ("Start a Groq-powered AI agent",                                 "full pentest of 10.10.11.78"),
+        ("Spawn Groq agent with full tool access",                        "recon and exploit 10.10.11.78"),
+        ("Run deepseek-r1 agent on the target",                           "find vulnerabilities on 10.10.11.78"),
+        ("Launch AI agent backed by Groq LLM",                           "enumerate and compromise 10.10.11.78"),
+        ("Start Groq agent to analyze the AD environment",                "Active Directory enumeration corp.local"),
+        ("Spawn an Ollama agent for local inference",                     "full offline pentest of 10.10.11.78"),
+        ("Use Groq to run an autonomous pentest",                         "autonomous pentest 10.10.11.78"),
     ],
 
     # ── Hive mind ────────────────────────────────────────────────────────────
@@ -768,6 +1210,15 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Create a hive with 5 drones for domain compromise",             "domain compromise corp.local"),
         ("Spawn drones: recon, creds, lateral movement",                  "parallel pentest 10.10.11.78"),
         ("Use the hive to enumerate all services in parallel",            "enumerate all services on 10.10.11.78"),
+        ("Deploy multiple drones in parallel against the target",         "parallel attack 10.10.11.78"),
+        ("Hive spawn: web, SMB, and LDAP enumeration drones",            "web SMB LDAP parallel enum"),
+        ("Launch parallel drone swarm for recon",                         "parallel recon 10.10.11.78"),
+        ("Spawn drones to simultaneously scan and exploit",               "simultaneous recon and exploit"),
+        ("Create drone army to attack AD from multiple angles",           "multi-vector AD attack corp.local"),
+        ("Hive attack: launch 4 parallel drones",                         "parallel pentest 10.10.11.78"),
+        ("Deploy the hive mind against the target",                       "full hive pentest 10.10.11.78"),
+        ("Start multi-drone operation",                                   "multi-drone attack 10.10.11.78"),
+        ("¡Lanza el enjambre de drones contra el objetivo!",             "enjambre 10.10.11.78"),
     ],
     "lazyown_hive_status": [
         ("Show hive-mind status",                                         ""),
@@ -775,38 +1226,78 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Hive status: drones and memory",                                ""),
         ("What is the queen doing?",                                      ""),
         ("¿Cuál es el estado de la mente colmena?",                      ""),
+        ("How many drones are running?",                                  ""),
+        ("Hive intelligence report",                                      ""),
+        ("Status of the distributed drone swarm",                         ""),
+        ("Show drone swarm status",                                       ""),
+        ("How is the hive performing?",                                   ""),
+        ("Hive overview: active drones and collected data",               ""),
+        ("Show me all drone statuses",                                    ""),
     ],
     "lazyown_hive_recall": [
         ("Search hive memory for domain admin credentials",               "domain admin credentials"),
         ("Recall all drone results about SMB",                            "SMB enumeration"),
         ("Hive memory: what do we know about the DC?",                    "domain controller"),
         ("Search drone findings for NTLM hashes",                        "NTLM hashes"),
+        ("What did the drones find about the web server?",                "web server"),
+        ("Search collective memory for privilege escalation paths",       "privilege escalation"),
+        ("Query hive mind for AD enumeration results",                    "Active Directory"),
+        ("What has the swarm discovered about port 445?",                 "SMB port 445"),
+        ("Recall drone findings about Kerberos",                          "Kerberos"),
+        ("Search hive memory for lateral movement opportunities",         "lateral movement"),
+        ("¿Qué encontró el enjambre sobre el dominio?",                  "dominio Active Directory"),
     ],
     "lazyown_hive_plan": [
         ("Plan a domain compromise without spawning drones",              "full domain compromise"),
         ("Decompose AD enumeration into drone tasks",                     "Active Directory enumeration"),
         ("Plan the attack: recon → exploit → privesc → lateral",         "full attack chain"),
         ("Generate task decomposition for this engagement",               "10.10.11.78 pentest"),
+        ("Break down the domain compromise into drone tasks",             "domain compromise corp.local"),
+        ("Plan a multi-drone parallel attack strategy",                   "parallel attack 10.10.11.78"),
+        ("Decompose this goal into parallel tasks",                       "compromise 10.10.11.78"),
+        ("Task planning: split the engagement across drones",             "AD enumeration and exploitation"),
+        ("Create a work breakdown for the hive",                          "full kill chain 10.10.11.78"),
+        ("Design parallel attack plan for hive",                          "corp.local domain compromise"),
     ],
     "lazyown_hive_result": [
         ("Get drone_001 result",                                          "drone_001"),
         ("Read the output from drone 2",                                  "drone_002"),
         ("Show what the recon drone found",                               "drone_recon_001"),
+        ("Retrieve drone_001 findings",                                   "drone_001"),
+        ("What did the SMB drone discover?",                              "drone_smb_001"),
+        ("Show output from the web testing drone",                        "drone_web_001"),
+        ("Read the lateral movement drone result",                        "drone_lateral_001"),
+        ("Get findings from recon drone",                                 "drone_recon_001"),
     ],
     "lazyown_hive_collect": [
         ("Wait for drones and summarize results",                         "drone_001,drone_002"),
         ("Collect and synthesize all drone outputs",                      "drone_001,drone_002,drone_003"),
         ("Queen: summarize what the drones found",                        "drone_001,drone_002"),
+        ("Aggregate drone results into a unified report",                 "drone_001,drone_002,drone_003"),
+        ("Collect all drone findings and create a summary",               "drone_001,drone_002"),
+        ("Synthesize drone outputs into actionable intelligence",         "drone_001,drone_002"),
+        ("Merge drone results and identify next steps",                   "drone_001,drone_002"),
+        ("Get the combined output from all finished drones",              "drone_001,drone_002,drone_003"),
     ],
     "lazyown_hive_forget": [
         ("Prune hive memory older than 24 hours",                         "24"),
         ("Clear old drone results from memory",                           "48"),
         ("Forget hive memory about the test environment",                 "72"),
+        ("Clean up stale drone memories",                                 "24"),
+        ("Delete old hive entries",                                       "48"),
+        ("Purge hive memory older than 2 days",                           "48"),
+        ("Clear hive memory to free space",                               "24"),
+        ("Remove outdated drone results",                                 "72"),
     ],
     "lazyown_hive_recover": [
         ("Recover interrupted hive drones",                               ""),
         ("Re-queue drones after crash",                                   ""),
         ("Restore hive state after restart",                              ""),
+        ("Resume interrupted drone tasks",                                ""),
+        ("Recover failed drones and restart them",                        ""),
+        ("Hive recovery: restart crashed drones",                         ""),
+        ("Restore the swarm after a system restart",                      ""),
+        ("Re-launch drones that were interrupted",                        ""),
     ],
 
     # ── Autonomous daemon ────────────────────────────────────────────────────
@@ -816,12 +1307,29 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Start the autonomous daemon with objective: get root",          "escalate to root on 10.10.11.78"),
         ("Run autonomous agent to find and exploit vulnerabilities",      "find and exploit all vulns on 10.10.11.78"),
         ("Inicia el daemon autónomo para comprometer el objetivo",        "comprometer 10.10.11.78"),
+        ("Launch the autonomous attack daemon",                           "full compromise 10.10.11.78"),
+        ("Start self-directed pentest against the target",                "autonomous pentest 10.10.11.78"),
+        ("Begin autonomous operation — no Claude Code needed",            "full autonomous attack 10.10.11.78"),
+        ("Start the fallback autonomous brain",                           "attack 10.10.11.78 autonomously"),
+        ("Run without Claude: start autonomous daemon",                   "autonomous compromise 10.10.11.78"),
+        ("Launch fully autonomous attack mode",                           "full attack 10.10.11.78"),
+        ("Start background autonomous pentest",                           "pentest 10.10.11.78 autonomously"),
+        ("Modo autónomo: comprometer el objetivo sin supervisión",        "comprometer 10.10.11.78"),
+        ("Kickoff autonomous attack loop",                                "autonomous attack 10.10.11.78"),
     ],
     "lazyown_autonomous_stop": [
         ("Stop the autonomous daemon",                                    ""),
         ("Halt the autonomous attack loop",                               ""),
         ("Stop automated exploitation",                                   ""),
         ("¡Para el daemon autónomo!",                                     ""),
+        ("Kill the autonomous daemon process",                            ""),
+        ("Pause the autonomous attack",                                   ""),
+        ("Stop autonomous mode",                                          ""),
+        ("Terminate the background daemon",                               ""),
+        ("Abort autonomous operation",                                    ""),
+        ("Halt self-directed attack",                                     ""),
+        ("Stop the fallback brain",                                       ""),
+        ("Detén el ataque autónomo",                                      ""),
     ],
     "lazyown_autonomous_status": [
         ("What is the autonomous daemon doing?",                          ""),
@@ -829,17 +1337,38 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("How many steps has the daemon completed?",                      ""),
         ("Show the current autonomous objective",                         ""),
         ("¿Cómo va el daemon autónomo?",                                  ""),
+        ("What phase is the daemon in?",                                  ""),
+        ("Show autonomous operation progress",                            ""),
+        ("How far along is the autonomous attack?",                       ""),
+        ("Daemon status: current phase, steps, objectives",               ""),
+        ("What has the autonomous daemon accomplished?",                  ""),
+        ("Check the self-directed attack status",                         ""),
+        ("Show me what the daemon is doing right now",                    ""),
     ],
     "lazyown_autonomous_inject": [
         ("Inject new objective into autonomous daemon: dump credentials", "dump all credentials from 10.10.11.78"),
         ("Add objective to daemon: exfiltrate sensitive files",           "exfiltrate /etc/shadow"),
         ("Tell the daemon to focus on lateral movement now",              "perform lateral movement to 10.10.11.100"),
+        ("Inject priority task: find the domain controller",              "locate and enumerate domain controller"),
+        ("New mission for autonomous daemon: pivot to internal network",  "pivot to 192.168.0.0/16"),
+        ("Add urgent objective: disable EDR on target",                   "disable EDR on 10.10.11.78"),
+        ("Inject: the target changed to 10.10.11.200",                   "switch target to 10.10.11.200"),
+        ("New priority: establish persistence before moving on",          "establish persistence on 10.10.11.78"),
+        ("Tell daemon: skip recon, go straight to exploitation",          "skip to exploitation phase"),
+        ("Add objective to daemon: escalate to SYSTEM",                   "escalate to SYSTEM on Windows target"),
     ],
     "lazyown_autonomous_events": [
         ("Show the last 20 autonomous events",                            "20"),
         ("Read the autonomous event stream",                              ""),
         ("Show recent daemon activity",                                   ""),
         ("What has the autonomous daemon done so far?",                   ""),
+        ("Daemon log: last 50 events",                                    "50"),
+        ("Show autonomous attack history",                                ""),
+        ("What actions has the daemon taken?",                            ""),
+        ("Event stream from the autonomous attack",                       ""),
+        ("Show last N steps from the daemon",                             "30"),
+        ("Autonomous activity log",                                       ""),
+        ("What did the daemon do in the last hour?",                      ""),
     ],
 
     # ── Tools / objectives ───────────────────────────────────────────────────
@@ -848,6 +1377,12 @@ _PHRASINGS: Dict[str, List[Tuple[str, str]]] = {
         ("Add a tool file for automatic Apache exploit",                  "apache 2.4.49"),
         ("Create a pwntomate rule for SMB vulnerabilities",               "SMB Windows"),
         ("New tool file for MySQL 5.5 exploitation",                      "mysql 5.5"),
+        ("Create a .tool file for log4j exploitation",                    "log4j RCE"),
+        ("Add pwntomate entry for Drupal 7",                              "Drupal 7"),
+        ("Create automation rule for ProFTPD exploit",                    "ProFTPD 1.3.5"),
+        ("New tool definition for vsftpd backdoor",                       "vsftpd 2.3.4 backdoor"),
+        ("Create tool file for Rejetto HFS exploit",                      "HFS 2.3"),
+        ("Add new tool to LazyOwn tool catalog",                          "new exploit service"),
     ],
 }
 
@@ -926,6 +1461,70 @@ _CHAINS: List[Dict] = [
         "domain": "Security/Report",
         "note": "team collaboration after finding"
     },
+
+    # ── Additional workflow chains ────────────────────────────────────────────
+    # Recon chains
+    {"instruction": "HTB box is live — port scan it",
+     "tool": "lazyown_run_command", "arg": "lazynmap", "domain": "Security/Execution"},
+    {"instruction": "Nmap done, now enumerate web directories",
+     "tool": "lazyown_run_command", "arg": "lazygobuster", "domain": "Security/Execution"},
+    {"instruction": "Found open ports — auto-populate config from scan",
+     "tool": "lazyown_auto_populate", "arg": "", "domain": "Security/Config"},
+    {"instruction": "Config updated — what should I do now?",
+     "tool": "lazyown_recommend_next", "arg": "", "domain": "Security/Intel"},
+    # Initial access chains
+    {"instruction": "Port 21 running vsftpd 2.3.4 — find exploits",
+     "tool": "lazyown_searchsploit", "arg": "vsftpd 2.3.4", "domain": "Security/Intel"},
+    {"instruction": "Got RCE — now look for privesc paths",
+     "tool": "lazyown_c2_vuln_analysis", "arg": "privilege escalation", "domain": "Security/Intel"},
+    {"instruction": "Shell obtained — recommend next action",
+     "tool": "lazyown_recommend_next", "arg": "", "domain": "Security/Intel"},
+    # Post-exploitation chains
+    {"instruction": "Got user shell, escalate to root now",
+     "tool": "lazyown_run_command", "arg": "lazyown_privesc", "domain": "Security/Execution"},
+    {"instruction": "Root achieved — dump all credentials",
+     "tool": "lazyown_credentials", "arg": "", "domain": "Security/Report"},
+    {"instruction": "Credentials captured — update report",
+     "tool": "lazyown_report_update", "arg": "Root access and credential dump on 10.10.11.78", "domain": "Security/Report"},
+    # C2 chains
+    {"instruction": "Deployed beacon — check if it checked in",
+     "tool": "lazyown_get_beacons", "arg": "", "domain": "Security/C2"},
+    {"instruction": "Beacon connected — task it with whoami",
+     "tool": "lazyown_c2_command", "arg": "whoami", "domain": "Security/C2"},
+    {"instruction": "C2 shell active — run systeminfo to fingerprint",
+     "tool": "lazyown_c2_command", "arg": "systeminfo", "domain": "Security/C2"},
+    # AD attack chains
+    {"instruction": "Have domain creds — enumerate with BloodHound via agent",
+     "tool": "lazyown_run_agent", "arg": "BloodHound enumeration corp.local", "domain": "Security/Agents"},
+    {"instruction": "BloodHound found DA path — plan the operation",
+     "tool": "lazyown_c2_redop", "arg": "domain admin via Kerberoasting", "domain": "Security/Intel"},
+    {"instruction": "Operation planned — inject it as daemon objective",
+     "tool": "lazyown_autonomous_inject", "arg": "Kerberoast accounts then DCSync", "domain": "Security/Autonomous"},
+    {"instruction": "Daemon running — check its current status",
+     "tool": "lazyown_autonomous_status", "arg": "", "domain": "Security/Autonomous"},
+    # Hive chains
+    {"instruction": "Large network — deploy hive drones to enumerate in parallel",
+     "tool": "lazyown_hive_spawn", "arg": "parallel recon on 10.10.11.0/24", "domain": "Security/Hive"},
+    {"instruction": "Drones deployed — check hive status",
+     "tool": "lazyown_hive_status", "arg": "", "domain": "Security/Hive"},
+    {"instruction": "Drones finished — collect all their results",
+     "tool": "lazyown_hive_collect", "arg": "drone_001,drone_002,drone_003", "domain": "Security/Hive"},
+    # Intel chains
+    {"instruction": "Found log4j on the server — CVE analysis",
+     "tool": "lazyown_c2_vuln_analysis", "arg": "log4j CVE-2021-44228", "domain": "Security/Intel"},
+    {"instruction": "Confirmed log4j RCE — generate exploit script",
+     "tool": "lazyown_c2_script", "arg": "log4j JNDI RCE exploit", "domain": "Security/Intel"},
+    {"instruction": "Engagement done — produce final pentest report",
+     "tool": "lazyown_generate_report", "arg": "", "domain": "Security/Report"},
+    {"instruction": "Report ready — export threat intel to MISP",
+     "tool": "lazyown_misp_export", "arg": "", "domain": "Security/Report"},
+    # Campaign close
+    {"instruction": "End of engagement — lessons learned?",
+     "tool": "lazyown_campaign_lessons", "arg": "", "domain": "Security/Report"},
+    {"instruction": "New shift starting — show full campaign SITREP",
+     "tool": "lazyown_campaign_sitrep", "arg": "", "domain": "Security/Report"},
+    {"instruction": "Shift handover — what is the session state?",
+     "tool": "lazyown_session_state", "arg": "", "domain": "Security/Config"},
 ]
 
 # ---------------------------------------------------------------------------
@@ -948,6 +1547,91 @@ def _make_record(tool_name: str, desc: str, category: str, instruction: str, arg
     }
 
 
+_IP_SUBS = [
+    ("10.10.11.78",  "10.10.10.5"),
+    ("10.10.11.78",  "192.168.1.100"),
+    ("10.10.11.78",  "172.16.0.50"),
+    ("10.10.11.1",   "10.10.11.200"),
+    ("192.168.1.100","10.10.11.50"),
+]
+
+_PREFIXES_EN = [
+    "I need to {}", "Let me {}", "Can you {}?", "Please {}",
+    "Help me {}", "I want to {}", "Time to {}", "Go ahead and {}",
+]
+_PREFIXES_ES = [
+    "Necesito {}", "Quiero {}", "Por favor {}",
+    "Ayúdame a {}", "Vamos a {}",
+]
+
+_CMD_VERBS = [
+    ("Run ", "Execute "), ("Run ", "Launch "), ("Run ", "Start "),
+    ("Show ", "Display "), ("Show ", "Print "), ("Show ", "List "),
+    ("Check ", "Verify "), ("Check ", "Inspect "), ("Check ", "Test "),
+    ("Get ", "Fetch "), ("Get ", "Retrieve "), ("Get ", "Read "),
+]
+
+
+def _expand(tool_name: str, phrasings: List[Tuple[str, str]]) -> List[Tuple[str, str]]:
+    """Generate additional phrasings via IP substitution, prefix injection, and verb swap."""
+    result = list(phrasings)
+    seen = {p[0].lower() for p in phrasings}
+
+    # 1. IP substitution — vary the target IP in existing phrasings
+    for instr, arg in phrasings:
+        for old_ip, new_ip in _IP_SUBS:
+            if old_ip in instr:
+                new_instr = instr.replace(old_ip, new_ip)
+                new_arg   = arg.replace(old_ip, new_ip)
+                if new_instr.lower() not in seen:
+                    seen.add(new_instr.lower())
+                    result.append((new_instr, new_arg))
+                    break  # one substitution per source phrasing
+
+    # 2. Prefix injection — only on short imperative phrasings starting with an action verb
+    _ACTION_VERBS = {
+        "run", "show", "get", "list", "check", "generate", "create", "add",
+        "set", "start", "stop", "read", "search", "find", "execute", "display",
+        "launch", "spawn", "inject", "update", "build", "export", "poll",
+        "broadcast", "send", "scan", "enumerate", "analyze", "deploy",
+    }
+    imperatives = [
+        (i, a) for i, a in phrasings
+        if len(i) <= 55 and "?" not in i and "→" not in i and "—" not in i
+        and (i.split()[0].lower() if i.split() else "") in _ACTION_VERBS
+    ]
+    random.shuffle(imperatives)
+    en_used = es_used = 0
+    for instr, arg in imperatives:
+        verb = instr.split()[0]
+        rest = instr[len(verb):].lstrip()
+        lowered_instr = verb.lower() + (" " + rest if rest else "")
+        if en_used < 3:
+            new_instr = _PREFIXES_EN[en_used % len(_PREFIXES_EN)].format(lowered_instr)
+            if new_instr.lower() not in seen:
+                seen.add(new_instr.lower())
+                result.append((new_instr, arg))
+                en_used += 1
+        if es_used < 2:
+            new_instr = _PREFIXES_ES[es_used % len(_PREFIXES_ES)].format(lowered_instr)
+            if new_instr.lower() not in seen:
+                seen.add(new_instr.lower())
+                result.append((new_instr, arg))
+                es_used += 1
+
+    # 3. Verb synonym swap (Run→Execute, Show→Display, etc.)
+    for instr, arg in phrasings:
+        for old_v, new_v in _CMD_VERBS:
+            if instr.startswith(old_v):
+                new_instr = new_v + instr[len(old_v):]
+                if new_instr.lower() not in seen:
+                    seen.add(new_instr.lower())
+                    result.append((new_instr, arg))
+                    break
+
+    return result
+
+
 def build_dataset() -> List[Dict]:
     records: List[Dict] = []
 
@@ -955,7 +1639,8 @@ def build_dataset() -> List[Dict]:
         phrasings = _PHRASINGS.get(tool_name, [])
         if not phrasings:
             continue
-        for instruction, arg in phrasings:
+        expanded = _expand(tool_name, phrasings)
+        for instruction, arg in expanded:
             records.append(_make_record(tool_name, desc, category, instruction, arg))
 
     # Chain examples

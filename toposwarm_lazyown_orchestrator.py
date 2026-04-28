@@ -807,50 +807,77 @@ _LAZYOWN_TRACES: List[Dict[str, Any]] = [
 
 def generate_dataset(output_path: Path, bridge: Optional[LazyOwnBridge] = None) -> int:
     """
-    Generate a ToolBench-format JSONL file for fine-tuning the TopoSwarm router
-    on LazyOwn-specific tool traces.
+    Generate a rich ToolBench-format JSONL for fine-tuning the TopoSwarm router.
 
-    If a LazyOwnBridge is provided, tools are actually executed and the real
-    output is stored as the result.  Otherwise a placeholder result is used.
+    Uses lazyown_dataset_generator.py (80 tools × 5-10 phrasings + chain examples)
+    for ~420 high-quality training examples covering every LazyOwn MCP tool.
+    If LazyOwn is live, a random sample of tools are actually executed and their
+    real output replaces the placeholder in the `answer` field.
 
     Returns the number of examples written.
     """
-    records: List[Dict[str, Any]] = []
-    for trace in _LAZYOWN_TRACES:
-        tool_name = trace["tool"]
-        arg       = trace["arg"]
-        result    = "[real output captured during actual pentest]"
+    # ── Load the rich generator ───────────────────────────────────────────────
+    gen_mod = None
+    for candidate in [_HERE / "lazyown_dataset_generator.py",
+                      Path.cwd() / "lazyown_dataset_generator.py"]:
+        if candidate.exists():
+            import importlib.util as _ilu
+            spec = _ilu.spec_from_file_location("lazyown_dataset_gen", candidate)
+            gen_mod = _ilu.module_from_spec(spec)
+            spec.loader.exec_module(gen_mod)
+            break
 
-        if bridge and bridge.available:
-            try:
-                raw = bridge.run(arg or "status", timeout=15)
-                if raw:
-                    result = raw[:256]
-            except Exception:
-                pass
+    if gen_mod is None:
+        # Fallback to built-in traces if generator not found
+        print("[dataset] WARNING: lazyown_dataset_generator.py not found, "
+              "falling back to built-in traces (35 examples).")
+        records: List[Dict[str, Any]] = []
+        for trace in _LAZYOWN_TRACES:
+            records.append({
+                "instruction": trace["instruction"],
+                "api_list": [{"tool_name": trace["tool"],
+                              "api_name": f"{trace['tool']}_endpoint",
+                              "api_description": trace["tool"].replace("lazyown_", "").replace("_", " "),
+                              "required_parameters": [{"name": "arg", "type": "STRING"}],
+                              "optional_parameters": []}],
+                "answer": f"[TOOL_CALL: {trace['tool']}({trace['arg']})] "
+                          "[real output captured during actual pentest]",
+                "domain": f"Security/{trace['domain']}",
+            })
+    else:
+        records = gen_mod.build_dataset()
 
-        record = {
-            "instruction": trace["instruction"],
-            "api_list": [{
-                "tool_name":       tool_name,
-                "api_name":        f"{tool_name}_endpoint",
-                "api_description": (
-                    f"LazyOwn pentesting tool: {tool_name.replace('lazyown_', '').replace('_', ' ')}"
-                ),
-                "required_parameters": [{"name": "arg", "type": "STRING"}],
-                "optional_parameters": [],
-            }],
-            "answer":  f"[TOOL_CALL: {tool_name}({arg})] {result}",
-            "domain":  f"Security/{trace['domain']}",
-        }
-        records.append(record)
+    # ── Optionally enrich answers with live LazyOwn output ───────────────────
+    if bridge and bridge.available:
+        import random as _rnd
+        sample = _rnd.sample(range(len(records)), min(40, len(records)))
+        enriched = 0
+        for i in sample:
+            r   = records[i]
+            arg = r["api_list"][0].get("required_parameters", [{}])[0].get("description", "")
+            # Extract arg from answer field: [TOOL_CALL: tool(arg)]
+            m = re.search(r"\[TOOL_CALL:[^\(]+\(([^)]*)\)\]", r["answer"])
+            cmd = m.group(1).strip() if m else ""
+            if cmd:
+                try:
+                    raw = bridge.run(cmd, timeout=10)
+                    if raw:
+                        r["answer"] = re.sub(
+                            r"\[real output[^\]]*\]", raw[:300], r["answer"]
+                        )
+                        enriched += 1
+                except Exception:
+                    pass
+        if enriched:
+            print(f"[dataset] Enriched {enriched} records with live LazyOwn output.")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w") as f:
         for r in records:
-            f.write(json.dumps(r) + "\n")
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
-    print(f"[dataset] Wrote {len(records)} LazyOwn traces → {output_path}")
+    print(f"[dataset] Wrote {len(records)} LazyOwn examples → {output_path}")
+    gen_mod and gen_mod.print_stats(records)
     return len(records)
 
 
@@ -861,36 +888,74 @@ def generate_dataset(output_path: Path, bridge: Optional[LazyOwnBridge] = None) 
 
 def finetune_on_lazyown(dataset_path: Path, agent_cfg: SwarmConfig, logger: logging.Logger) -> None:
     """
-    Run one additional fine-tuning epoch on LazyOwn traces using the existing
-    TopoSwarm training pipeline.
+    Fine-tune the TopoSwarm router on the full LazyOwn tool dataset using
+    EWC + Experience Replay to prevent catastrophic forgetting.
 
-    The training loop in topo_swarm_agent.py reads DATASET_LOCAL_PATH; we
-    patch it to point at our LazyOwn JSONL then call train_epoch directly.
+    Pipeline (delegated to toposwarm_continual_trainer.py):
+      1. Load the 420-example lazyown_full.jsonl.
+      2. Compute / load Fisher Information diagonal on any available ToolBench
+         data (anchors critical weights so general routing is preserved).
+      3. Build a ToolBench replay buffer (20 % of every mini-batch).
+      4. Fine-tune with combined loss: L_task + λ/2 · Σ F_i(θ_i − θ*_i)²
+      5. Evaluate routing accuracy on held-out LazyOwn + ToolBench samples.
+      6. Print final checkpoint stats (epoch, step, task_loss, ewc_lambda).
     """
     if not dataset_path.exists():
         logger.error("Dataset not found: %s — run --gen-dataset first", dataset_path)
         return
 
-    logger.info("Fine-tuning on LazyOwn traces: %s", dataset_path)
+    logger.info("Fine-tuning with EWC+Replay on: %s", dataset_path)
 
-    # Patch dataset path and reduce epochs to 1 for fine-tuning
-    agent_cfg.DATASET_LOCAL_PATH = str(dataset_path)
-    agent_cfg.DATASET_NAME       = ""          # force local file
-    agent_cfg.EPOCHS             = 1
-    agent_cfg.LEARNING_RATE      = 3e-5        # lower LR for fine-tune
-    agent_cfg.BATCH_SIZE         = 2
-    agent_cfg.GRAD_ACCUM_STEPS   = 4
+    # ── Load the continual trainer ────────────────────────────────────────────
+    ct_mod = None
+    for candidate in [_HERE / "toposwarm_continual_trainer.py",
+                      Path.cwd() / "toposwarm_continual_trainer.py"]:
+        if candidate.exists():
+            import importlib.util as _ilu
+            spec   = _ilu.spec_from_file_location("toposwarm_continual_trainer", candidate)
+            ct_mod = _ilu.module_from_spec(spec)
+            sys.modules["toposwarm_continual_trainer"] = ct_mod  # must be before exec_module (dataclasses)
+            spec.loader.exec_module(ct_mod)
+            break
 
-    # Import and run the training loop
+    if ct_mod is None:
+        logger.error("toposwarm_continual_trainer.py not found — cannot use EWC+Replay")
+        return
+
     try:
-        from topo_swarm_agent import SwarmTrainer
-        trainer = SwarmTrainer(agent_cfg)
-        trainer.train()
-        logger.info("Fine-tuning complete. Checkpoint saved to %s", agent_cfg.CHECKPOINT_DIR)
-    except ImportError:
-        logger.error("SwarmTrainer not found in topo_swarm_agent — check your version")
+        cl_cfg = ct_mod.ContinualConfig(
+            LAZYOWN_DATASET  = str(dataset_path),
+            CHECKPOINT_DIR   = agent_cfg.CHECKPOINT_DIR,
+            FISHER_PATH      = str(Path(agent_cfg.CHECKPOINT_DIR) / "fisher.pt"),
+            EPOCHS           = 300,       # 3 epochs on 420 examples = ~1 260 gradient steps
+            LEARNING_RATE    = 2e-5,    # 15× below original pre-training LR
+            BATCH_SIZE       = 4,
+            GRAD_ACCUM_STEPS = 4,
+            LOG_INTERVAL     = 10,
+            EVAL_INTERVAL    = 50,
+            EWC_LAMBDA       = 400.0,   # strong anchor; tune down if loss stays high
+            REPLAY_RATIO     = 0.20,    # 20 % of each batch from ToolBench replay
+        )
+        ct_logger = ct_mod._setup_logger(cl_cfg.LOG_LEVEL)
+        ct_mod.run_full_pipeline(cl_cfg, ct_logger)
+
+        # ── Final checkpoint report ───────────────────────────────────────────
+        meta_path = Path(agent_cfg.CHECKPOINT_DIR) / "latest" / "meta.json"
+        if meta_path.exists():
+            import json as _json
+            meta = _json.loads(meta_path.read_text())
+            logger.info(
+                "Final checkpoint — epoch=%s step=%s task_loss=%s ewc_lambda=%s",
+                meta.get("epoch", "?"),
+                meta.get("step", "?"),
+                f"{float(meta['task_loss']):.4f}" if "task_loss" in meta else "?",
+                meta.get("ewc_lambda", "?"),
+            )
+        else:
+            logger.warning("meta.json not found — checkpoint may not have been saved")
+
     except Exception as exc:
-        logger.error("Fine-tuning failed: %s", exc, exc_info=True)
+        logger.error("Continual fine-tuning failed: %s", exc, exc_info=True)
 
 
 # ===========================================================================
@@ -1007,7 +1072,7 @@ def main() -> None:
     parser.add_argument("--finetune",    action="store_true",
                         help="Fine-tune the router on LazyOwn traces (1 epoch)")
     parser.add_argument("--dataset-out", type=str,
-                        default="data_toolbench/lazyown_traces.jsonl",
+                        default="data_toolbench/lazyown_full.jsonl",
                         help="Path for generated dataset JSONL")
     parser.add_argument("--lazyown-dir", type=str, default="",
                         help="Override path to LazyOwn repo root")
@@ -1054,8 +1119,10 @@ def main() -> None:
     # ── Fine-tuning ───────────────────────────────────────────────────────
     if args.finetune:
         if not dataset_path.exists():
-            logger.info("Dataset missing — generating first…")
+            logger.info("Dataset missing — generating %s first…", dataset_path)
             generate_dataset(dataset_path, bridge if bridge.available else None)
+        n_examples = sum(1 for _ in dataset_path.open())
+        logger.info("Dataset: %d examples in %s", n_examples, dataset_path)
         finetune_on_lazyown(dataset_path, agent_cfg, logger)
         return
 
