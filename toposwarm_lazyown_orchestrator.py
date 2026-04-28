@@ -927,7 +927,7 @@ def finetune_on_lazyown(dataset_path: Path, agent_cfg: SwarmConfig, logger: logg
             LAZYOWN_DATASET  = str(dataset_path),
             CHECKPOINT_DIR   = agent_cfg.CHECKPOINT_DIR,
             FISHER_PATH      = str(Path(agent_cfg.CHECKPOINT_DIR) / "fisher.pt"),
-            EPOCHS           = 300,       # 3 epochs on 420 examples = ~1 260 gradient steps
+            EPOCHS           = 20,      # up to 20 epochs; early stopping (patience=5) guards overfit
             LEARNING_RATE    = 2e-5,    # 15× below original pre-training LR
             BATCH_SIZE       = 4,
             GRAD_ACCUM_STEPS = 4,
