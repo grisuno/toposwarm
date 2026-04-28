@@ -128,13 +128,15 @@ class ContinualConfig:
     REPLAY_BUFFER_SIZE:int   = 600     # max ToolBench examples in memory
 
     # ── Training ─────────────────────────────────────────────────────────────
-    EPOCHS:            int   = 2       # fine-tuning epochs (low to avoid forgetting)
-    LEARNING_RATE:     float = 2e-5    # 15× lower than original 3e-4
+    EPOCHS:            int   = 20      # more epochs needed; early-stop guards against overfit
+    LEARNING_RATE:     float = 2e-5
+    ROUTING_HEAD_LR:   float = 5e-4   # routing head learns faster than backbone
     BATCH_SIZE:        int   = 4
     GRAD_ACCUM_STEPS:  int   = 4
-    WARMUP_RATIO:      float = 0.10
-    GRADIENT_CLIP:     float = 0.5    # tighter than original (1.0)
+    WARMUP_RATIO:      float = 0.05
+    GRADIENT_CLIP:     float = 0.5
     WEIGHT_DECAY:      float = 0.05
+    EARLY_STOP_PATIENCE: int = 5      # stop if val_acc doesn't improve for N epochs
 
     # ── Logging ───────────────────────────────────────────────────────────────
     LOG_INTERVAL:      int   = 10
@@ -183,34 +185,50 @@ def _encode_record(record: Dict, tok: BPETokenizer, cfg: SwarmConfig) -> Optiona
     """
     Encode a ToolBench-format record into (input_ids, target_ids).
 
-    Uses the same format as BPETokenizer.encode_tool_trace() so the fine-tuning
-    distribution exactly matches the original pretraining distribution.
+    Uses the same compact format as topo_swarm_agent.ToolBenchDataset._encode_record:
+        [instruction BPE tokens]  [tool token]  [compact result BPE tokens]
+
+    This matches the pretraining distribution exactly, keeping cross-entropy in
+    the same range as the original training (1-2 nats) rather than the full
+    vocabulary baseline (~10.8 nats for random predictions over 50k+ tokens).
     """
     try:
-        api_list = record.get("api_list", [{}])
-        tool_name = api_list[0].get("tool_name", "unknown") if api_list else "unknown"
-        instruction = record.get("instruction", "")
-        answer = record.get("answer", "")
+        instruction = str(
+            record.get("instruction") or record.get("query") or ""
+        )[:512]
 
-        text = (
-            f"query: {instruction}\n"
-            f"api_list: {json.dumps(api_list)}\n"
-            f"domain: {record.get('domain', 'General')}"
-        )
-        tool_token_id = tok.tool_token(tool_name)
-        instruction_ids = tok.encode(text)
-        result_ids      = tok.encode(answer)
+        api_list  = record.get("api_list", [])
+        first     = api_list[0] if api_list and isinstance(api_list[0], dict) else {}
+        tool_name = str(first.get("tool_name") or first.get("api_name") or "generic_tool")
 
-        ids = instruction_ids + [tool_token_id] + result_ids
-        ids = [min(i, cfg.VOCAB_SIZE - 1) for i in ids]
+        # Compact result: same formula as topo_swarm_agent to stay in-distribution
+        domain = str(record.get("domain") or "")
+        desc   = str(first.get("api_description") or "")[:256]
+        result = f"[{domain}] {tool_name}: {desc}"[:512]
+
+        instr_ids  = tok.encode(instruction)
+        tool_tok   = tok.tool_token(tool_name)
+        result_ids = tok.encode(result)
+
+        # Full sequence (same layout as ToolBenchDataset: return full ids, not pre-shifted)
+        # Model forward does its own shift: logits[:,:-1] vs targets[:,1:]
+        ids = (instr_ids + [tool_tok] + result_ids)[-cfg.MAX_SEQ_LEN:]
 
         if len(ids) < 4:
             return None
 
-        ids = ids[-cfg.MAX_SEQ_LEN:]
-        input_ids  = ids[:-1]
-        target_ids = ids[1:]
-        return input_ids, target_ids
+        # Build masked targets aligned with full ids (no pre-shift).
+        # Model forward takes targets[:,1:], so to supervise position p in ids,
+        # set masked[p] = ids[p].  Everything else stays -100 (ignore_index).
+        # We supervise only the tool token slot: ids[tool_pos] = tool_tok,
+        # predicted from the last instruction token at ids[tool_pos - 1].
+        instr_len_clipped = min(len(instr_ids), len(ids))
+        tool_pos = instr_len_clipped          # index of tool_tok in ids
+        masked = [-100] * len(ids)
+        if 0 < tool_pos < len(ids):
+            masked[tool_pos] = tool_tok       # model learns: after instr → predict tool
+
+        return ids, masked
 
     except Exception:
         return None
@@ -415,6 +433,69 @@ class EWC:
 
 
 # ===========================================================================
+# Routing Head — dedicated 80-class classifier
+# ===========================================================================
+
+import torch.nn as nn  # noqa: E402 (already imported at top, but safe to repeat)
+
+
+class RoutingHead(nn.Module):
+    """
+    Thin linear probe: d_model → n_tools.
+
+    Trained on top of the frozen (or lightly-tuned) backbone with standard
+    cross-entropy over the N LazyOwn tools.  Bypasses the 50k-token LM head
+    so 100% of the gradient goes to the routing decision.
+
+    Tool-to-index mapping is deterministic (sorted tool name list), so the
+    head can be saved/loaded independently of the backbone checkpoint.
+    """
+
+    HEAD_CKPT = "checkpoints_toposwarm/routing_head.pt"
+
+    def __init__(self, d_model: int, tool_names: List[str]) -> None:
+        super().__init__()
+        self.tool_names = sorted(set(tool_names))
+        self.tool_to_idx = {t: i for i, t in enumerate(self.tool_names)}
+        n = len(self.tool_names)
+        self.proj = nn.Linear(d_model, n, bias=True)
+        nn.init.xavier_uniform_(self.proj.weight)
+        nn.init.zeros_(self.proj.bias)
+
+    @property
+    def n_tools(self) -> int:
+        return len(self.tool_names)
+
+    def forward(self, hidden: torch.Tensor) -> torch.Tensor:
+        """hidden: [B, d_model] → logits [B, n_tools]"""
+        return self.proj(hidden)
+
+    def label(self, tool_name: str) -> int:
+        return self.tool_to_idx.get(tool_name, -1)
+
+    def predict(self, hidden: torch.Tensor) -> List[str]:
+        """hidden: [B, d_model] → list of tool name strings"""
+        idx = self.forward(hidden).argmax(dim=-1).tolist()
+        if isinstance(idx, int):
+            idx = [idx]
+        return [self.tool_names[i] for i in idx]
+
+    def save(self, path: str = HEAD_CKPT) -> None:
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        torch.save({
+            "state_dict": self.state_dict(),
+            "tool_names":  self.tool_names,
+        }, path)
+
+    @classmethod
+    def load(cls, d_model: int, path: str = HEAD_CKPT) -> "RoutingHead":
+        data = torch.load(path, map_location="cpu")
+        head = cls(d_model, data["tool_names"])
+        head.load_state_dict(data["state_dict"])
+        return head
+
+
+# ===========================================================================
 # Continual Trainer
 # ===========================================================================
 
@@ -444,6 +525,7 @@ class ContinualTrainer:
         ewc: EWC,
         replay: ReplayBuffer,
         logger: logging.Logger,
+        routing_head: Optional["RoutingHead"] = None,
     ) -> None:
         self.model    = model
         self.cfg      = cfg
@@ -457,19 +539,27 @@ class ContinualTrainer:
         self.scaler   = torch.cuda.amp.GradScaler(
             enabled=cfg.USE_AMP and "cuda" in self.device
         )
+        self.routing_head = routing_head.to(self.device) if routing_head else None
 
     def _make_optimizer(self) -> torch.optim.AdamW:
-        decay = [p for n, p in self.model.named_parameters()
-                 if p.requires_grad and p.ndim >= 2]
+        decay   = [p for n, p in self.model.named_parameters()
+                   if p.requires_grad and p.ndim >= 2]
         nodecay = [p for n, p in self.model.named_parameters()
                    if p.requires_grad and p.ndim < 2]
-        return torch.optim.AdamW(
-            [{"params": decay,   "weight_decay": self.cl_cfg.WEIGHT_DECAY},
-             {"params": nodecay, "weight_decay": 0.0}],
-            lr=self.cl_cfg.LEARNING_RATE,
-            betas=(0.9, 0.95),
-            eps=1e-8,
-        )
+        param_groups = [
+            {"params": decay,   "weight_decay": self.cl_cfg.WEIGHT_DECAY,
+             "lr": self.cl_cfg.LEARNING_RATE},
+            {"params": nodecay, "weight_decay": 0.0,
+             "lr": self.cl_cfg.LEARNING_RATE},
+        ]
+        if self.routing_head is not None:
+            # Routing head trains at a higher LR — it starts from random
+            param_groups.append({
+                "params": list(self.routing_head.parameters()),
+                "weight_decay": self.cl_cfg.WEIGHT_DECAY,
+                "lr": self.cl_cfg.ROUTING_HEAD_LR,
+            })
+        return torch.optim.AdamW(param_groups, betas=(0.9, 0.95), eps=1e-8)
 
     @staticmethod
     def _lr_schedule(optimizer, step: int, total: int, warmup: int, base_lr: float) -> None:
@@ -514,7 +604,55 @@ class ContinualTrainer:
 
         return torch.cat([ids, r_ids], dim=0), torch.cat([tgt, r_tgt], dim=0)
 
-    def train(self, lazyown_dataset: ToolBenchDataset) -> None:
+    def _routing_accuracy(self, records: List[Dict]) -> float:
+        """Quick routing accuracy pass — no grad, no shuffle."""
+        self.model.eval()
+        correct = total = 0
+        for rec in records:
+            api_list  = rec.get("api_list", [{}])
+            tool_name = api_list[0].get("tool_name", "") if api_list else ""
+            instruction = str(rec.get("instruction") or "")[:512]
+            instr_ids = self.tok.encode(instruction)[-self.cfg.MAX_SEQ_LEN:]
+            if not instr_ids:
+                continue
+            ids = torch.tensor([instr_ids], dtype=torch.long, device=self.device)
+            with torch.no_grad():
+                h_vec = self._hidden_at_last_pos(ids)
+                if self.routing_head is not None and h_vec is not None:
+                    rlogits = self.routing_head(h_vec.unsqueeze(0))[0]
+                    pred_name = self.routing_head.tool_names[rlogits.argmax().item()]
+                    correct += int(pred_name == tool_name)
+                else:
+                    logits = self.model(ids, berry_phase=0.0)["logits"][0, -1,
+                             self.cfg.TOOL_TOKEN_OFFSET:
+                             self.cfg.TOOL_TOKEN_OFFSET + self.cfg.TOOL_VOCAB_SIZE]
+                    pred = logits.argmax().item()
+                    gt   = self.tok.tool_token(tool_name) - self.cfg.TOOL_TOKEN_OFFSET
+                    correct += int(pred == gt)
+                total += 1
+        self.model.train()
+        if self.routing_head is not None:
+            self.routing_head.train()
+        return correct / max(total, 1)
+
+    def _hidden_at_last_pos(self, ids: torch.Tensor) -> Optional[torch.Tensor]:
+        """Extract the hidden state at the last token position via a forward hook."""
+        captured: List[torch.Tensor] = []
+
+        def _hook(module, inp, out):
+            captured.append(out[0, -1, :].detach())  # [d_model]
+
+        handle = self.model.norm_out.register_forward_hook(_hook)
+        try:
+            with torch.no_grad():
+                self.model(ids, berry_phase=0.0)
+        finally:
+            handle.remove()
+        return captured[0] if captured else None
+
+    def train(self, lazyown_dataset: ToolBenchDataset,
+              train_records: Optional[List[Dict]] = None,
+              val_records:   Optional[List[Dict]] = None) -> None:
         loader = torch.utils.data.DataLoader(
             lazyown_dataset,
             batch_size=self.cl_cfg.BATCH_SIZE,
@@ -524,25 +662,33 @@ class ContinualTrainer:
             num_workers=0,
         )
 
-        optimizer   = self._make_optimizer()
-        total_steps = len(loader) * self.cl_cfg.EPOCHS
-        warmup      = max(1, int(total_steps * self.cl_cfg.WARMUP_RATIO))
-        step        = 0
+        optimizer        = self._make_optimizer()
+        steps_per_epoch  = len(loader)
+        # Cosine schedule restarts each epoch so LR never dies regardless of
+        # how many epochs are configured.  Warmup only on the first epoch.
+        warmup           = max(1, int(steps_per_epoch * self.cl_cfg.WARMUP_RATIO))
+        step             = 0
+
+        best_val_acc = 0.0
+        no_improve   = 0
 
         self.logger.info(
             "Continual fine-tuning: %d LazyOwn examples, %d replay buffer, "
-            "λ_ewc=%.0f, replay_ratio=%.0f%%",
+            "λ_ewc=%.0f, replay_ratio=%.0f%%, steps/epoch=%d, routing_head=%s",
             len(lazyown_dataset),
             len(self.replay),
             self.cl_cfg.EWC_LAMBDA,
             self.cl_cfg.REPLAY_RATIO * 100,
+            steps_per_epoch,
+            "yes" if self.routing_head else "no",
         )
 
         for epoch in range(self.cl_cfg.EPOCHS):
             self.model.train()
             running_task = 0.0
             running_ewc  = 0.0
-            n = 0
+            n            = 0
+            epoch_step   = 0   # step within this epoch for per-epoch cosine schedule
 
             for accum_idx, (ids, tgt) in enumerate(loader):
                 ids = ids.to(self.device)
@@ -551,51 +697,134 @@ class ContinualTrainer:
                 # Mix in replay
                 ids, tgt = self._merge_with_replay(ids, tgt)
 
-                self._lr_schedule(optimizer, step, total_steps, warmup,
-                                   self.cl_cfg.LEARNING_RATE)
+                # Per-epoch cosine restart: warmup only on epoch 0
+                eff_warmup = warmup if epoch == 0 else 0
+                self._lr_schedule(optimizer, epoch_step, steps_per_epoch,
+                                   eff_warmup, self.cl_cfg.LEARNING_RATE)
 
                 phase = self.cfg.BERRY_PHASE_BASE * (accum_idx % self.cfg.N_AGENTS)
 
                 with torch.cuda.amp.autocast(
                     enabled=self.cfg.USE_AMP and "cuda" in self.device
                 ):
+                    # ── LM backbone loss ─────────────────────────────────────
                     out       = self.model(ids, berry_phase=phase, targets=tgt)
                     task_loss = out["loss"]
                     ewc_pen   = self.ewc.penalty()
                     loss      = (task_loss + ewc_pen) / self.cl_cfg.GRAD_ACCUM_STEPS
 
+                    # ── Routing head loss (when available) ───────────────────
+                    head_loss_val = 0.0
+                    if self.routing_head is not None:
+                        # Capture hidden states via hook for the current batch
+                        hidden_states: List[torch.Tensor] = []
+                        def _capture(module, inp, out_h):
+                            hidden_states.append(out_h)
+                        _h = self.model.norm_out.register_forward_hook(_capture)
+                        _ = self.model(ids, berry_phase=phase)
+                        _h.remove()
+                        if hidden_states:
+                            # ids shape: [B, S] — last position is last instr token
+                            h = hidden_states[0][:, -1, :]  # [B, d_model]
+                            # Build class labels from tgt: find non-(-100) position
+                            labels = []
+                            for b in range(tgt.shape[0]):
+                                nonmask = (tgt[b] != -100).nonzero(as_tuple=True)[0]
+                                if len(nonmask):
+                                    tool_tok_id = tgt[b, nonmask[0]].item()
+                                    # Reverse-lookup tool name from token id
+                                    tool_name_b = None
+                                    for tn in self.routing_head.tool_names:
+                                        if self.tok.tool_token(tn) == tool_tok_id:
+                                            tool_name_b = tn
+                                            break
+                                    if tool_name_b is not None:
+                                        labels.append(
+                                            self.routing_head.label(tool_name_b)
+                                        )
+                                    else:
+                                        labels.append(-1)
+                                else:
+                                    labels.append(-1)
+                            valid = [(h[i], lb) for i, lb in enumerate(labels)
+                                     if lb >= 0]
+                            if valid:
+                                h_v = torch.stack([x[0] for x in valid])
+                                lb_v = torch.tensor([x[1] for x in valid],
+                                                    dtype=torch.long,
+                                                    device=self.device)
+                                rlogits = self.routing_head(h_v)
+                                head_loss = F.cross_entropy(rlogits, lb_v)
+                                loss = loss + head_loss / self.cl_cfg.GRAD_ACCUM_STEPS
+                                head_loss_val = head_loss.item()
+
                 self.scaler.scale(loss).backward()
 
                 if (accum_idx + 1) % self.cl_cfg.GRAD_ACCUM_STEPS == 0:
                     self.scaler.unscale_(optimizer)
-                    torch.nn.utils.clip_grad_norm_(
-                        self.model.parameters(), self.cl_cfg.GRADIENT_CLIP
-                    )
+                    all_params = list(self.model.parameters())
+                    if self.routing_head is not None:
+                        all_params += list(self.routing_head.parameters())
+                    torch.nn.utils.clip_grad_norm_(all_params, self.cl_cfg.GRADIENT_CLIP)
                     self.scaler.step(optimizer)
                     self.scaler.update()
                     optimizer.zero_grad()
 
                 running_task += task_loss.item()
                 running_ewc  += ewc_pen.item()
-                n   += 1
-                step += 1
+                n          += 1
+                step       += 1
+                epoch_step += 1
 
                 if step % self.cl_cfg.LOG_INTERVAL == 0:
                     self.logger.info(
-                        "epoch=%d step=%d task_loss=%.4f ewc_pen=%.4f lr=%.2e",
+                        "epoch=%d step=%d task_loss=%.4f head_loss=%.4f ewc=%.4f lr=%.2e",
                         epoch, step,
                         running_task / max(n, 1),
+                        head_loss_val,
                         running_ewc  / max(n, 1),
                         optimizer.param_groups[0]["lr"],
                     )
                     running_task = running_ewc = 0.0
                     n = 0
 
-            # Save after each epoch
-            self.ckpt.save(self.model, optimizer, epoch, step, task_loss.item())
-            self.logger.info("Epoch %d complete. Checkpoint saved.", epoch)
+            # Per-epoch train/val routing accuracy + early stopping
+            tr_acc = self._routing_accuracy(train_records) if train_records else 0.0
+            va_acc = self._routing_accuracy(val_records)   if val_records   else 0.0
+            self.logger.info(
+                "epoch=%d  train_acc=%.1f%%  val_acc=%.1f%%",
+                epoch, tr_acc * 100, va_acc * 100,
+            )
 
-        self.logger.info("Continual fine-tuning complete.")
+            # Early stopping: track best val_acc
+            if va_acc > best_val_acc:
+                best_val_acc = va_acc
+                no_improve   = 0
+                # Save routing head at best val_acc
+                if self.routing_head is not None:
+                    self.routing_head.save()
+                    self.logger.info("New best val_acc=%.1f%% — routing head saved.", va_acc*100)
+            else:
+                no_improve += 1
+                if no_improve >= self.cl_cfg.EARLY_STOP_PATIENCE:
+                    self.logger.info(
+                        "Early stop: val_acc hasn't improved for %d epochs (best=%.1f%%).",
+                        no_improve, best_val_acc * 100,
+                    )
+                    break
+
+            self.ckpt.save(
+                self.model, optimizer,
+                {"epoch": epoch, "step": step,
+                 "task_loss": task_loss.item(), "val_acc": va_acc,
+                 "ewc_lambda": self.cl_cfg.EWC_LAMBDA},
+                force=True,
+            )
+            self.logger.info("Epoch %d complete.", epoch)
+
+        self.logger.info(
+            "Continual fine-tuning complete. Best val_acc=%.1f%%", best_val_acc * 100
+        )
 
 
 # ===========================================================================
@@ -623,23 +852,28 @@ def evaluate_routing(
         sample = random.sample(records, min(100, len(records)))
         correct = 0
         for rec in sample:
-            enc = _encode_record(rec, tok, cfg)
-            if enc is None:
-                continue
-            inp, _ = enc
-            ids    = torch.tensor([inp[-cfg.MAX_SEQ_LEN:]], dtype=torch.long, device=cfg.DEVICE)
-            with torch.no_grad():
-                out    = model(ids, berry_phase=0.0)
-                logits = out["logits"][0, -1, :]                # last position
-                # Restrict to tool-token range
-                tool_logits = logits[cfg.TOOL_TOKEN_OFFSET: cfg.TOOL_TOKEN_OFFSET + cfg.TOOL_VOCAB_SIZE]
-                pred_offset = tool_logits.argmax().item()
-
-            # Ground truth tool token
             api_list  = rec.get("api_list", [{}])
             tool_name = api_list[0].get("tool_name", "") if api_list else ""
-            gt_token  = tok.tool_token(tool_name) - cfg.TOOL_TOKEN_OFFSET
-            correct  += int(pred_offset == gt_token)
+            instruction = str(rec.get("instruction") or rec.get("query") or "")[:512]
+
+            # Feed ONLY the instruction tokens — the model must predict the
+            # tool token as the very next token (position after instruction end).
+            instr_ids = tok.encode(instruction)
+            if not instr_ids:
+                continue
+            instr_ids = instr_ids[-cfg.MAX_SEQ_LEN:]
+            ids = torch.tensor([instr_ids], dtype=torch.long, device=cfg.DEVICE)
+
+            with torch.no_grad():
+                out    = model(ids, berry_phase=0.0)
+                logits = out["logits"][0, -1, :]   # next-token prediction after instruction
+                tool_logits = logits[cfg.TOOL_TOKEN_OFFSET:
+                                     cfg.TOOL_TOKEN_OFFSET + cfg.TOOL_VOCAB_SIZE]
+                pred_offset = tool_logits.argmax().item()
+
+            gt_token = tok.tool_token(tool_name) - cfg.TOOL_TOKEN_OFFSET
+            correct += int(pred_offset == gt_token)
+
         acc = correct / max(len(sample), 1)
         logger.info("Routing accuracy %-20s : %.1f%%  (%d/%d)",
                     label, acc * 100, correct, len(sample))
@@ -716,7 +950,15 @@ def run_full_pipeline(cl_cfg: ContinualConfig, logger: logging.Logger) -> None:
         ewc.compute(toolbench_records)
         ewc.save(fisher_path)
     else:
-        logger.warning("No ToolBench data — EWC disabled (penalty will be 0)")
+        # No ToolBench available: compute Fisher on the LazyOwn data itself.
+        # This anchors the routing weights the model already learned so that
+        # the next fine-tuning run cannot overwrite them (continual learning).
+        logger.info(
+            "No ToolBench data — computing Fisher on LazyOwn dataset "
+            "(anchors current routing knowledge for future runs)."
+        )
+        ewc.compute(lazyown_records)
+        ewc.save(fisher_path)
 
     # ── Step 4: Build replay buffer ───────────────────────────────────────────
     replay = ReplayBuffer(
@@ -735,11 +977,30 @@ def run_full_pipeline(cl_cfg: ContinualConfig, logger: logging.Logger) -> None:
     train_ds = ToolBenchDataset(train_records, tok, cfg)
     logger.info("Train: %d samples | Val: %d samples", len(train_ds), len(val_records))
 
-    # ── Step 6: Fine-tune ─────────────────────────────────────────────────────
-    trainer = ContinualTrainer(model, cfg, cl_cfg, tok, ewc, replay, logger)
-    trainer.train(train_ds)
+    # ── Step 6: Build or load routing head ───────────────────────────────────
+    all_tool_names = list({
+        rec["api_list"][0]["tool_name"]
+        for rec in lazyown_records
+        if rec.get("api_list") and rec["api_list"]
+    })
+    head_path = Path(RoutingHead.HEAD_CKPT)
+    if head_path.exists():
+        try:
+            routing_head = RoutingHead.load(cfg.D_MODEL, str(head_path))
+            logger.info("Routing head loaded from %s (%d tools)", head_path, routing_head.n_tools)
+        except Exception as e:
+            logger.warning("Routing head load failed (%s) — starting fresh", e)
+            routing_head = RoutingHead(cfg.D_MODEL, all_tool_names)
+    else:
+        routing_head = RoutingHead(cfg.D_MODEL, all_tool_names)
+        logger.info("New routing head: %d tools → %d classes", len(all_tool_names), routing_head.n_tools)
 
-    # ── Step 7: Evaluate ──────────────────────────────────────────────────────
+    # ── Step 7: Fine-tune ─────────────────────────────────────────────────────
+    trainer = ContinualTrainer(model, cfg, cl_cfg, tok, ewc, replay, logger,
+                               routing_head=routing_head)
+    trainer.train(train_ds, train_records=train_records, val_records=val_records)
+
+    # ── Step 8: Evaluate ──────────────────────────────────────────────────────
     evaluate_routing(model, cfg, tok, val_records, toolbench_records[:200], logger)
 
 
