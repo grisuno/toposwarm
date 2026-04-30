@@ -933,7 +933,7 @@ def finetune_on_lazyown(dataset_path: Path, agent_cfg: SwarmConfig, logger: logg
             GRAD_ACCUM_STEPS = 4,
             LOG_INTERVAL     = 10,
             EVAL_INTERVAL    = 50,
-            EWC_LAMBDA       = 400.0,   # strong anchor; tune down if loss stays high
+            EWC_LAMBDA       = 10.0,    # reduced from 400 — high lambda was freezing weights
             REPLAY_RATIO     = 0.20,    # 20 % of each batch from ToolBench replay
         )
         ct_logger = ct_mod._setup_logger(cl_cfg.LOG_LEVEL)

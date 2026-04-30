@@ -111,8 +111,17 @@ class SwarmConfig:
     N_LAYERS: int = 4
     DROPOUT: float = 0.1
 
-    # --- FFN / SwiGLU ----------------------------------------------------
+    # --- FFN / SwiGLU -------------------------------------------------------
     FFN_HIDDEN_DIM: int = 128
+
+    # --- Mixture-of-Experts (MiMo V2 style, opt-in) ----------------------
+    # Set USE_MOE=True to replace the dense SwiGLU in every transformer layer
+    # with N_MOE_EXPERTS independent experts + sigmoid gate (top-k routing).
+    # Existing checkpoints remain compatible when USE_MOE=False (default).
+    USE_MOE: bool = False
+    N_MOE_EXPERTS: int = 4      # total experts per MoE layer
+    MOE_TOP_K: int = 2          # experts activated per token
+    MOE_EXPERT_DIM: int = 128   # hidden dim of each expert (same as FFN_HIDDEN_DIM)
 
     # --- Quaternion torus topology (8 nodes = 4 angular × 2 radial) ------
     TORUS_RADIAL_BINS: int = 2
@@ -214,7 +223,12 @@ class SwarmConfig:
 
 
 def _setup_logger(name: str, level: str = "INFO") -> logging.Logger:
-    """Return an idempotent logger with a single StreamHandler."""
+    """Return an idempotent logger. Delegates to ts_utils.setup_logger."""
+    try:
+        from ts_utils import setup_logger
+        return setup_logger(name, level)
+    except ImportError:
+        pass
     logger = logging.getLogger(name)
     logger.setLevel(getattr(logging, level.upper(), logging.INFO))
     if not logger.handlers:
@@ -555,6 +569,237 @@ class SwiGLU(nn.Module):
 
 
 # ===========================================================================
+# SWARM MOE FFN — Mixture-of-Experts SwiGLU (inspired by MiMo V2)
+# ===========================================================================
+#
+# Replaces the dense SwiGLU with N independent expert FFNs and a sigmoid gate.
+# Key differences from standard MoE:
+#   - Sigmoid scoring (not softmax): experts activate independently.
+#     Borrowed directly from MiMo V2's MiMoV2MoEGate with scoring_func="sigmoid".
+#   - Top-k selection: only K experts contribute to each token, keeping
+#     compute constant regardless of N.
+#   - Weighted sum of expert outputs (weights normalised post-sigmoid topk).
+#
+# This helps TopoSwarm route different tool categories through different
+# specialists — e.g. one expert for recon commands, another for C2/beacons.
+
+
+class SwarmMoEGate(nn.Module):
+    """Sigmoid gate: selects top-k experts per token, weights normalised."""
+
+    def __init__(self, d_model: int, n_experts: int, top_k: int) -> None:
+        super().__init__()
+        self.n_experts = n_experts
+        self.top_k     = top_k
+        self.weight    = nn.Parameter(torch.empty(n_experts, d_model))
+        nn.init.xavier_uniform_(self.weight)
+
+    def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+        """x: [..., D] → (topk_idx [... K], topk_weight [..., K])"""
+        flat = x.view(-1, x.shape[-1])
+        scores = F.linear(flat.float(), self.weight.float()).sigmoid()
+        scores = scores.to(x.dtype)
+        topk_w, topk_idx = scores.topk(self.top_k, dim=-1)
+        topk_w = topk_w / (topk_w.sum(dim=-1, keepdim=True) + 1e-9)
+        orig = x.shape[:-1]
+        return topk_idx.view(*orig, self.top_k), topk_w.view(*orig, self.top_k)
+
+
+class SwarmMoE(nn.Module):
+    """
+    Drop-in MoE replacement for SwiGLU in TopoSwarmLayer.
+
+    Architecture: N_EXPERTS independent SwiGLU experts + sigmoid gate.
+    Each token routes to top_k experts; outputs are weighted-summed.
+
+    For a 2M-param model (D=64, FFN_DIM=128):
+      - 4 experts, top-2, expert_dim=128 → same FLOP as one dense FFN
+        but 4× more representational capacity.
+    """
+
+    def __init__(
+        self,
+        d_model: int,
+        expert_hidden_dim: int,
+        n_experts: int   = 4,
+        top_k: int       = 2,
+        dropout: float   = 0.0,
+    ) -> None:
+        super().__init__()
+        self.n_experts = n_experts
+        self.top_k     = top_k
+        self.gate      = SwarmMoEGate(d_model, n_experts, top_k)
+        self.experts   = nn.ModuleList([
+            SwiGLU(d_model, expert_hidden_dim, dropout=dropout)
+            for _ in range(n_experts)
+        ])
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """x: [B, S, D] → [B, S, D]  (autograd-safe, no in-place scatter)"""
+        orig_shape = x.shape
+        flat = x.view(-1, x.shape[-1])           # [N, D]
+        topk_idx, topk_w = self.gate(flat)       # [N, K], [N, K]
+
+        all_out = torch.stack([e(flat) for e in self.experts], dim=1)  # [N, E, D]
+        W = flat.new_zeros(flat.shape[0], self.n_experts)
+        for k in range(self.top_k):
+            W.scatter_add_(1, topk_idx[:, k:k+1], topk_w[:, k:k+1])
+
+        out = (W.unsqueeze(-1) * all_out).sum(dim=1)   # [N, D]
+        return out.view(orig_shape)
+
+
+# ===========================================================================
+# SWARM MOE ADAPTER — residual MoE injected after norm_out, before lm_head
+# ===========================================================================
+#
+# Design goals:
+#   1. Checkpoint-compatible — the existing model has moe_adapter=None, so all
+#      saved weights load cleanly with strict=False.
+#   2. Zero-init output projections — adapter starts as identity, so the model
+#      begins at its already-trained 60% accuracy and improves from there.
+#   3. Frozen backbone — only adapter weights train; backbone optionally frozen.
+#   4. Residual + LayerNorm — stable gradient flow even at zero-init.
+
+
+class SwarmMoEAdapter(nn.Module):
+    """
+    Residual MoE adapter: output = LayerNorm(input + moe(input)).
+
+    Plugs between model.norm_out and model.lm_head.  Zero-init on the output
+    projection of every expert means the adapter is an identity at init time —
+    the model starts at its existing accuracy and the adapter learns on top.
+
+    Expert architecture: d_model → d_model//2 → d_model (small bottleneck)
+    Gate: sigmoid (MiMo V2 style) → top-k selection, normalised weights.
+    """
+
+    ADAPTER_CKPT = "checkpoints_toposwarm/moe_adapter.pt"
+
+    def __init__(
+        self,
+        d_model:    int,
+        n_experts:  int   = 4,
+        top_k:      int   = 2,
+        bottleneck: int   = 0,  # 0 = d_model // 2
+        dropout:    float = 0.0,
+    ) -> None:
+        super().__init__()
+        self.n_experts = n_experts
+        self.top_k     = top_k
+        bn = bottleneck or max(d_model // 2, 16)
+
+        self.gate    = SwarmMoEGate(d_model, n_experts, top_k)
+        self.experts = nn.ModuleList()
+        for _ in range(n_experts):
+            up   = nn.Linear(d_model, bn, bias=False)
+            act  = nn.GELU()
+            down = nn.Linear(bn, d_model, bias=False)
+            nn.init.xavier_uniform_(up.weight)
+            nn.init.zeros_(down.weight)          # ← zero-init = identity at start
+            self.experts.append(nn.Sequential(up, act, down))
+
+        self.norm    = nn.LayerNorm(d_model)
+        self.drop    = nn.Dropout(dropout) if dropout > 0 else nn.Identity()
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """x: [B, S, D] → [B, S, D]  (residual)
+
+        Autograd-safe: no in-place scatter — computes all expert outputs at
+        once and weights them via a sparse weight tensor.
+        """
+        orig = x.shape
+        flat = x.view(-1, orig[-1])                          # [N, D]
+        topk_idx, topk_w = self.gate(flat)                  # [N, K], [N, K]
+
+        # Stack all expert outputs: [N, E, D]
+        all_out = torch.stack([e(flat) for e in self.experts], dim=1)
+
+        # Build full weight matrix [N, E], scatter top-k weights
+        W = flat.new_zeros(flat.shape[0], self.n_experts)
+        for k in range(self.top_k):
+            W.scatter_add_(1, topk_idx[:, k:k+1], topk_w[:, k:k+1])
+
+        # Weighted sum: [N, E, 1] * [N, E, D] → [N, D]
+        delta = (W.unsqueeze(-1) * all_out).sum(dim=1)
+        return x + self.norm(self.drop(delta).view(orig))
+
+    def save(self, path: str = ADAPTER_CKPT) -> None:
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        torch.save({
+            "state_dict": self.state_dict(),
+            "n_experts":  self.n_experts,
+            "top_k":      self.top_k,
+            "d_model":    self.norm.normalized_shape[0],
+        }, path)
+        print(f"[adapter] Saved → {path}")
+
+    @classmethod
+    def load(cls, path: str = ADAPTER_CKPT) -> "SwarmMoEAdapter":
+        data = torch.load(path, map_location="cpu", weights_only=False)
+        adapter = cls(
+            d_model   = data["d_model"],
+            n_experts = data.get("n_experts", 4),
+            top_k     = data.get("top_k", 2),
+        )
+        adapter.load_state_dict(data["state_dict"])
+        return adapter
+
+
+def inject_moe_adapter(
+    model:      "TopoSwarmModel",
+    n_experts:  int   = 4,
+    top_k:      int   = 2,
+    dropout:    float = 0.0,
+    freeze_backbone: bool = True,
+    adapter_path: Optional[str] = None,
+) -> SwarmMoEAdapter:
+    """
+    Inject a SwarmMoEAdapter into an already-loaded TopoSwarmModel.
+
+    The backbone weights remain unchanged; only the adapter is new.
+    Optionally freezes all backbone parameters so only the adapter trains.
+
+    Args:
+        model:           Loaded TopoSwarmModel instance.
+        n_experts:       Number of MoE experts in the adapter.
+        top_k:           Experts activated per token.
+        dropout:         Adapter dropout.
+        freeze_backbone: If True, freeze all non-adapter model parameters.
+        adapter_path:    If given, load adapter weights from this path instead
+                         of initialising from scratch.
+
+    Returns:
+        The injected SwarmMoEAdapter (also stored as model.moe_adapter).
+    """
+    d_model = model.cfg.D_MODEL
+
+    if adapter_path and Path(adapter_path).exists():
+        adapter = SwarmMoEAdapter.load(adapter_path)
+        print(f"[adapter] Loaded from {adapter_path}")
+    else:
+        adapter = SwarmMoEAdapter(
+            d_model=d_model, n_experts=n_experts,
+            top_k=top_k, dropout=dropout,
+        )
+        print(f"[adapter] Initialised (zero-output, starts as identity)")
+
+    model.moe_adapter = adapter.to(next(model.parameters()).device)
+
+    if freeze_backbone:
+        frozen = 0
+        for name, param in model.named_parameters():
+            if "moe_adapter" not in name:
+                param.requires_grad_(False)
+                frozen += param.numel()
+        adapter_params = sum(p.numel() for p in adapter.parameters())
+        print(f"[adapter] Frozen {frozen:,} backbone params — "
+              f"training only {adapter_params:,} adapter params")
+
+    return adapter
+
+
+# ===========================================================================
 # QUATERNION TORUS BRAIN (vectorised, chunked for OOM safety)
 # ===========================================================================
 
@@ -824,20 +1069,27 @@ class QuaternionAttention(nn.Module):
         K = K.repeat_interleave(self.gqa_groups, dim=1)
         V = V.repeat_interleave(self.gqa_groups, dim=1)
 
-        with (
-            torch.backends.cuda.sdp_kernel(
-                enable_flash=True, enable_math=False, enable_mem_efficient=True
-            )
-            if torch.cuda.is_available()
-            else contextlib.nullcontext()
-        ):
+        def _manual_attn():
+            scale  = Q.shape[-1] ** -0.5
+            scores = torch.matmul(Q, K.transpose(-2, -1)) * scale
+            if is_causal:
+                S_q, S_k = Q.shape[2], K.shape[2]
+                mask = torch.ones(S_q, S_k, dtype=torch.bool, device=Q.device).tril()
+                scores = scores.masked_fill(~mask, float("-inf"))
+            attn = F.softmax(scores, dim=-1)
+            if self.dropout_p > 0 and self.training:
+                attn = F.dropout(attn, p=self.dropout_p)
+            return torch.matmul(attn, V)
+
+        try:
             out = F.scaled_dot_product_attention(
-                Q,
-                K,
-                V,
+                Q, K, V,
                 dropout_p=self.dropout_p if self.training else 0.0,
                 is_causal=is_causal,
             )
+        except RuntimeError:
+            # Flash/efficient kernels unavailable on this device — use math path
+            out = _manual_attn()
 
         out = out.transpose(1, 2).contiguous().view(B, S, D)
         return self.o_proj(out)
@@ -965,7 +1217,19 @@ class TopoSwarmLayer(nn.Module):
         """
         super().__init__()
         self.attn = QuaternionAttention(cfg)
-        self.torus = QuaternionTorusBrain(cfg)
+        # MoE FFN (MiMo V2 sigmoid gate) or standard QuaternionTorusBrain
+        if cfg.USE_MOE:
+            self.torus = SwarmMoE(
+                d_model=cfg.D_MODEL,
+                expert_hidden_dim=cfg.MOE_EXPERT_DIM,
+                n_experts=cfg.N_MOE_EXPERTS,
+                top_k=cfg.MOE_TOP_K,
+                dropout=cfg.DROPOUT,
+            )
+            self._moe_mode = True
+        else:
+            self.torus = QuaternionTorusBrain(cfg)
+            self._moe_mode = False
         self.norm1 = RMSNorm(cfg.D_MODEL)
         self.norm2 = RMSNorm(cfg.D_MODEL)
         self.use_ckpt = cfg.GRADIENT_CHECKPOINTING
@@ -991,7 +1255,12 @@ class TopoSwarmLayer(nn.Module):
         else:
             attn_out = self.attn(self.norm1(x))
         x = x + attn_out
-        torus_out, recon_loss = self.torus(self.norm2(x), berry_phase=berry_phase)
+        if self._moe_mode:
+            # SwarmMoE returns tensor directly (no recon loss)
+            torus_out = self.torus(self.norm2(x))
+            recon_loss = x.new_zeros(1)
+        else:
+            torus_out, recon_loss = self.torus(self.norm2(x), berry_phase=berry_phase)
         x = x + torus_out
         return x, recon_loss
 
@@ -1035,6 +1304,9 @@ class TopoSwarmModel(nn.Module):
         # Weight tying: embedding and lm_head share the token matrix
         self.lm_head.weight = self.embed.weight
         nn.init.normal_(self.embed.weight, std=0.02)
+        # MoE adapter slot — None by default (checkpoint-compatible).
+        # Call inject_moe_adapter(model) to activate without retraining.
+        self.moe_adapter: Optional[nn.Module] = None
 
     def forward(
         self,
@@ -1074,6 +1346,8 @@ class TopoSwarmModel(nn.Module):
             total_recon = total_recon + recon
 
         x = self.norm_out(x)
+        if self.moe_adapter is not None:
+            x = self.moe_adapter(x)
         logits = self.lm_head(x)
 
         # HRM on attention-weighted pooled representation
@@ -1198,7 +1472,11 @@ def _chunked_ce(
         total = total + F.cross_entropy(
             logits[start:end], targets[start:end], reduction="sum"
         )
-    return total / N
+    # Divide by non-ignored positions only (same as mean-path behaviour).
+    # Dividing by total N inflates the denominator when most targets are -100
+    # (masked), making loss appear ~N/n_valid times smaller than the real CE.
+    n_valid = max((targets != -100).sum().item(), 1)
+    return total / n_valid
 
 
 # ===========================================================================
