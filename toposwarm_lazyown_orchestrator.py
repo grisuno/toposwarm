@@ -927,13 +927,13 @@ def finetune_on_lazyown(dataset_path: Path, agent_cfg: SwarmConfig, logger: logg
             LAZYOWN_DATASET  = str(dataset_path),
             CHECKPOINT_DIR   = agent_cfg.CHECKPOINT_DIR,
             FISHER_PATH      = str(Path(agent_cfg.CHECKPOINT_DIR) / "fisher.pt"),
-            EPOCHS           = 20,      # up to 20 epochs; early stopping (patience=5) guards overfit
+            EPOCHS           = 300,      # up to 20 epochs; early stopping (patience=5) guards overfit
             LEARNING_RATE    = 2e-5,    # 15× below original pre-training LR
             BATCH_SIZE       = 4,
             GRAD_ACCUM_STEPS = 4,
             LOG_INTERVAL     = 10,
             EVAL_INTERVAL    = 50,
-            EWC_LAMBDA       = 400.0,   # strong anchor; tune down if loss stays high
+            EWC_LAMBDA       = 10.0,    # reduced from 400 — high lambda was freezing weights
             REPLAY_RATIO     = 0.20,    # 20 % of each batch from ToolBench replay
         )
         ct_logger = ct_mod._setup_logger(cl_cfg.LOG_LEVEL)
