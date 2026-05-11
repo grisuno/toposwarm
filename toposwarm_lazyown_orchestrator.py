@@ -47,17 +47,44 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 # ---------------------------------------------------------------------------
-# Resolve paths
+# Resolve paths  ( LazyOwn directory discovery )
 # ---------------------------------------------------------------------------
 
-_HERE        = Path(__file__).parent.resolve()
-_LAZYOWN_DIR = Path(os.environ.get("LAZYOWN_DIR", _HERE.parent.parent / "LazyOwn")).resolve()
+_HERE = Path(__file__).parent.resolve()
 
-if not _LAZYOWN_DIR.exists():
-    # Try repo-relative sibling (LazyOwn cloned next to src_note/py/toposwarm)
-    alt = _HERE.parent.parent / "LazyOwn"
-    if alt.exists():
-        _LAZYOWN_DIR = alt
+
+def _resolve_lazyown_dir() -> Path:
+    """
+    Discover LazyOwn installation directory.
+
+    Priority:
+      1. LAZYOWN_DIR environment variable (expanded ~).
+      2. Default relative to this script: <repo>/LazyOwn.
+      3. User home directory: ~/LazyOwn.
+      4. Return the relative default anyway (caller will see available=False).
+    """
+    # 1. Explicit env variable
+    env_dir = os.environ.get("LAZYOWN_DIR", "")
+    if env_dir:
+        p = Path(env_dir).expanduser().resolve()
+        if p.exists():
+            return p
+
+    # 2. Default relative to script location
+    rel = (_HERE.parent.parent / "LazyOwn").resolve()
+    if rel.exists():
+        return rel
+
+    # 3. Fallback to user's home directory
+    home = (Path.home() / "LazyOwn").resolve()
+    if home.exists():
+        return home
+
+    # 4. Final fallback (may not exist, but consistent)
+    return rel
+
+
+_LAZYOWN_DIR = _resolve_lazyown_dir()
 
 # ---------------------------------------------------------------------------
 # Import toposwarm_infer from the same directory
@@ -94,8 +121,102 @@ def _import_agent() -> Any:
             return mod
     raise FileNotFoundError("topo_swarm_agent.py not found")
 
+# ---------------------------------------------------------------------------
+# Import Meta-Harness module
+# ---------------------------------------------------------------------------
+
+def _import_meta_harness() -> Any:
+    candidates = [_HERE / "toposwarm_meta_harness.py", Path.cwd() / "toposwarm_meta_harness.py"]
+    for c in candidates:
+        if c.exists():
+            spec = importlib.util.spec_from_file_location("toposwarm_meta_harness", c)
+            mod  = importlib.util.module_from_spec(spec)
+            sys.modules["toposwarm_meta_harness"] = mod
+            spec.loader.exec_module(mod)
+            return mod
+    return None
+
+_meta = _import_meta_harness()
+
 _agent = _import_agent()
 SwarmConfig = _agent.SwarmConfig
+
+# ---------------------------------------------------------------------------
+# Optional RoutingHead import (from continual trainer)
+# ---------------------------------------------------------------------------
+def _import_routing_head() -> Optional[Any]:
+    candidates = [
+        _HERE / "toposwarm_continual_trainer.py",
+        Path.cwd() / "toposwarm_continual_trainer.py",
+    ]
+    for c in candidates:
+        if c.exists():
+            spec = importlib.util.spec_from_file_location("toposwarm_continual_trainer", c)
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules["toposwarm_continual_trainer"] = mod
+            spec.loader.exec_module(mod)
+            return getattr(mod, "RoutingHead", None)
+    return None
+
+_RoutingHeadCls = _import_routing_head()
+
+
+# ===========================================================================
+# Session Context — multi-turn persistent memory
+# ===========================================================================
+
+
+@dataclass
+class SessionContext:
+    """Persistent session state across multiple prompts."""
+
+    target_ip: Optional[str] = None
+    current_phase: str = "recon"
+    findings: List[str] = field(default_factory=list)
+    last_tool: Optional[str] = None
+    last_arg: Optional[str] = None
+    history: List[Dict[str, Any]] = field(default_factory=list)
+    turn_count: int = 0
+
+    def to_prompt_prefix(self) -> str:
+        """Compact context block injected before the user prompt."""
+        parts: List[str] = []
+        if self.target_ip:
+            parts.append(f"Target: {self.target_ip}")
+        if self.last_tool:
+            parts.append(f"Last action: {self.last_tool}({self.last_arg or ''})")
+        if self.findings:
+            parts.append(f"Findings: {'; '.join(self.findings[-3:])}")
+        if not parts:
+            return ""
+        parts.append(f"Phase: {self.current_phase}")
+        return "[Context] " + " | ".join(parts) + "\n\n"
+
+    def update(self, tool_name: str, arg: str, output: str, ok: bool) -> None:
+        self.last_tool = tool_name
+        self.last_arg = arg
+        self.turn_count += 1
+        self.history.append(
+            {
+                "turn": self.turn_count,
+                "tool": tool_name,
+                "arg": arg,
+                "ok": ok,
+                "output_preview": output[:200],
+            }
+        )
+        # Auto-extract target IP from arguments
+        ip_m = re.search(r"\b(\d{1,3}(?:\.\d{1,3}){3}(?:/\d+)?)\b", arg)
+        if ip_m and not self.target_ip:
+            self.target_ip = ip_m.group(1)
+        # Simple phase progression heuristics
+        if ok and tool_name in ("lazyown_run_command", "lazyown_add_target"):
+            if self.current_phase == "recon":
+                self.current_phase = "exploit"
+        if "credential" in output.lower() or "password" in output.lower():
+            self.findings.append("credentials found")
+        if "root" in output.lower() or "admin" in output.lower() or "nt authority" in output.lower():
+            self.findings.append("privilege escalation possible")
 
 
 # ===========================================================================
@@ -115,6 +236,17 @@ class LazyOwnBridge:
     """
 
     _ANSI = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
+    # Strip noisy LazyOwn bootstrap spam (activation banners, Lua/YAML registration, etc.)
+    _NOISE_PATTERNS = [
+        re.compile(r"Environment Activated\s*"),
+        re.compile(r"\[\+\]\s*Command\s+'[^']+'\s+registere?d?.*?\[.\]"),
+        re.compile(r"\[-\]\s*Not scan file please run nmap before.*?\[.\]"),
+        re.compile(r"\[\+\]\s*LazyOwn framework started.*"),
+        re.compile(r"\[\!\]\s*WARNING:.*"),
+        re.compile(r"\{\s*\"status\"\s*:\s*\"ok\"\s*\}"),
+        # Strip very long lines with no alphabetic characters (banner art, dividers)
+        re.compile(r"^[^a-zA-Z]{80,}\s*$", re.MULTILINE),
+    ]
 
     def __init__(self, lazyown_dir: Path = _LAZYOWN_DIR, default_timeout: int = 30) -> None:
         self.lazyown_dir    = lazyown_dir
@@ -202,7 +334,12 @@ class LazyOwnBridge:
                 pass
 
         raw = "".join(chunks)
-        return self._ANSI.sub("", raw).strip()
+        cleaned = self._ANSI.sub("", raw)
+        for pat in self._NOISE_PATTERNS:
+            cleaned = pat.sub("", cleaned)
+        # Collapse multiple blank lines to a single blank line
+        cleaned = re.sub(r"\n\s*\n+", "\n\n", cleaned)
+        return cleaned.strip()
 
     def get_config(self) -> Dict[str, Any]:
         payload_path = self.lazyown_dir / "payload.json"
@@ -630,6 +767,14 @@ class LazyOwnOrchestrator:
 
     InferenceEngine is loaded only when needed (lazy) so the orchestrator
     can be used for dataset generation without a GPU.
+
+    Meta-Harness integration (2026-05):
+    - Filesystem experience store: every execution is logged with code,
+      traces, and scores for future proposer diagnosis.
+    - Environment bootstrap: gathers a LazyOwn sandbox snapshot before the
+      first turn to eliminate wasted exploratory commands.
+    - Draft-verification routing: retrieves confirmers/challengers from
+      prior episodes to verify or revise the keyword router's draft.
     """
 
     def __init__(
@@ -639,6 +784,7 @@ class LazyOwnOrchestrator:
         bridge: LazyOwnBridge,
         logger: logging.Logger,
         load_model: bool = True,
+        meta_cfg: Optional[Any] = None,
     ) -> None:
         self.cfg       = cfg
         self.agent_cfg = agent_cfg
@@ -652,26 +798,130 @@ class LazyOwnOrchestrator:
             # Patch in our expanded registry
             self._engine.registry = self.registry
 
+        # --- Neural Router (RoutingHead) -------------------------------------
+        self._routing_head: Optional[Any] = None
+        if _RoutingHeadCls is not None:
+            self._routing_head = self._load_routing_head()
+
+        # --- Session Context (multi-turn memory) -----------------------------
+        self.session = SessionContext()
+
+        # --- Meta-Harness ----------------------------------------------------
+        self._mh: Optional[Any] = None
+        self._snapshot_text: str = ""
+        if _meta is not None:
+            mh_cfg = meta_cfg or _meta.MetaHarnessConfig()
+            self._mh = _meta.MetaHarnessOptimizer(mh_cfg)
+            self._mh.set_router(infer_lazyown_tool)
+            if mh_cfg.BOOTSTRAP_ENABLED and bridge.available:
+                try:
+                    snap = self._mh.bootstrap.gather_snapshot(bridge)
+                    self._snapshot_text = self._mh.bootstrap.format_snapshot(snap)
+                    self.logger.info("Meta-Harness env bootstrap gathered (%d chars)",
+                                     len(self._snapshot_text))
+                except Exception as exc:
+                    self.logger.warning("Meta-Harness bootstrap failed: %s", exc)
+
+    def _load_routing_head(self) -> Optional[Any]:
+        """Load the trained RoutingHead if a checkpoint exists."""
+        head_path = Path(self.agent_cfg.CHECKPOINT_DIR) / "routing_head.pt"
+        if not head_path.exists():
+            self.logger.info("No routing_head.pt found — neural routing disabled")
+            return None
+        try:
+            head = _RoutingHeadCls.load(self.agent_cfg.D_MODEL, str(head_path))
+            device = self.agent_cfg.DEVICE
+            if "cuda" in device and __import__("torch").cuda.is_available():
+                head = head.to(device)
+            self.logger.info(
+                "RoutingHead loaded: %d tools → %d classes on %s",
+                head.n_tools,
+                head.n_tools,
+                device,
+            )
+            return head
+        except Exception as exc:
+            self.logger.warning("Failed to load RoutingHead: %s", exc)
+            return None
+
+    def _neural_route(self, prompt: str) -> Optional[Tuple[str, str]]:
+        """
+        Use the TopoSwarm model + RoutingHead to predict the LazyOwn tool.
+        Returns (tool_name, tool_arg) or None if unavailable / uncertain.
+        """
+        if self._engine is None or self._routing_head is None:
+            return None
+        try:
+            import torch
+        except ImportError:
+            return None
+        tok = self._engine.tokenizer
+        device = self.agent_cfg.DEVICE
+        ids = torch.tensor([tok.encode(prompt)], dtype=torch.long, device=device)
+        hidden_states: List[torch.Tensor] = []
+
+        def _hook(module: Any, inp: Any, out: torch.Tensor) -> None:
+            hidden_states.append(out)
+
+        handle = self._engine.model.norm_out.register_forward_hook(_hook)
+        try:
+            with torch.no_grad():
+                self._engine.model(ids)
+        finally:
+            handle.remove()
+        if not hidden_states:
+            return None
+        # last token hidden state [1, D_MODEL]
+        h = hidden_states[0][:, -1, :]
+        logits = self._routing_head(h)
+        probs = torch.softmax(logits, dim=-1)
+        conf, idx = probs.max(dim=-1)
+        if conf.item() < 0.5:
+            self.logger.debug("Neural route confidence %.2f < 0.5 — falling back", conf.item())
+            return None
+        tool_name = self._routing_head.tool_names[idx.item()]
+        arg = _extract_arg(prompt, tool_name)
+        self.logger.info("Neural router → %s(%r) conf=%.2f", tool_name, arg[:80], conf.item())
+        return tool_name, arg
+
     def run(self, prompt: str) -> InferenceResult:
         """Route prompt → LazyOwn tool → answer."""
-        result = InferenceResult(prompt=prompt)
+        # --- Inject session context into prompt --------------------------------
+        contextual_prompt = self.session.to_prompt_prefix() + prompt
+        result = InferenceResult(prompt=contextual_prompt)
+        t0 = time.monotonic()
 
-        # Route via keyword heuristic (fast, no GPU)
-        tool_name, tool_arg = infer_lazyown_tool(prompt)
+        # --- Neural routing (primary) ------------------------------------------
+        neural = self._neural_route(contextual_prompt)
+        if neural is not None:
+            tool_name, tool_arg = neural
+        else:
+            # --- Meta-Harness routing: draft-verify or fallback keyword ------
+            if self._mh and self._mh.draft_verifier is not None:
+                try:
+                    tool_name, tool_arg, confidence = self._mh.draft_verifier.route(
+                        contextual_prompt, self._snapshot_text
+                    )
+                    self.logger.info("Meta-Harness router → %s(%r) conf=%.2f",
+                                     tool_name, tool_arg[:80], confidence)
+                except Exception as exc:
+                    self.logger.warning("Meta-Harness draft-verify failed (%s), falling back", exc)
+                    tool_name, tool_arg = infer_lazyown_tool(contextual_prompt)
+            else:
+                tool_name, tool_arg = infer_lazyown_tool(contextual_prompt)
         result.tool_name = tool_name
         result.tool_arg  = tool_arg
-        self.logger.info("Router → %s(%r)", tool_name, tool_arg[:80])
 
         # Execute tool
         tool_result = self.registry.execute(tool_name, tool_arg)
         result.tool_result = tool_result
         result.tool_used   = True
-        self.logger.info("Tool output (%d chars)", len(tool_result.output))
+        latency_ms = (time.monotonic() - t0) * 1000
+        self.logger.info("Tool output (%d chars, %.1f ms)", len(tool_result.output), latency_ms)
 
         # Generate answer: use model pass-2 when available, else template
         if self._engine is not None:
             try:
-                from toposwarm_infer import ToolResult as _TR
                 result.final_answer = self._engine._template_answer(
                     tool_name, tool_arg, tool_result
                 )
@@ -680,6 +930,40 @@ class LazyOwnOrchestrator:
                 result.final_answer = f"{tool_name} result:\n{tool_result.output}"
         else:
             result.final_answer = f"{tool_name} result:\n{tool_result.output}"
+
+        # --- Meta-Harness: log run to filesystem experience store ------------
+        if self._mh is not None:
+            try:
+                harness_cfg = {
+                    "orchestrator_version": "lazyown_mh_2026_05",
+                    "tool_name": tool_name,
+                    "bootstrap_len": len(self._snapshot_text),
+                    "model_loaded": self._engine is not None,
+                }
+                trace_steps = [
+                    {
+                        "step": 1,
+                        "prompt": prompt,
+                        "tool": tool_name,
+                        "arg": tool_arg,
+                        "output": tool_result.output[:500],
+                        "ok": tool_result.ok,
+                        "t_ms": latency_ms,
+                    }
+                ]
+                score = {
+                    "prompt": prompt,
+                    "success": tool_result.ok,
+                    "latency_ms": latency_ms,
+                    "context_chars": len(prompt) + len(self._snapshot_text) + len(tool_arg),
+                    "output_chars": len(tool_result.output),
+                }
+                self._mh.log_run(harness_cfg, trace_steps, score)
+            except Exception as exc:
+                self.logger.debug("Meta-Harness log_run failed: %s", exc)
+
+        # --- Update session context --------------------------------------------
+        self.session.update(tool_name, tool_arg, tool_result.output, tool_result.ok)
 
         return result
 
@@ -1089,7 +1373,7 @@ def main() -> None:
 
     logger = _setup_logger(args.log_level)
 
-    lazyown_dir = Path(args.lazyown_dir) if args.lazyown_dir else _LAZYOWN_DIR
+    lazyown_dir = Path(args.lazyown_dir).expanduser().resolve() if args.lazyown_dir else _LAZYOWN_DIR
     bridge      = LazyOwnBridge(lazyown_dir)
     logger.info("LazyOwn dir: %s (available=%s)", bridge.lazyown_dir, bridge.available)
 

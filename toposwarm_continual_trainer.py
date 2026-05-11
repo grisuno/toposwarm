@@ -112,7 +112,12 @@ class ContinualConfig:
     """All hyper-parameters for the continual learning run."""
 
     # ── Paths ────────────────────────────────────────────────────────────────
-    LAZYOWN_DATASET:  str = "data_toolbench/lazyown_full.jsonl"
+    # Auto-detect enriched dataset (real execution traces + synthetic)
+    LAZYOWN_DATASET:  str = field(default_factory=lambda: (
+        "data_toolbench/lazyown_enriched.jsonl"
+        if Path("data_toolbench/lazyown_enriched.jsonl").exists()
+        else "data_toolbench/lazyown_full.jsonl"
+    ))
     TOOLBENCH_DATASET:str = "data_toolbench/toolbench.jsonl"  # fallback replay source
     CHECKPOINT_DIR:   str = "checkpoints_toposwarm"
     FISHER_PATH:      str = "checkpoints_toposwarm/fisher.pt"
@@ -607,13 +612,24 @@ class RoutingHead(nn.Module):
     HEAD_CKPT = "checkpoints_toposwarm/routing_head.pt"
 
     def __init__(self, d_model: int, tool_names: List[str],
-                 n_experts: int = 4, top_k: int = 2) -> None:
+                 n_experts: int = 4, top_k: int = 2,
+                 hidden_dim: int = 256) -> None:
         super().__init__()
         self.tool_names  = sorted(set(tool_names))
         self.tool_to_idx = {t: i for i, t in enumerate(self.tool_names)}
         n = len(self.tool_names)
         self.n_experts = n_experts
         self.top_k     = top_k
+        self.hidden_dim = hidden_dim
+
+        # Pre-projection MLP: d_model → hidden_dim → d_model
+        # Increases routing capacity without changing the backbone D_MODEL.
+        self.pre_mlp = nn.Sequential(
+            nn.Linear(d_model, hidden_dim),
+            nn.GELU(),
+            nn.Dropout(0.1),
+            nn.Linear(hidden_dim, d_model),
+        )
 
         # LiquidNeuron core: slow gradient path + fast Hebbian path
         # Replaces the simple linear projection with a dual-speed learner.
@@ -640,16 +656,20 @@ class RoutingHead(nn.Module):
         hidden: [B, d_model] → logits [B, n_tools]
 
         Pipeline:
+          0. Pre-MLP: enrich representation capacity
           1. LiquidNeuron: slow grad + fast Hebbian → base logits [B, n_tools]
           2. MoE gate: select top-k specialty expert refinements
           3. Weighted sum of expert-refined logits
         """
+        # Step 0: capacity-enriching pre-projection
+        h = self.pre_mlp(hidden)                                # [B, d_model]
+
         # Step 1: liquid neuron base logits
-        base = self.liquid(hidden)                               # [B, n_tools]
+        base = self.liquid(h)                                   # [B, n_tools]
 
         # Step 2: MoE gate on d_model features
-        gate_scores = torch.sigmoid(self.gate(hidden))           # [B, E]
-        topk_w, topk_idx = gate_scores.topk(self.top_k, dim=-1) # [B, K]
+        gate_scores = torch.sigmoid(self.gate(h))               # [B, E]
+        topk_w, topk_idx = gate_scores.topk(self.top_k, dim=-1)  # [B, K]
         topk_w = topk_w / (topk_w.sum(dim=-1, keepdim=True) + 1e-9)
 
         # Step 3: experts refine the base logits (not re-process d_model)
@@ -679,15 +699,26 @@ class RoutingHead(nn.Module):
             "tool_names":  self.tool_names,
             "n_experts":   self.n_experts,
             "top_k":       self.top_k,
+            "hidden_dim":  self.hidden_dim,
         }, path)
 
     @classmethod
     def load(cls, d_model: int, path: str = HEAD_CKPT) -> "RoutingHead":
         data = torch.load(path, map_location="cpu", weights_only=False)
-        head = cls(d_model, data["tool_names"],
-                   n_experts=data.get("n_experts", 4),
-                   top_k=data.get("top_k", 2))
-        head.load_state_dict(data["state_dict"])
+        head = cls(
+            d_model,
+            data["tool_names"],
+            n_experts=data.get("n_experts", 4),
+            top_k=data.get("top_k", 2),
+            hidden_dim=data.get("hidden_dim", 256),
+        )
+        # strict=False allows loading older checkpoints that lack pre_mlp
+        missing, unexpected = head.load_state_dict(data["state_dict"], strict=False)
+        if missing:
+            import logging
+            logging.getLogger("RoutingHead").warning(
+                "Missing keys when loading RoutingHead (expected for old checkpoints): %s", missing
+            )
         return head
 
 
@@ -862,7 +893,13 @@ class ContinualTrainer:
                 lm_logits = out["logits"][0, -1,
                             self.cfg.TOOL_TOKEN_OFFSET:
                             self.cfg.TOOL_TOKEN_OFFSET + self.cfg.TOOL_VOCAB_SIZE]
-                lm_correct += int(lm_logits.argmax().item() == gt_off)
+                pred = lm_logits.argmax().item()
+                lm_correct += int(pred == gt_off)
+
+                # DEBUG: print first 5 predictions
+                if total < 5:
+                    self.logger.info("DEBUG _routing_accuracy: tool=%s gt=%d pred=%d match=%s",
+                                     tool_name, gt_off, pred, pred == gt_off)
 
                 # Routing head accuracy (secondary)
                 if self.routing_head is not None and captured:
@@ -879,6 +916,8 @@ class ContinualTrainer:
         if self.routing_head is not None and total:
             self.logger.debug("  routing_head_acc=%.1f%%  lm_head_acc=%.1f%%",
                               head_correct / total * 100, lm_correct / total * 100)
+        self.logger.info("DEBUG _routing_accuracy final: lm_correct=%d total=%d acc=%.1f%%",
+                         lm_correct, total, lm_correct/max(total,1)*100)
         return lm_correct / max(total, 1)  # return LM-head (honest metric)
 
     def train(self, lazyown_dataset: ToolBenchDataset,

@@ -574,7 +574,7 @@ class LanguageBackend:
             Path.cwd(),
         ]
         for d in search_dirs:
-            for name in ("topogpt2_1.py", "topogpt2.py", "topogpt.py"):
+            for name in ("topogpt2_1.py", "topogpt2.1.py"):
                 candidate = d / name
                 if candidate.exists():
                     spec = importlib.util.spec_from_file_location("topogpt2_mod", candidate)
