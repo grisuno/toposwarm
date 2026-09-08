@@ -1,0 +1,21 @@
+{
+  "tool": "readmenator",
+  "generated_at": "2026-09-08T17:31:34Z",
+  "project_root": "/tmp/push_toposwarm_20260908_131917",
+  "files": 17,
+  "symbols": 636,
+  "imports": 5153,
+  "resolved_imports": 16,
+  "security_findings": 0,
+  "languages": {
+    "py": 17
+  },
+  "entrypoints": [],
+  "start_here": "INDEX.md",
+  "workflow": [
+    "grep -n '<keyword>' INDEX.md",
+    "cat KB_<subsystem>.md",
+    "grep -n '<file>' ARCHITECTURE.md SYMBOLS.md"
+  ],
+  "regenerate": "readmenator . --rebuild"
+}
