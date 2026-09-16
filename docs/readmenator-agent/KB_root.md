@@ -1,0 +1,675 @@
+# Subsystem: root
+
+## lazyown_dataset_enhancer.py
+- Layer: data_access
+- Language: py
+- Symbols:
+  - `_difficulty` (function, line 64) `def _difficulty(record)`
+  - `ExperienceStoreReader` (class, line 87) `class ExperienceStoreReader`
+  - `_sanitize_output` (method, line 136) `def _sanitize_output(text)`
+  - `_build_toolbench_record` (method, line 149) `def _build_toolbench_record(instruction, tool_name, arg, answer, domain)`
+  - `DatasetEnhancer` (class, line 165) `class DatasetEnhancer`
+  - `print_stats` (method, line 348) `def print_stats(records)`
+  - `main` (method, line 375) `def main()`
+  - `__init__` (method, line 88) `def __init__(self, log_dir)`
+  - `list_runs` (method, line 91) `def list_runs(self)`
+  - `read_trace` (method, line 98) `def read_trace(self, run_dir)`
+  - `read_score` (method, line 113) `def read_score(self, run_dir)`
+  - `read_harness` (method, line 122) `def read_harness(self, run_dir)`
+  - `__init__` (method, line 166) `def __init__(self, log_dir, max_runs)`
+  - `enhance` (method, line 171) `def enhance(self)`
+  - `add_negative_examples` (method, line 236) `def add_negative_examples(self, records, n)`
+  - `curriculum_sort` (method, line 261) `def curriculum_sort(self, records)`
+  - `deduplicate` (method, line 265) `def deduplicate(self, records)`
+  - `augment_simple` (method, line 276) `def augment_simple(self, records, multiplier)`
+  - `run` (method, line 301) `def run(self, merge_with)`
+
+## lazyown_dataset_generator.py
+- Layer: data_access
+- Language: py
+- Symbols:
+  - `_make_record` (function, line 3321) `def _make_record(tool_name, desc, category, instruction, arg)`
+  - `_apply_pentest_synonyms` (function, line 3414) `def _apply_pentest_synonyms(instr)`
+  - `_expand` (function, line 3430) `def _expand(tool_name, phrasings)`
+  - `_is_noisy_phrasing` (function, line 3554) `def _is_noisy_phrasing(instruction, arg)`
+  - `build_dataset` (function, line 3571) `def build_dataset()`
+  - `write_jsonl` (function, line 3595) `def write_jsonl(records, path)`
+  - `print_stats` (function, line 3602) `def print_stats(records)`
+  - `main` (function, line 3616) `def main()`
+
+## meta_harness_proposer.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_setup_logger` (function, line 58) `def _setup_logger(name, level)`
+  - `LLMConfig` (class, line 75) `class LLMConfig`
+  - `LLMClient` (class, line 86) `class LLMClient`
+  - `ExperienceReader` (class, line 150) `class ExperienceReader`
+  - `PatchEngine` (class, line 243) `class PatchEngine`
+  - `MetaHarnessProposer` (class, line 392) `class MetaHarnessProposer`
+  - `main` (method, line 572) `def main()`
+  - `__init__` (method, line 93) `def __init__(self, cfg, logger)`
+  - `_try_chat` (method, line 97) `def _try_chat(self, api_url, model, system, user)`
+  - `chat` (method, line 121) `def chat(self, system, user)`
+  - `__init__` (method, line 153) `def __init__(self, log_dir, logger)`
+  - `list_runs` (method, line 157) `def list_runs(self, n)`
+  - `load_run` (method, line 165) `def load_run(self, run_dir)`
+  - `build_diagnostic_context` (method, line 193) `def build_diagnostic_context(self, top_k)`
+  - `__init__` (method, line 246) `def __init__(self, logger)`
+  - `validate_syntax` (method, line 249) `def validate_syntax(self, code)`
+  - `apply_full_rewrite` (method, line 265) `def apply_full_rewrite(self, target_path, new_code, dry_run)`
+  - `_strip_line_numbers` (method, line 283) `def _strip_line_numbers(self, s)`
+  - `apply_line_range` (method, line 287) `def apply_line_range(self, target_path, line_start, line_end, new_string, dry_run)`
+  - `apply_diff_hunk` (method, line 316) `def apply_diff_hunk(self, target_path, old_string, new_string, dry_run)`
+  - `__init__` (method, line 434) `def __init__(self, log_dir, llm_cfg, logger)`
+  - `propose_patch` (method, line 445) `def propose_patch(self, target_path, top_k, dry_run)`
+  - `_log_proposal` (method, line 538) `def _log_proposal(self, target_path, response, applied, diag)`
+  - `_norm` (method, line 331) `def _norm(s)`
+- Depends on: `toposwarm_meta_harness.py`
+
+## topo_swarm_agent.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `SwarmConfig` (class, line 84) `class SwarmConfig`
+  - `_setup_logger` (method, line 225) `def _setup_logger(name, level)`
+  - `_set_seed` (method, line 243) `def _set_seed(seed, device)`
+  - `_param_count` (method, line 253) `def _param_count(module)`
+  - `_get_torus_positions` (method, line 264) `def _get_torus_positions(n_angular, n_radial, device)`
+  - `QuaternionOps` (class, line 282) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 330) `class QuaternionLinear(Module)`
+  - `SpectralBottleneck` (class, line 394) `class SpectralBottleneck(Module)`
+  - `RMSNorm` (class, line 465) `class RMSNorm(Module)`
+  - `RotaryEmbedding` (class, line 489) `class RotaryEmbedding(Module)`
+  - `SwiGLU` (class, line 548) `class SwiGLU(Module)`
+  - `SwarmMoEGate` (class, line 587) `class SwarmMoEGate(Module)`
+  - `SwarmMoE` (class, line 608) `class SwarmMoE(Module)`
+  - `SwarmMoEAdapter` (class, line 665) `class SwarmMoEAdapter(Module)`
+  - `inject_moe_adapter` (method, line 749) `def inject_moe_adapter(model, n_experts, top_k, dropout, freeze_backbone, adapter_path)`
+  - `QuaternionTorusBrain` (class, line 807) `class QuaternionTorusBrain(Module)`
+  - `QuaternionAttention` (class, line 998) `class QuaternionAttention(Module)`
+  - `HRMModule` (class, line 1103) `class HRMModule(Module)`
+  - `TopoSwarmLayer` (class, line 1205) `class TopoSwarmLayer(Module)`
+  - `TopoSwarmModel` (class, line 1273) `class TopoSwarmModel(Module)`
+  - `_chunked_ce` (method, line 1445) `def _chunked_ce(logits, targets, chunk_size)`
+  - `EpisodicMemory` (class, line 1487) `class EpisodicMemory`
+  - `SwarmOrchestrator` (class, line 1602) `class SwarmOrchestrator`
+  - `BPETokenizer` (class, line 1693) `class BPETokenizer`
+  - `ToolBenchDataset` (class, line 1811) `class ToolBenchDataset(Dataset)`
+  - `CheckpointManager` (class, line 2046) `class CheckpointManager`
+  - `KappaDetector` (class, line 2149) `class KappaDetector`
+  - `SwarmTrainer` (class, line 2192) `class SwarmTrainer`
+  - `build_dataloaders` (method, line 2509) `def build_dataloaders(cfg, tokenizer, logger)`
+  - `main` (method, line 2552) `def main()`
+  - `__post_init__` (method, line 202) `def __post_init__(self)`
+  - `hamilton_product` (method, line 289) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 304) `def normalize(q, eps)`
+  - `berry_phase_rotation` (method, line 309) `def berry_phase_rotation(q, phase)`
+  - `__init__` (method, line 341) `def __init__(self, in_features, out_features, bias, init_std)`
+  - `forward` (method, line 370) `def forward(self, x)`
+  - `__init__` (method, line 406) `def __init__(self, cfg)`
+  - `_filter` (method, line 428) `def _filter(self, x, kr, ki)`
+  - `forward` (method, line 436) `def forward(self, x)`
+  - `__init__` (method, line 468) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 478) `def forward(self, x)`
+  - `__init__` (method, line 497) `def __init__(self, d_head, max_seq_len, base, ntk_factor)`
+  - `_build_cache` (method, line 522) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 530) `def _rotate_half(self, x)`
+  - `forward` (method, line 534) `def forward(self, x, seq_len)`
+  - `__init__` (method, line 551) `def __init__(self, d_model, hidden_dim, dropout)`
+  - `forward` (method, line 566) `def forward(self, x)`
+  - `__init__` (method, line 590) `def __init__(self, d_model, n_experts, top_k)`
+  - `forward` (method, line 597) `def forward(self, x)`
+  - `__init__` (method, line 620) `def __init__(self, d_model, expert_hidden_dim, n_experts, top_k, dropout)`
+  - `forward` (method, line 637) `def forward(self, x)`
+  - `__init__` (method, line 679) `def __init__(self, d_model, n_experts, top_k, bottleneck, dropout)`
+  - `forward` (method, line 705) `def forward(self, x)`
+  - `save` (method, line 727) `def save(self, path)`
+  - `load` (method, line 738) `def load(cls, path)`
+  - `__init__` (method, line 825) `def __init__(self, cfg)`
+  - `_build_torus_graph` (method, line 855) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 887) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 909) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 940) `def forward(self, x, berry_phase)`
+  - `__init__` (method, line 1006) `def __init__(self, cfg)`
+  - `_head_filter` (method, line 1039) `def _head_filter(self, x)`
+  - `forward` (method, line 1045) `def forward(self, x, is_causal)`
+  - `__init__` (method, line 1119) `def __init__(self, cfg)`
+  - `_l_step` (method, line 1156) `def _l_step(self, x, state)`
+  - `_h_step` (method, line 1163) `def _h_step(self, z)`
+  - `forward` (method, line 1167) `def forward(self, x)`
+  - `__init__` (method, line 1213) `def __init__(self, cfg)`
+  - `_attn_fn` (method, line 1237) `def _attn_fn(self, x)`
+  - `forward` (method, line 1240) `def forward(self, x, berry_phase)`
+  - `__init__` (method, line 1287) `def __init__(self, cfg)`
+  - `forward` (method, line 1311) `def forward(self, input_ids, berry_phase, targets)`
+  - `generate` (method, line 1392) `def generate(self, input_ids, max_new_tokens, temperature, top_k, berry_phase, act_halt_threshold)`
+  - `__init__` (method, line 1497) `def __init__(self, cfg)`
+  - `compute_surprise` (method, line 1512) `def compute_surprise(logits, targets, gate_mean)`
+  - `store` (method, line 1537) `def store(self, episode, surprise)`
+  - `sample` (method, line 1558) `def sample(self, n)`
+  - `_decay` (method, line 1591) `def _decay(self)`
+  - `__init__` (method, line 1622) `def __init__(self, model, cfg)`
+  - `infer` (method, line 1640) `def infer(self, input_ids, tokenizer, max_new_tokens, temperature, top_k)`
+  - `__init__` (method, line 1701) `def __init__(self, cfg)`
+  - `encode` (method, line 1739) `def encode(self, text)`
+  - `decode` (method, line 1751) `def decode(self, ids)`
+  - `tool_token` (method, line 1756) `def tool_token(self, tool_name)`
+  - `encode_tool_trace` (method, line 1778) `def encode_tool_trace(self, instruction, tool_name, result)`
+  - `__init__` (method, line 1824) `def __init__(self, cfg, tokenizer, split, logger)`
+  - `_load` (method, line 1846) `def _load(self, split)`
+  - `_encode_record` (method, line 1927) `def _encode_record(self, rec)`
+  - `_synthetic_stubs` (method, line 1984) `def _synthetic_stubs(self, n)`
+  - `__len__` (method, line 2017) `def __len__(self)`
+  - `__getitem__` (method, line 2020) `def __getitem__(self, idx)`
+  - `__init__` (method, line 2054) `def __init__(self, cfg, logger)`
+  - `save` (method, line 2066) `def save(self, model, optimizer, meta, force)`
+  - `load` (method, line 2108) `def load(self, model, optimizer, device)`
+  - `__init__` (method, line 2159) `def __init__(self, cfg)`
+  - `update` (method, line 2167) `def update(self, loss)`
+  - `__init__` (method, line 2206) `def __init__(self, model, cfg, tokenizer, logger)`
+  - `_make_optimizer` (method, line 2233) `def _make_optimizer(self, lr)`
+  - `_warmup_cosine_lr` (method, line 2263) `def _warmup_cosine_lr(self, optimizer, step, total_steps, warmup_steps, base_lr)`
+  - `_train_one_batch` (method, line 2280) `def _train_one_batch(self, optimizer, input_ids, targets, accum_step, berry_phase)`
+  - `_phase0_calibrate` (method, line 2322) `def _phase0_calibrate(self, dataloader, n_steps)`
+  - `train` (method, line 2363) `def train(self, train_dl, val_dl, resume)`
+  - `_evaluate` (method, line 2476) `def _evaluate(self, val_dl)`
+  - `_manual_attn` (method, line 1072) `def _manual_attn()`
+- Depends on: `ts_utils.py`
+- Imported by: `toposwarm_coevolve.py`, `toposwarm_lazyown_sweep.py`
+
+## topogpt2_1.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `TopoGPT2Config` (class, line 55) `class TopoGPT2Config`
+  - `setup_logger` (method, line 155) `def setup_logger(name, level)`
+  - `set_seed` (method, line 165) `def set_seed(seed, device)`
+  - `QuaternionOps` (class, line 177) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 216) `class QuaternionLinear(Module)`
+  - `QuaternionSpectralLayer` (class, line 261) `class QuaternionSpectralLayer(Module)`
+  - `SpectralAutoencoder` (class, line 348) `class SpectralAutoencoder(Module)`
+  - `QuaternionTorusBrain` (class, line 431) `class QuaternionTorusBrain(Module)`
+  - `RotaryEmbedding` (class, line 648) `class RotaryEmbedding(Module)`
+  - `RMSNorm` (class, line 696) `class RMSNorm(Module)`
+  - `SwiGLU` (class, line 713) `class SwiGLU(Module)`
+  - `TopoMoEBrain` (class, line 742) `class TopoMoEBrain(Module)`
+  - `MultiHeadAttention` (class, line 847) `class MultiHeadAttention(Module)`
+  - `TopoGPT2Layer` (class, line 929) `class TopoGPT2Layer(Module)`
+  - `TopoGPT2` (class, line 976) `class TopoGPT2(Module)`
+  - `BPETokenizer` (class, line 1082) `class BPETokenizer`
+  - `CorpusDownloader` (class, line 1107) `class CorpusDownloader`
+  - `TokenizedDataset` (class, line 1170) `class TokenizedDataset(Dataset)`
+  - `CheckpointManager` (class, line 1220) `class CheckpointManager`
+  - `TopoGPT2Trainer` (class, line 1453) `class TopoGPT2Trainer`
+  - `MechanisticMetrics` (class, line 1746) `class MechanisticMetrics`
+  - `Phase0_KernelOptimizer` (class, line 1983) `class Phase0_KernelOptimizer`
+  - `Phase1_BatchProspector` (class, line 2058) `class Phase1_BatchProspector`
+  - `Phase2_SeedMiner` (class, line 2141) `class Phase2_SeedMiner`
+  - `Phase4_AnnealingRefiner` (class, line 2223) `class Phase4_AnnealingRefiner`
+  - `TopoPhasePipeline` (class, line 2384) `class TopoPhasePipeline`
+  - `main` (method, line 2506) `def main()`
+  - `__post_init__` (method, line 124) `def __post_init__(self)`
+  - `hamilton_product` (method, line 185) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 197) `def normalize(q, eps)`
+  - `conjugate` (method, line 201) `def conjugate(q)`
+  - `rotate_vector` (method, line 206) `def rotate_vector(v, q)`
+  - `__init__` (method, line 228) `def __init__(self, in_features, out_features, bias)`
+  - `forward` (method, line 244) `def forward(self, x)`
+  - `__init__` (method, line 281) `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+  - `_kernel` (method, line 300) `def _kernel(self, c)`
+  - `_contract` (method, line 303) `def _contract(self, W, X)`
+  - `forward` (method, line 307) `def forward(self, x)`
+  - `__init__` (method, line 361) `def __init__(self, config)`
+  - `_filter1d` (method, line 393) `def _filter1d(self, x, kr, ki)`
+  - `encode` (method, line 399) `def encode(self, x)`
+  - `decode` (method, line 404) `def decode(self, z)`
+  - `forward` (method, line 409) `def forward(self, x)`
+  - `process_torus_grid` (method, line 416) `def process_torus_grid(self, grid)`
+  - `__init__` (method, line 449) `def __init__(self, d_model, config)`
+  - `_build_torus_graph` (method, line 489) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 523) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 550) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 587) `def forward(self, x)`
+  - `__init__` (method, line 655) `def __init__(self, d_head, max_seq_len, base)`
+  - `_build_cache` (method, line 661) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 668) `def _rotate_half(self, x)`
+  - `forward` (method, line 672) `def forward(self, q, k, seq_len, offset)`
+  - `__init__` (method, line 699) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 704) `def forward(self, x)`
+  - `__init__` (method, line 720) `def __init__(self, d_model, expansion, dropout)`
+  - `forward` (method, line 734) `def forward(self, x)`
+  - `__init__` (method, line 757) `def __init__(self, d_model, config)`
+  - `_route` (method, line 778) `def _route(self, x)`
+  - `forward` (method, line 820) `def forward(self, x)`
+  - `__init__` (method, line 857) `def __init__(self, d_model, n_heads, config)`
+  - `forward` (method, line 875) `def forward(self, x, is_causal, past_kv)`
+  - `__init__` (method, line 938) `def __init__(self, d_model, n_heads, config)`
+  - `_forward_impl` (method, line 947) `def _forward_impl(self, x, past_kv)`
+  - `forward` (method, line 956) `def forward(self, x, past_kv)`
+  - `__init__` (method, line 987) `def __init__(self, config)`
+  - `_init_weights` (method, line 1006) `def _init_weights(self)`
+  - `forward` (method, line 1013) `def forward(self, token_ids, past_kvs)`
+  - `count_params` (method, line 1036) `def count_params(self)`
+  - `generate` (method, line 1042) `def generate(self, token_ids, max_new_tokens, temperature, top_k)`
+  - `__init__` (method, line 1085) `def __init__(self, encoding)`
+  - `encode` (method, line 1093) `def encode(self, text)`
+  - `decode` (method, line 1096) `def decode(self, tokens)`
+  - `eot_token` (method, line 1099) `def eot_token(self)`
+  - `__init__` (method, line 1119) `def __init__(self, corpus, data_dir, logger)`
+  - `get_text` (method, line 1125) `def get_text(self, split)`
+  - `_download_hf` (method, line 1150) `def _download_hf(self, dataset_name, split, text_column, name)`
+  - `__init__` (method, line 1179) `def __init__(self, text, tokenizer, seq_len, max_tokens, cache_dir, split_tag)`
+  - `__len__` (method, line 1206) `def __len__(self)`
+  - `__getitem__` (method, line 1209) `def __getitem__(self, idx)`
+  - `__init__` (method, line 1245) `def __init__(self, config, logger)`
+  - `patch_config_for_resume` (method, line 1255) `def patch_config_for_resume(self, cfg)`
+  - `_save_model` (method, line 1284) `def _save_model(self, model, directory)`
+  - `_load_model` (method, line 1297) `def _load_model(self, model, directory)`
+  - `_save_optimizer` (method, line 1328) `def _save_optimizer(self, optimizer, directory)`
+  - `_load_optimizer` (method, line 1331) `def _load_optimizer(self, optimizer, directory, device)`
+  - `_save_state` (method, line 1340) `def _save_state(self, state, directory)`
+  - `_load_state` (method, line 1345) `def _load_state(self, directory)`
+  - `should_save` (method, line 1356) `def should_save(self)`
+  - `save` (method, line 1359) `def save(self, model, optimizer, state, is_best)`
+  - `load_latest` (method, line 1404) `def load_latest(self, model, optimizer)`
+  - `load_best` (method, line 1431) `def load_best(self, model)`
+  - `has_checkpoint` (method, line 1443) `def has_checkpoint(self)`
+  - `__init__` (method, line 1465) `def __init__(self, model, config, tokenizer)`
+  - `resume` (method, line 1500) `def resume(self)`
+  - `_current_state` (method, line 1525) `def _current_state(self)`
+  - `_cosine_lr` (method, line 1536) `def _cosine_lr(self, step_in_session, total_steps_session)`
+  - `_set_lr` (method, line 1544) `def _set_lr(self, lr)`
+  - `train` (method, line 1548) `def train(self, train_dl, val_dl)`
+  - `_sample_text` (method, line 1684) `def _sample_text(self, tokenizer, prompts, max_new, temperature, top_k)`
+  - `evaluate` (method, line 1716) `def evaluate(self, dataloader)`
+  - `__init__` (method, line 1766) `def __init__(self, config)`
+  - `compute_delta` (method, line 1774) `def compute_delta(self, model)`
+  - `compute_alpha` (method, line 1781) `def compute_alpha(self, delta)`
+  - `update_grad_buffer` (method, line 1786) `def update_grad_buffer(self, model)`
+  - `compute_t_eff` (method, line 1812) `def compute_t_eff(self, lr)`
+  - `compute_kappa` (method, line 1820) `def compute_kappa(self, model, dataloader, n_batches)`
+  - `compute_berry_phase` (method, line 1878) `def compute_berry_phase(self, model)`
+  - `compute_lc` (method, line 1891) `def compute_lc(self, model)`
+  - `compute_sp` (method, line 1905) `def compute_sp(self, model)`
+  - `classify_phase` (method, line 1921) `def classify_phase(self, delta, kappa, berry)`
+  - `compute_all` (method, line 1940) `def compute_all(self, model, lr, dataloader, compute_kappa)`
+  - `format_log` (method, line 1965) `def format_log(self, m)`
+  - `__init__` (method, line 2001) `def __init__(self, config, logger)`
+  - `_measure_ratio` (method, line 2005) `def _measure_ratio(self, ratio, sample_batch)`
+  - `optimize` (method, line 2034) `def optimize(self, dataloader)`
+  - `__init__` (method, line 2074) `def __init__(self, config, logger)`
+  - `prospect` (method, line 2078) `def prospect(self, candidates, train_dataset, prospect_steps)`
+  - `__init__` (method, line 2157) `def __init__(self, config, logger)`
+  - `mine` (method, line 2161) `def mine(self, seed_start, n_seeds, train_dataset, prospect_steps)`
+  - `__init__` (method, line 2243) `def __init__(self, trainer, t0, cooling_rate, stagnation_patience)`
+  - `refine` (method, line 2252) `def refine(self, train_dl, val_dl, refine_epochs)`
+  - `__init__` (method, line 2404) `def __init__(self, config, train_dataset, val_dataset, tokenizer, logger)`
+  - `_make_dataloaders` (method, line 2414) `def _make_dataloaders(self, batch_size)`
+  - `run` (method, line 2426) `def run(self, run_prospect, refine_epochs, resume, prospect_steps, probe_seeds, seed_start)`
+  - `ckpt_fn` (method, line 964) `def ckpt_fn(x_in)`
+
+## toposwarm_coevolve.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_resolve_lazyown_dir` (function, line 63) `def _resolve_lazyown_dir()`
+  - `_setup_logger` (function, line 90) `def _setup_logger(name, level)`
+  - `HarnessMutation` (class, line 128) `class HarnessMutation`
+  - `_clip` (method, line 175) `def _clip(x, lo, hi)`
+  - `MockLazyOwnBridge` (class, line 183) `class MockLazyOwnBridge`
+  - `HarnessEvaluator` (class, line 233) `class HarnessEvaluator`
+  - `WeightTrainer` (class, line 391) `class WeightTrainer`
+  - `CoEvolutionEngine` (class, line 451) `class CoEvolutionEngine`
+  - `main` (method, line 646) `def main()`
+  - `mutate` (method, line 132) `def mutate(cfg_dict)`
+  - `crossover` (method, line 167) `def crossover(a, b)`
+  - `__init__` (method, line 190) `def __init__(self)`
+  - `available` (method, line 196) `def available(self)`
+  - `run` (method, line 199) `def run(self, command, timeout)`
+  - `get_config` (method, line 222) `def get_config(self)`
+  - `set_config` (method, line 225) `def set_config(self, key, value)`
+  - `__init__` (method, line 244) `def __init__(self, prompts, lazyown_dir, logger, use_mock_bridge)`
+  - `evaluate` (method, line 256) `def evaluate(self, cfg_dict)`
+  - `_build_orchestrator` (method, line 313) `def _build_orchestrator(self, cfg_dict)`
+  - `_log_run` (method, line 343) `def _log_run(self, orch, prompt, result, latency_ms, ctx_len, ok, cfg_dict)`
+  - `__init__` (method, line 397) `def __init__(self, logger)`
+  - `_load` (method, line 402) `def _load(self)`
+  - `is_available` (method, line 415) `def is_available(self)`
+  - `fine_tune` (method, line 418) `def fine_tune(self, dataset_path, steps, learning_rate)`
+  - `__init__` (method, line 456) `def __init__(self, generations, population_size, train_steps_per_gen, proposer_interval, lazyown_dir, logger)`
+  - `run` (method, line 490) `def run(self)`
+  - `_next_generation` (method, line 550) `def _next_generation(self, scores)`
+  - `_tournament_select` (method, line 567) `def _tournament_select(sorted_scores, k)`
+  - `_is_on_frontier` (method, line 575) `def _is_on_frontier(self, cfg, metrics)`
+  - `_run_proposer` (method, line 596) `def _run_proposer(self)`
+  - `_save_state` (method, line 619) `def _save_state(self, generation)`
+  - `load_state` (method, line 628) `def load_state(self, path)`
+  - `_report_frontier` (method, line 635) `def _report_frontier(self)`
+- Depends on: `topo_swarm_agent.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+
+## toposwarm_continual_trainer.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_import` (function, line 91) `def _import(name, filename)`
+  - `ContinualConfig` (class, line 111) `class ContinualConfig`
+  - `_setup_logger` (method, line 158) `def _setup_logger(level)`
+  - `SurpriseBuffer` (class, line 166) `class SurpriseBuffer`
+  - `_load_jsonl` (method, line 232) `def _load_jsonl(path)`
+  - `_encode_record` (method, line 247) `def _encode_record(record, tok, cfg)`
+  - `ToolBenchDataset` (class, line 300) `class ToolBenchDataset(Dataset)`
+  - `_collate` (method, line 319) `def _collate(batch)`
+  - `ReplayBuffer` (class, line 334) `class ReplayBuffer`
+  - `EWC` (class, line 365) `class EWC`
+  - `SwarmLiquidNeuron` (class, line 514) `class SwarmLiquidNeuron(Module)`
+  - `RoutingHead` (class, line 600) `class RoutingHead(Module)`
+  - `ContinualTrainer` (class, line 730) `class ContinualTrainer`
+  - `evaluate_routing` (method, line 1137) `def evaluate_routing(model, cfg, tok, lazyown_records, toolbench_records, logger)`
+  - `build_model_and_tok` (method, line 1195) `def build_model_and_tok(cl_cfg, logger)`
+  - `run_full_pipeline` (method, line 1217) `def run_full_pipeline(cl_cfg, logger)`
+  - `main` (method, line 1384) `def main()`
+  - `__init__` (method, line 180) `def __init__(self, maxsize, replay_ratio)`
+  - `update` (method, line 186) `def update(self, records, task_losses, logits)`
+  - `sample` (method, line 213) `def sample(self, batch_size)`
+  - `__len__` (method, line 223) `def __len__(self)`
+  - `__init__` (method, line 301) `def __init__(self, records, tok, cfg)`
+  - `__len__` (method, line 312) `def __len__(self)`
+  - `__getitem__` (method, line 315) `def __getitem__(self, idx)`
+  - `__init__` (method, line 343) `def __init__(self, records, max_size, tok, cfg)`
+  - `sample` (method, line 351) `def sample(self, n)`
+  - `__len__` (method, line 356) `def __len__(self)`
+  - `__init__` (method, line 380) `def __init__(self, model, cfg, cl_cfg, tok, logger)`
+  - `compute` (method, line 401) `def compute(self, toolbench_records)`
+  - `save` (method, line 465) `def save(self, path)`
+  - `load` (method, line 470) `def load(self, path)`
+  - `penalty` (method, line 481) `def penalty(self)`
+  - `__init__` (method, line 534) `def __init__(self, d_model, n_tools)`
+  - `forward` (method, line 551) `def forward(self, x)`
+  - `hebbian_update` (method, line 570) `def hebbian_update(self, pre, labels)`
+  - `__init__` (method, line 614) `def __init__(self, d_model, tool_names, n_experts, top_k, hidden_dim)`
+  - `n_tools` (method, line 651) `def n_tools(self)`
+  - `forward` (method, line 654) `def forward(self, hidden)`
+  - `label` (method, line 685) `def label(self, tool_name)`
+  - `predict` (method, line 688) `def predict(self, hidden)`
+  - `save` (method, line 695) `def save(self, path)`
+  - `load` (method, line 706) `def load(cls, d_model, path)`
+  - `__init__` (method, line 746) `def __init__(self, model, cfg, cl_cfg, tok, ewc, replay, logger, routing_head)`
+  - `_make_optimizer` (method, line 782) `def _make_optimizer(self)`
+  - `_lr_schedule` (method, line 821) `def _lr_schedule(optimizer, step, total, warmup, base_lr)`
+  - `_merge_with_replay` (method, line 830) `def _merge_with_replay(self, ids, tgt)`
+  - `_routing_accuracy` (method, line 863) `def _routing_accuracy(self, records)`
+  - `train` (method, line 923) `def train(self, lazyown_dataset, train_records, val_records)`
+  - `_accuracy` (method, line 1153) `def _accuracy(records, label)`
+  - `_hook` (method, line 887) `def _hook(m, i, o)`
+  - `_capture` (method, line 995) `def _capture(module, inp, out_h)`
+- Depends on: `ts_utils.py`
+
+## toposwarm_hybrid.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_import_agent` (function, line 85) `def _import_agent()`
+  - `HybridConfig` (class, line 115) `class HybridConfig`
+  - `_setup_logger` (method, line 164) `def _setup_logger(name, level)`
+  - `_safe_eval` (method, line 182) `def _safe_eval(expr)`
+  - `ToolResult` (class, line 218) `class ToolResult`
+  - `ToolRegistry` (class, line 231) `class ToolRegistry`
+  - `TopoSwarmRouter` (class, line 396) `class TopoSwarmRouter`
+  - `LanguageBackend` (class, line 465) `class LanguageBackend`
+  - `_template_answer` (method, line 887) `def _template_answer(tool_name, tool_arg, tool_result)`
+  - `_is_useful_output` (method, line 918) `def _is_useful_output(text, min_chars)`
+  - `HybridResult` (class, line 946) `class HybridResult`
+  - `HybridOrchestrator` (class, line 977) `class HybridOrchestrator`
+  - `main` (method, line 1051) `def main()`
+  - `_eval` (method, line 192) `def _eval(node)`
+  - `__init__` (method, line 221) `def __init__(self, tool_name, arg, output, ok)`
+  - `__str__` (method, line 227) `def __str__(self)`
+  - `__init__` (method, line 234) `def __init__(self, cfg)`
+  - `_register` (method, line 240) `def _register(self)`
+  - `resolve` (method, line 249) `def resolve(self, raw)`
+  - `route` (method, line 261) `def route(self, prompt)`
+  - `execute` (method, line 287) `def execute(self, tool_name, arg)`
+  - `_http_get` (method, line 299) `def _http_get(self, url)`
+  - `_register_all` (method, line 304) `def _register_all(self)`
+  - `tool_names` (method, line 387) `def tool_names(self)`
+  - `__init__` (method, line 409) `def __init__(self, cfg, registry, logger)`
+  - `_load` (method, line 428) `def _load(self)`
+  - `route` (method, line 441) `def route(self, prompt)`
+  - `__init__` (method, line 475) `def __init__(self, cfg, logger)`
+  - `_load` (method, line 486) `def _load(self)`
+  - `_load_tinystories` (method, line 507) `def _load_tinystories(self)`
+  - `_import_topogpt` (method, line 563) `def _import_topogpt(self)`
+  - `_load_checkpoint` (method, line 588) `def _load_checkpoint(self)`
+  - `generate` (method, line 859) `def generate(self, prompt, tool_result)`
+  - `pretty` (method, line 958) `def pretty(self)`
+  - `__init__` (method, line 988) `def __init__(self, cfg, logger)`
+  - `run` (method, line 1000) `def run(self, prompt)`
+  - `decorator` (method, line 241) `def decorator(fn)`
+  - `get_weather` (method, line 308) `def get_weather(city)`
+  - `search_web` (method, line 319) `def search_web(query)`
+  - `calc_expr` (method, line 331) `def calc_expr(expr)`
+  - `get_datetime` (method, line 335) `def get_datetime(tz_hint)`
+  - `translate` (method, line 341) `def translate(text)`
+  - `get_news` (method, line 373) `def get_news(topic)`
+  - `echo` (method, line 383) `def echo(text)`
+  - `_generate` (method, line 540) `def _generate(prompt_text)`
+  - `_cfg_score` (method, line 703) `def _cfg_score(cls)`
+  - `_generate` (method, line 812) `def _generate(prompt_text)`
+  - `_generate` (method, line 835) `def _generate(prompt_text)`
+
+## toposwarm_infer.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_import_agent` (function, line 51) `def _import_agent()`
+  - `InferenceConfig` (class, line 84) `class InferenceConfig`
+  - `_safe_eval` (method, line 138) `def _safe_eval(expr)`
+  - `ToolResult` (class, line 189) `class ToolResult`
+  - `ToolRegistry` (class, line 210) `class ToolRegistry`
+  - `ToolCallParser` (class, line 438) `class ToolCallParser`
+  - `InferenceEngine` (class, line 483) `class InferenceEngine`
+  - `InferenceResult` (class, line 883) `class InferenceResult`
+  - `_setup_logger` (method, line 920) `def _setup_logger(name, level)`
+  - `main` (method, line 938) `def main()`
+  - `_eval` (method, line 157) `def _eval(node)`
+  - `__init__` (method, line 192) `def __init__(self, tool_name, arg, output, ok)`
+  - `__str__` (method, line 205) `def __str__(self)`
+  - `__init__` (method, line 219) `def __init__(self, cfg)`
+  - `register` (method, line 229) `def register(self)`
+  - `resolve` (method, line 239) `def resolve(self, raw_name)`
+  - `execute` (method, line 262) `def execute(self, raw_name, arg)`
+  - `_http_get` (method, line 292) `def _http_get(self, url)`
+  - `_register_builtin_tools` (method, line 301) `def _register_builtin_tools(self)`
+  - `__init__` (method, line 446) `def __init__(self, cfg)`
+  - `parse` (method, line 453) `def parse(self, text)`
+  - `__init__` (method, line 495) `def __init__(self, cfg, agent_cfg, logger)`
+  - `_load_checkpoint` (method, line 521) `def _load_checkpoint(self)`
+  - `_encode_prompt` (method, line 538) `def _encode_prompt(self, text)`
+  - `_generate` (method, line 586) `def _generate(self, prompt_ids, max_new_tokens, temperature)`
+  - `run` (method, line 679) `def run(self, prompt)`
+  - `_template_answer` (method, line 818) `def _template_answer(self, tool_name, tool_arg, tool_result)`
+  - `_infer_tool_and_arg` (method, line 844) `def _infer_tool_and_arg(self, prompt)`
+  - `pretty` (method, line 895) `def pretty(self)`
+  - `decorator` (method, line 231) `def decorator(fn)`
+  - `get_weather` (method, line 305) `def get_weather(city)`
+  - `search_web` (method, line 323) `def search_web(query)`
+  - `calc_expr` (method, line 340) `def calc_expr(expr)`
+  - `get_datetime` (method, line 345) `def get_datetime(tz_hint)`
+  - `translate` (method, line 351) `def translate(text)`
+  - `get_news` (method, line 409) `def get_news(topic)`
+  - `echo` (method, line 428) `def echo(text)`
+- Imported by: `toposwarm_coevolve.py`
+
+## toposwarm_lazyown_orchestrator.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_resolve_lazyown_dir` (function, line 56) `def _resolve_lazyown_dir()`
+  - `_import_infer` (function, line 93) `def _import_infer()`
+  - `_import_agent` (function, line 113) `def _import_agent()`
+  - `_import_meta_harness` (function, line 128) `def _import_meta_harness()`
+  - `_import_routing_head` (function, line 147) `def _import_routing_head()`
+  - `SessionContext` (class, line 170) `class SessionContext`
+  - `LazyOwnBridge` (class, line 227) `class LazyOwnBridge`
+  - `LazyOwnToolRegistry` (class, line 372) `class LazyOwnToolRegistry(ToolRegistry)`
+  - `infer_lazyown_tool` (method, line 691) `def infer_lazyown_tool(prompt)`
+  - `_extract_arg` (method, line 716) `def _extract_arg(prompt, tool_name)`
+  - `LazyOwnOrchestrator` (class, line 764) `class LazyOwnOrchestrator`
+  - `generate_dataset` (method, line 1092) `def generate_dataset(output_path, bridge)`
+  - `finetune_on_lazyown` (method, line 1173) `def finetune_on_lazyown(dataset_path, agent_cfg, logger)`
+  - `run_mcp_server` (method, line 1250) `def run_mcp_server(orchestrator)`
+  - `_setup_logger` (method, line 1329) `def _setup_logger(level)`
+  - `main` (method, line 1346) `def main()`
+  - `to_prompt_prefix` (method, line 181) `def to_prompt_prefix(self)`
+  - `update` (method, line 195) `def update(self, tool_name, arg, output, ok)`
+  - `__init__` (method, line 251) `def __init__(self, lazyown_dir, default_timeout)`
+  - `available` (method, line 257) `def available(self)`
+  - `run` (method, line 265) `def run(self, command, timeout)`
+  - `get_config` (method, line 344) `def get_config(self)`
+  - `set_config` (method, line 353) `def set_config(self, key, value)`
+  - `__init__` (method, line 455) `def __init__(self, cfg, bridge)`
+  - `_register_lazyown_tools` (method, line 460) `def _register_lazyown_tools(self)`
+  - `__init__` (method, line 780) `def __init__(self, cfg, agent_cfg, bridge, logger, load_model, meta_cfg)`
+  - `_load_routing_head` (method, line 825) `def _load_routing_head(self)`
+  - `_neural_route` (method, line 847) `def _neural_route(self, prompt)`
+  - `run` (method, line 887) `def run(self, prompt)`
+  - `list_tools` (method, line 1273) `def list_tools()`
+  - `call_tool` (method, line 1307) `def call_tool(name, arguments)`
+  - `_serve` (method, line 1317) `def _serve()`
+  - `run_command` (method, line 466) `def run_command(arg)`
+  - `get_config` (method, line 470) `def get_config(_)`
+  - `set_config` (method, line 475) `def set_config(arg)`
+  - `list_modules` (method, line 483) `def list_modules(_)`
+  - `get_beacons` (method, line 487) `def get_beacons(_)`
+  - `c2_command` (method, line 491) `def c2_command(arg)`
+  - `run_api` (method, line 495) `def run_api(arg)`
+  - `list_sessions` (method, line 499) `def list_sessions(_)`
+  - `read_session_file` (method, line 507) `def read_session_file(arg)`
+  - `c2_status` (method, line 514) `def c2_status(_)`
+  - `create_addon` (method, line 518) `def create_addon(arg)`
+  - `list_addons` (method, line 522) `def list_addons(_)`
+  - `list_plugins` (method, line 529) `def list_plugins(_)`
+  - `poll_events` (method, line 536) `def poll_events(_)`
+  - `ack_event` (method, line 540) `def ack_event(arg)`
+  - `add_rule` (method, line 544) `def add_rule(arg)`
+  - `list_event_rules` (method, line 548) `def list_event_rules(_)`
+  - `heartbeat_status` (method, line 552) `def heartbeat_status(_)`
+  - `session_init` (method, line 556) `def session_init(arg)`
+  - `discover_commands` (method, line 560) `def discover_commands(arg)`
+  - `phase_guide` (method, line 564) `def phase_guide(arg)`
+  - `command_help` (method, line 568) `def command_help(arg)`
+  - `add_target` (method, line 572) `def add_target(arg)`
+  - `list_targets` (method, line 578) `def list_targets(_)`
+  - `run_agent` (method, line 582) `def run_agent(arg)`
+  - `agent_status` (method, line 586) `def agent_status(arg)`
+  - `agent_result` (method, line 590) `def agent_result(arg)`
+  - `list_agents` (method, line 594) `def list_agents(_)`
+  - `set_active_target` (method, line 598) `def set_active_target(arg)`
+  - `campaign_sitrep` (method, line 602) `def campaign_sitrep(_)`
+  - `c2_notes` (method, line 606) `def c2_notes(arg)`
+  - `credentials` (method, line 610) `def credentials(_)`
+  - `report_update` (method, line 614) `def report_update(arg)`
+  - `campaign_lessons` (method, line 618) `def campaign_lessons(_)`
+  - `auto_populate` (method, line 622) `def auto_populate(_)`
+  - `session_state` (method, line 626) `def session_state(_)`
+  - `recommend_next` (method, line 630) `def recommend_next(_)`
+  - `timeline` (method, line 634) `def timeline(_)`
+  - `c2_vuln_analysis` (method, line 638) `def c2_vuln_analysis(arg)`
+  - `c2_redop` (method, line 642) `def c2_redop(arg)`
+  - `c2_search_agent` (method, line 646) `def c2_search_agent(arg)`
+  - `c2_script` (method, line 650) `def c2_script(arg)`
+  - `c2_adversary` (method, line 654) `def c2_adversary(arg)`
+  - `policy_status` (method, line 658) `def policy_status(_)`
+  - `auto_loop` (method, line 662) `def auto_loop(arg)`
+  - `create_tool` (method, line 666) `def create_tool(arg)`
+  - `llm_ask` (method, line 670) `def llm_ask(arg)`
+  - `inject_objective` (method, line 674) `def inject_objective(arg)`
+  - `next_objective` (method, line 678) `def next_objective(_)`
+  - `read_prompt` (method, line 682) `def read_prompt(arg)`
+  - `_hook` (method, line 863) `def _hook(module, inp, out)`
+- Imported by: `tests/test_orchestrator.py`, `tests/test_orchestrator.py`, `tests/test_orchestrator.py`, `tests/test_orchestrator.py`, `toposwarm_coevolve.py`, `toposwarm_coevolve.py`, `toposwarm_lazyown_sweep.py`
+
+## toposwarm_lazyown_sweep.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `generate_prompts` (function, line 130) `def generate_prompts(n)`
+  - `setup_logger` (function, line 145) `def setup_logger()`
+  - `run_sweep` (function, line 155) `def run_sweep(prompts, bridge, logger)`
+  - `write_results` (function, line 189) `def write_results(results, out_path)`
+  - `main` (function, line 223) `def main()`
+- Depends on: `topo_swarm_agent.py`, `toposwarm_lazyown_orchestrator.py`
+
+## toposwarm_meta_harness.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `MetaHarnessConfig` (class, line 60) `class MetaHarnessConfig`
+  - `_setup_logger` (method, line 95) `def _setup_logger(name, level)`
+  - `_stable_id` (method, line 107) `def _stable_id(text)`
+  - `_now_iso` (method, line 112) `def _now_iso()`
+  - `MetaHarnessLogger` (class, line 121) `class MetaHarnessLogger`
+  - `DenseMemoryRetriever` (class, line 322) `class DenseMemoryRetriever`
+  - `MetaHarnessMemory` (class, line 430) `class MetaHarnessMemory`
+  - `EnvironmentBootstrapper` (class, line 583) `class EnvironmentBootstrapper`
+  - `DraftVerifier` (class, line 738) `class DraftVerifier`
+  - `ParetoFrontier` (class, line 837) `class ParetoFrontier`
+  - `MetaHarnessOptimizer` (class, line 948) `class MetaHarnessOptimizer`
+  - `_demo` (method, line 1013) `def _demo()`
+  - `__init__` (method, line 138) `def __init__(self, cfg, logger)`
+  - `_count_existing_runs` (method, line 149) `def _count_existing_runs(self)`
+  - `_next_run_dir` (method, line 152) `def _next_run_dir(self, hint)`
+  - `_prune_old` (method, line 158) `def _prune_old(self)`
+  - `log_run` (method, line 176) `def log_run(self, harness_snapshot, trace_steps, score, reasoning)`
+  - `list_runs` (method, line 229) `def list_runs(self, n)`
+  - `grep_traces` (method, line 238) `def grep_traces(self, pattern, max_results)`
+  - `get_scores` (method, line 257) `def get_scores(self)`
+  - `get_pareto_runs` (method, line 269) `def get_pareto_runs(self, metrics)`
+  - `__init__` (method, line 335) `def __init__(self, logger)`
+  - `add` (method, line 362) `def add(self, text, episode)`
+  - `_rebuild_tfidf` (method, line 368) `def _rebuild_tfidf(self)`
+  - `bulk_index` (method, line 376) `def bulk_index(self, texts, episodes)`
+  - `search` (method, line 392) `def search(self, query, top_k)`
+  - `_search_st` (method, line 401) `def _search_st(self, query, top_k)`
+  - `_search_tfidf` (method, line 412) `def _search_tfidf(self, query, top_k)`
+  - `__init__` (method, line 441) `def __init__(self, logger, capacity, dense)`
+  - `_build_index` (method, line 453) `def _build_index(self)`
+  - `_load_episode` (method, line 464) `def _load_episode(self, run_dir)`
+  - `_episode_text` (method, line 482) `def _episode_text(score, traces)`
+  - `store` (method, line 493) `def store(self, score, traces)`
+  - `retrieve_similar` (method, line 505) `def retrieve_similar(self, prompt, tool_hint, top_k, min_score)`
+  - `retrieve_confirmers_and_challengers` (method, line 549) `def retrieve_confirmers_and_challengers(self, draft_tool, prompt, top_k)`
+  - `_tokenise` (method, line 573) `def _tokenise(text)`
+  - `__init__` (method, line 592) `def __init__(self, cfg, logger)`
+  - `gather_snapshot` (method, line 596) `def gather_snapshot(self, bridge)`
+  - `_parse_list` (method, line 680) `def _parse_list(raw)`
+  - `format_snapshot` (method, line 687) `def format_snapshot(self, snapshot, max_chars)`
+  - `__init__` (method, line 754) `def __init__(self, cfg, memory, keyword_router, logger)`
+  - `route` (method, line 766) `def route(self, prompt, snapshot_text)`
+  - `_reextract_arg` (method, line 820) `def _reextract_arg(prompt, tool_name, fallback)`
+  - `__init__` (method, line 846) `def __init__(self, cfg, logger)`
+  - `add` (method, line 855) `def add(self, config, metrics)`
+  - `select_best` (method, line 875) `def select_best(self, preference)`
+  - `frontier_configs` (method, line 907) `def frontier_configs(self)`
+  - `_is_on_frontier` (method, line 911) `def _is_on_frontier(self, candidate)`
+  - `_prune` (method, line 933) `def _prune(self)`
+  - `__init__` (method, line 965) `def __init__(self, cfg)`
+  - `set_router` (method, line 980) `def set_router(self, keyword_router)`
+  - `log_run` (method, line 986) `def log_run(self, harness_snapshot, trace_steps, score, reasoning)`
+  - `get_best_harness_config` (method, line 999) `def get_best_harness_config(self)`
+  - `query_experience` (method, line 1003) `def query_experience(self, prompt, tool_hint, top_k)`
+- Imported by: `meta_harness_proposer.py`, `toposwarm_coevolve.py`, `toposwarm_coevolve.py`
+
+## ts_utils.py
+- Layer: utility
+- Language: py
+- Symbols:
+  - `setup_logger` (function, line 25) `def setup_logger(name, level)`
+  - `safe_eval` (function, line 42) `def safe_eval(expr)`
+  - `import_module` (function, line 62) `def import_module(name)`
+  - `make_cached_encode` (function, line 86) `def make_cached_encode(tokenizer)`
+  - `make_cached_tool_token` (function, line 100) `def make_cached_tool_token(tokenizer)`
+  - `_cached_encode` (function, line 94) `def _cached_encode(text)`
+  - `_cached_tool_token` (function, line 103) `def _cached_tool_token(tool_name)`
+- Imported by: `topo_swarm_agent.py`, `toposwarm_continual_trainer.py`, `toposwarm_continual_trainer.py`
