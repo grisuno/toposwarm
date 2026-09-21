@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:54:14Z",
+  "prompt": "test for SQL injection on 192.168.1.1",
+  "success": true,
+  "latency_ms": 13816.974589979509,
+  "context_chars": 1583,
+  "output_chars": 512
+}

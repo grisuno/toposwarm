@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:09:01Z",
+  "prompt": "send command to beacon",
+  "success": true,
+  "latency_ms": 2278.6314569821116,
+  "context_chars": 1560,
+  "output_chars": 512
+}

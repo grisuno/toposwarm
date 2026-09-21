@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:52:50Z",
+  "prompt": "check system info",
+  "success": true,
+  "latency_ms": 2300.027486984618,
+  "context_chars": 1550,
+  "output_chars": 512
+}

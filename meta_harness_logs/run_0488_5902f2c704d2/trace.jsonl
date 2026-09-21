@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "Show all active sessions", "tool": "lazyown_list_sessions", "arg": "Show all active sessions", "output": "No sessions directory found", "ok": true, "t_ms": 7.818838988896459}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T02:11:55Z",
+  "prompt": "Show all active sessions",
+  "success": true,
+  "latency_ms": 0.591418007388711,
+  "context_chars": 1564,
+  "output_chars": 113
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:55:53Z",
+  "prompt": "run nmap on victim.corp",
+  "success": true,
+  "latency_ms": 13693.074836017331,
+  "context_chars": 1553,
+  "output_chars": 512
+}

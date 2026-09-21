@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:46:09Z",
+  "prompt": "generate reverse shell",
+  "success": true,
+  "latency_ms": 2311.2299700151198,
+  "context_chars": 1560,
+  "output_chars": 512
+}

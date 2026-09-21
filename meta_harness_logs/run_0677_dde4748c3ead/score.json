@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:53:35Z",
+  "prompt": "check subdomains of target.local",
+  "success": true,
+  "latency_ms": 2364.030240016291,
+  "context_chars": 1580,
+  "output_chars": 512
+}

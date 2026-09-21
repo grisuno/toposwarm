@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:17:02Z",
+  "prompt": "check logs",
+  "success": true,
+  "latency_ms": 2371.3954520062543,
+  "context_chars": 1536,
+  "output_chars": 512
+}

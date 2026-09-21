@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:39:41Z",
+  "prompt": "test for SSRF on 10.10.11.78",
+  "success": true,
+  "latency_ms": 14416.9574950065,
+  "context_chars": 1574,
+  "output_chars": 512
+}

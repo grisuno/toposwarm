@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "list sessions", "tool": "lazyown_list_sessions", "arg": "list sessions", "output": "hive\ncve_cache\nuploads\nimplant\nlin\nphp\nai_model\n127.0.0.1\nreports\nphishing\nlogs\nc\nwin\nc2_profiles\ncaptured_images", "ok": true, "t_ms": 5.016277980757877}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:52:42Z",
+  "prompt": "start listener on port 4444",
+  "success": true,
+  "latency_ms": 2319.0709649934433,
+  "context_chars": 1570,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T02:11:39Z",
+  "prompt": "Scan for open ports on 10.10.11.78",
+  "success": true,
+  "latency_ms": 13839.616178011056,
+  "context_chars": 1580,
+  "output_chars": 512
+}

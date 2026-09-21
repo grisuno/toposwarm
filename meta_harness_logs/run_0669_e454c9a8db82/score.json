@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:52:45Z",
+  "prompt": "enumerate DNS for target.local",
+  "success": true,
+  "latency_ms": 2309.892975987168,
+  "context_chars": 1576,
+  "output_chars": 512
+}

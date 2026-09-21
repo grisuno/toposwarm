@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:14:30Z",
+  "prompt": "dump SAM database",
+  "success": true,
+  "latency_ms": 2520.711676974315,
+  "context_chars": 1550,
+  "output_chars": 512
+}

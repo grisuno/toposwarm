@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:53:15Z",
+  "prompt": "enumerate DNS for 172.16.0.5",
+  "success": true,
+  "latency_ms": 14095.669300993904,
+  "context_chars": 1573,
+  "output_chars": 512
+}

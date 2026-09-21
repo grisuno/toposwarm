@@ -230,9 +230,9 @@ def main() -> None:
     args = parser.parse_args()
 
     logger = setup_logger()
-    bridge = LazyOwnBridge(
-        lazyown_dir=Path(args.lazyown_dir) if args.lazyown_dir else Path.home() / "LazyOwn"
-    )
+    if args.lazyown_dir:
+        os.environ["LAZYOWN_DIR"] = str(Path(args.lazyown_dir).expanduser().resolve())
+    bridge = LazyOwnBridge()
     logger.info("LazyOwn dir: %s (available=%s)", bridge.lazyown_dir, bridge.available)
 
     if not bridge.available:

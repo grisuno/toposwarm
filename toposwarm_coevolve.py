@@ -325,7 +325,8 @@ class HarnessEvaluator:
             if self.use_mock_bridge:
                 bridge: Any = MockLazyOwnBridge()
             else:
-                bridge = LazyOwnBridge(self.lazyown_dir)
+                os.environ["LAZYOWN_DIR"] = str(self.lazyown_dir)
+                bridge = LazyOwnBridge()
                 if not bridge.available:
                     self.logger.debug("LazyOwn not found at %s — using mock bridge", self.lazyown_dir)
                     bridge = MockLazyOwnBridge()
@@ -489,8 +490,10 @@ class CoEvolutionEngine:
 
     def run(self) -> None:
         # Detect whether we are running against a real LazyOwn or mock
+        import os
         from toposwarm_lazyown_orchestrator import LazyOwnBridge
-        real_bridge = LazyOwnBridge(self.lazyown_dir)
+        os.environ["LAZYOWN_DIR"] = str(self.lazyown_dir)
+        real_bridge = LazyOwnBridge()
         mode = "REAL" if real_bridge.available else "MOCK"
         self.logger.info(
             "Starting co-evolution: gens=%d pop=%d weight_steps=%d mode=%s",

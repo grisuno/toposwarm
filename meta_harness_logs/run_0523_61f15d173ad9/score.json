@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:39:18Z",
+  "prompt": "enumerate services on 192.168.1.1",
+  "success": true,
+  "latency_ms": 14622.78613098897,
+  "context_chars": 1579,
+  "output_chars": 512
+}

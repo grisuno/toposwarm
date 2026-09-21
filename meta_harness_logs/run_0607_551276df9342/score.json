@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:46:43Z",
+  "prompt": "list active C2 sessions",
+  "success": true,
+  "latency_ms": 4.907966998871416,
+  "context_chars": 1562,
+  "output_chars": 113
+}

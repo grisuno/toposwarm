@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "List all available LazyOwn modules", "tool": "lazyown_list_modules", "arg": "List all available LazyOwn modules", "output": "recon\nscan\nenum\nlinux-exploit-suggester\nlazynmap", "ok": true, "t_ms": 0.014963996363803744}

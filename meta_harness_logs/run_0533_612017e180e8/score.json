@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-17T00:17:33Z",
+  "prompt": "run fuzzing on target.local",
+  "tool": "lazyown_run_command",
+  "arg_preview": "fuzzing on target",
+  "route_source": "draft_verify",
+  "route_confidence": 0.99,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 2809.74,
+  "context_chars": 468,
+  "output_chars": 512
+}

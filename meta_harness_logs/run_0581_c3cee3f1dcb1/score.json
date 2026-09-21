@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:45:07Z",
+  "prompt": "discover hosts in 192.168.1.1",
+  "success": true,
+  "latency_ms": 2314.494933001697,
+  "context_chars": 1574,
+  "output_chars": 512
+}

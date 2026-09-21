@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "Check C2 server status", "tool": "lazyown_c2_command", "arg": "Check C2 server status", "output": "C2 server: RUNNING\nListeners: 2", "ok": true, "t_ms": 7.810918003087863}

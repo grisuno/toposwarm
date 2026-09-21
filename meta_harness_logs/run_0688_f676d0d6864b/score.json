@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:54:13Z",
+  "prompt": "run exploit against 10.10.11.78",
+  "success": true,
+  "latency_ms": 2334.897625987651,
+  "context_chars": 1565,
+  "output_chars": 512
+}

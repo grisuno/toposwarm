@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:24:12Z",
+  "prompt": "generate a macro payload",
+  "success": true,
+  "latency_ms": 7279.4188859988935,
+  "context_chars": 1564,
+  "output_chars": 512
+}

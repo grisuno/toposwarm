@@ -1,0 +1,25 @@
+{
+  "coevolve_cfg": {
+    "LOG_DIR": "meta_harness_logs",
+    "MAX_LOGGED_RUNS": 500,
+    "COMPRESS_OLD_TRACES": false,
+    "BOOTSTRAP_ENABLED": true,
+    "BOOTSTRAP_MAX_FILES": 31,
+    "BOOTSTRAP_TIMEOUT": 5.0,
+    "DRAFT_VERIFY_ENABLED": false,
+    "DRAFT_VERIFY_THRESHOLD": 0.6218879205246707,
+    "RETRIEVAL_TOP_K": 5,
+    "FRONTIER_MAX_SIZE": 20,
+    "FRONTIER_METRICS": [
+      "success_rate",
+      "latency_ms",
+      "context_chars"
+    ],
+    "MEMORY_CAPACITY": 2000,
+    "MEMORY_HALFLIFE": 100,
+    "LOG_LEVEL": "INFO"
+  },
+  "tool_name": "lazyown_credentials",
+  "bootstrap_len": 1516,
+  "model_loaded": false
+}

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-17T00:15:51Z",
+  "prompt": "list available tools",
+  "tool": "lazyown_run_command",
+  "arg_preview": "set rhost 10.10.11.78\nlazynmap",
+  "route_source": "draft_verify",
+  "route_confidence": 0.99,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 1718.81,
+  "context_chars": 474,
+  "output_chars": 512
+}

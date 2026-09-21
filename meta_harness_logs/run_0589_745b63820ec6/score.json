@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:45:30Z",
+  "prompt": "extract kerberos tickets",
+  "success": true,
+  "latency_ms": 2312.6675070088822,
+  "context_chars": 1564,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:45:04Z",
+  "prompt": "exploit 10.10.11.78",
+  "success": true,
+  "latency_ms": 2333.2000960072037,
+  "context_chars": 1554,
+  "output_chars": 512
+}

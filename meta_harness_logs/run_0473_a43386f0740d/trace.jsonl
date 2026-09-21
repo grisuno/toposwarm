@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "Auto-populate the configuration from target scan", "tool": "lazyown_run_command", "arg": "Auto-populate the configuration from target scan", "output": "Mock output for command: Auto-populate the configuration from target scan", "ok": true, "t_ms": 0.015449011698365211}

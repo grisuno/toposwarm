@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-16T16:49:31Z",
+  "prompt": "list available modules",
+  "tool": "lazyown_list_modules",
+  "arg_preview": "list available modules",
+  "route_source": "draft_verify",
+  "route_confidence": 0.769,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 2953.17,
+  "context_chars": 468,
+  "output_chars": 512
+}

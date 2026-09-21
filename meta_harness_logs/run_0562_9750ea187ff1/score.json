@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:43:23Z",
+  "prompt": "run nmap on 10.10.11.78",
+  "success": true,
+  "latency_ms": 13705.796567024663,
+  "context_chars": 1549,
+  "output_chars": 512
+}

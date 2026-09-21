@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-17T00:16:32Z",
+  "prompt": "run nmap on 10.10.11.78",
+  "tool": "lazyown_run_command",
+  "arg_preview": "nmap on 10",
+  "route_source": "draft_verify",
+  "route_confidence": 0.99,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 28228.16,
+  "context_chars": 457,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:49:43Z",
+  "prompt": "what ports are open on 192.168.1.1",
+  "success": true,
+  "latency_ms": 13632.229948008899,
+  "context_chars": 1580,
+  "output_chars": 512
+}

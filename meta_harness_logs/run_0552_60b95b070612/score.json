@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:13:03Z",
+  "prompt": "test for LFI on target.local",
+  "success": true,
+  "latency_ms": 2498.1830129981972,
+  "context_chars": 1572,
+  "output_chars": 512
+}

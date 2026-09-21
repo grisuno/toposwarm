@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:37:35Z",
+  "prompt": "what ports are open on 10.10.11.78",
+  "success": true,
+  "latency_ms": 14569.662149006035,
+  "context_chars": 1580,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:09:23Z",
+  "prompt": "run a full port scan on target.local",
+  "success": true,
+  "latency_ms": 2296.0548810078762,
+  "context_chars": 1578,
+  "output_chars": 512
+}

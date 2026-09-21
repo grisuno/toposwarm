@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:53:22Z",
+  "prompt": "test for SSRF on 192.168.1.1",
+  "success": true,
+  "latency_ms": 13706.288479006616,
+  "context_chars": 1574,
+  "output_chars": 512
+}

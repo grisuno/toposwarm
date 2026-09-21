@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:37:19Z",
+  "prompt": "start listener on port 8080",
+  "success": true,
+  "latency_ms": 2450.281855999492,
+  "context_chars": 1570,
+  "output_chars": 512
+}

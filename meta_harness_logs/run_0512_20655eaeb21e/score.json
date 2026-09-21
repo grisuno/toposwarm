@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:53:34Z",
+  "prompt": "generate shellcode",
+  "success": true,
+  "latency_ms": 7179.208241024753,
+  "context_chars": 1552,
+  "output_chars": 512
+}

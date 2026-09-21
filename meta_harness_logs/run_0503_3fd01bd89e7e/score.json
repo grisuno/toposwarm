@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:15:44Z",
+  "prompt": "find vulnerabilities on 10.10.11.78",
+  "success": true,
+  "latency_ms": 2381.7445049935486,
+  "context_chars": 1586,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:56:08Z",
+  "prompt": "test for LFI on 192.168.1.1",
+  "success": true,
+  "latency_ms": 13822.92472399422,
+  "context_chars": 1573,
+  "output_chars": 512
+}

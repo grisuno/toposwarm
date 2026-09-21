@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-06T05:09:09Z",
+  "prompt": "run nmap on 192.168.1.1",
+  "success": true,
+  "latency_ms": 23199.942129984265,
+  "context_chars": 1550,
+  "output_chars": 512
+}

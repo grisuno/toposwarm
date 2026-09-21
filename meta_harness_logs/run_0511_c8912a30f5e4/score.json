@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:09:18Z",
+  "prompt": "network reconnaissance on 10.10.11.78",
+  "success": true,
+  "latency_ms": 13814.369390020147,
+  "context_chars": 1583,
+  "output_chars": 512
+}

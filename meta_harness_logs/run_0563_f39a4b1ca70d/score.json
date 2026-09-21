@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:43:25Z",
+  "prompt": "check for XSS on victim.corp",
+  "success": true,
+  "latency_ms": 2309.732711990364,
+  "context_chars": 1572,
+  "output_chars": 512
+}

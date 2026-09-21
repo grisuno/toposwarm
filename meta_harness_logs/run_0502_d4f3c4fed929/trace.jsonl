@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "exploit victim.corp", "tool": "lazyown_run_command", "arg": "[Context] Last action: lazyown_run_command(enumerate DNS for victim.corp) | Phase: exploit\n\nexploit victim.corp", "output": "Execution error: Command contains forbidden characters: {'&', '$', '|', '`', ';', ')', '>', '(', '<'}", "ok": false, "t_ms": 29.677284008357674}

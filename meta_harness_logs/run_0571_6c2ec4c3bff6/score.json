@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:44:11Z",
+  "prompt": "find vulnerabilities on target.local",
+  "success": true,
+  "latency_ms": 2305.7894079829566,
+  "context_chars": 1588,
+  "output_chars": 512
+}

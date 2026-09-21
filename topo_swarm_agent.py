@@ -12,7 +12,8 @@ Key design decisions
 --------------------
 - Single-file, self-contained, production-ready.
 - Every numerical constant lives inside a typed dataclass (SwarmConfig).
-- Architecture: micro quaternionic torus brain (d_model=64, ~2M params)
+- Architecture: quaternionic torus brain (default SCALE='xl150m': d_model=1024,
+  12 layers, ~150M params; SCALE='micro' keeps the legacy d_model=64 model)
   with a 1-D spectral autoencoder bottleneck acting as the function-call
   filter (SpectralBottleneck) and a two-level HRM (L=action / H=strategy).
 - Swarm: N lightweight agent instances share the same weight tensor but
@@ -85,11 +86,18 @@ class SwarmConfig:
     """
     All architectural and training hyper-parameters in one place.
 
-    Scale target: fit inside 6 GB VRAM on an RTX 2060.
-    - Weights: ~2 M params × 4 bytes = ~8 MB
-    - Activations (B=4, S=256): ~256 MB peak with gradient checkpointing
+    Scale target: SCALE='xl150m' (~150M params) trains on 12-16 GB VRAM with
+    AMP + gradient checkpointing; SCALE='micro' fits inside 6 GB (RTX 2060).
+    - Weights (xl150m, bf16): ~150 M params × 2 bytes = ~300 MB
+    - Activations (B=2, S=512): ~1-2 GB peak with gradient checkpointing
     - Swarm overhead: N_AGENTS × D_MODEL × 4 bytes per Berry-phase tensor
     """
+
+    # --- Scale preset ----------------------------------------------------
+    # 'xl150m': ~150M-param model (default).  'micro': legacy ~3M-param model
+    # (d_model=64, compatible with old checkpoints_toposwarm/).  'custom':
+    # respect the field values below as written (no preset overwrite).
+    SCALE: str = "xl150m"
 
     # --- Device ----------------------------------------------------------
     DEVICE: str = field(default_factory=lambda: "cuda" if torch.cuda.is_available() else "cpu")
@@ -102,17 +110,18 @@ class SwarmConfig:
     # TOOL_TOKEN_OFFSET + TOOL_VOCAB_SIZE.  It is recomputed in __post_init__
     # so the value set here is overwritten automatically.
     VOCAB_SIZE: int = 50512      # placeholder; overwritten in __post_init__
-    MAX_SEQ_LEN: int = 256
+    MAX_SEQ_LEN: int = 512       # micro preset restores 256
 
-    # --- Core architecture (micro: ~2 M params) --------------------------
-    D_MODEL: int = 64          # must be divisible by 4 (quaternions)
-    N_HEADS: int = 4
-    N_KV_HEADS: int = 1        # GQA: 1 KV head shared across 4 query heads
-    N_LAYERS: int = 4
+    # --- Core architecture (defaults = xl150m: ~150 M params) -------------
+    # micro preset restores: D_MODEL=64, N_HEADS=4, N_KV_HEADS=1, N_LAYERS=4.
+    D_MODEL: int = 1024        # must be divisible by 4 (quaternions)
+    N_HEADS: int = 16          # 1024 / 16 = 64-dim heads
+    N_KV_HEADS: int = 4        # GQA: 4 KV heads shared across 16 query heads
+    N_LAYERS: int = 12
     DROPOUT: float = 0.1
 
     # --- FFN / SwiGLU -------------------------------------------------------
-    FFN_HIDDEN_DIM: int = 128
+    FFN_HIDDEN_DIM: int = 1792
 
     # --- Mixture-of-Experts (MiMo V2 style, opt-in) ----------------------
     # Set USE_MOE=True to replace the dense SwiGLU in every transformer layer
@@ -121,7 +130,7 @@ class SwarmConfig:
     USE_MOE: bool = False
     N_MOE_EXPERTS: int = 4      # total experts per MoE layer
     MOE_TOP_K: int = 2          # experts activated per token
-    MOE_EXPERT_DIM: int = 128   # hidden dim of each expert (same as FFN_HIDDEN_DIM)
+    MOE_EXPERT_DIM: int = 1792  # hidden dim of each expert (same as FFN_HIDDEN_DIM)
 
     # --- Quaternion torus topology (8 nodes = 4 angular × 2 radial) ------
     TORUS_RADIAL_BINS: int = 2
@@ -135,7 +144,7 @@ class SwarmConfig:
     AE_RECON_WEIGHT: float = 0.01
 
     # --- HRM: fast L-module (action/syntax) + slow H-module (strategy) --
-    HRM_HIDDEN_DIM: int = 64
+    HRM_HIDDEN_DIM: int = 512
     HRM_N_CYCLES: int = 2      # H-level cycles per token
     HRM_T_STEPS: int = 2       # L-level steps per H-cycle
     HRM_ACT_EPSILON: float = 0.1
@@ -149,17 +158,17 @@ class SwarmConfig:
     N_AGENTS: int = 3          # instantiated simultaneously
     BERRY_PHASE_BASE: float = math.pi / 4.0  # offset per agent slot
 
-    # --- Training --------------------------------------------------------
-    BATCH_SIZE: int = 4
-    GRAD_ACCUM_STEPS: int = 8
-    LEARNING_RATE: float = 3e-4
+    # --- Training (defaults = xl150m; micro preset restores B=4/accum=8) --
+    BATCH_SIZE: int = 2            # micro-batch; effective batch = B × ACCUM
+    GRAD_ACCUM_STEPS: int = 16     # 2 × 16 = 32 effective
+    LEARNING_RATE: float = 1.5e-4  # lower LR for the 150M model
     WEIGHT_DECAY: float = 0.1
     EPOCHS: int = 3
-    WARMUP_RATIO: float = 0.05
+    WARMUP_RATIO: float = 0.06
     GRADIENT_CLIP_NORM: float = 1.0
     GRADIENT_CHECKPOINTING: bool = True
     CHUNKED_CE_CHUNK_SIZE: int = 128
-    TORUS_TOKEN_CHUNK_SIZE: int = 64
+    TORUS_TOKEN_CHUNK_SIZE: int = 32
 
     # --- Grokking / kappa detector ---------------------------------------
     KAPPA_WINDOW: int = 50
@@ -180,7 +189,7 @@ class SwarmConfig:
     DATASET_SPLIT: str = "train"
     DATASET_LOCAL_PATH: str = "data_toolbench/toolbench.jsonl"
     DATA_DIR: str = "data_toolbench"
-    MAX_TRAIN_TOKENS: int = 5_000_000   # 5 M tokens for micro run
+    MAX_TRAIN_TOKENS: int = 100_000_000  # 100 M tokens for the 150M run (micro: 5 M)
 
     # --- Tool token management -------------------------------------------
     # Tool tokens occupy a reserved block ABOVE the standard GPT-2 vocab.
@@ -191,7 +200,8 @@ class SwarmConfig:
     TOOL_TOKEN_OFFSET: int = 50257       # first tool-token id (= gpt2 vocab end)
 
     # --- Checkpointing ---------------------------------------------------
-    CHECKPOINT_DIR: str = "checkpoints_toposwarm"
+    # NOTE: xl150m uses its own dir so legacy micro checkpoints are untouched.
+    CHECKPOINT_DIR: str = "checkpoints_toposwarm_xl150m"
     CHECKPOINT_INTERVAL_MINUTES: int = 5
 
     # --- Logging ---------------------------------------------------------
@@ -200,6 +210,36 @@ class SwarmConfig:
     LOG_LEVEL: str = "INFO"
 
     def __post_init__(self) -> None:
+        # Scale presets.  SCALE='custom' respects manual field values.
+        # SCALE='micro' restores the legacy ~3M-param model and its paths.
+        _PRESETS = {
+            "micro": dict(
+                D_MODEL=64, N_HEADS=4, N_KV_HEADS=1, N_LAYERS=4,
+                FFN_HIDDEN_DIM=128, MOE_EXPERT_DIM=128, HRM_HIDDEN_DIM=64,
+                MAX_SEQ_LEN=256, BATCH_SIZE=4, GRAD_ACCUM_STEPS=8,
+                LEARNING_RATE=3e-4, WARMUP_RATIO=0.05,
+                MAX_TRAIN_TOKENS=5_000_000,
+                CHECKPOINT_DIR="checkpoints_toposwarm",
+                TORUS_TOKEN_CHUNK_SIZE=64,
+            ),
+            "xl150m": dict(
+                D_MODEL=1024, N_HEADS=16, N_KV_HEADS=4, N_LAYERS=12,
+                FFN_HIDDEN_DIM=1792, MOE_EXPERT_DIM=1792, HRM_HIDDEN_DIM=512,
+                MAX_SEQ_LEN=512, BATCH_SIZE=2, GRAD_ACCUM_STEPS=16,
+                LEARNING_RATE=1.5e-4, WARMUP_RATIO=0.06,
+                MAX_TRAIN_TOKENS=100_000_000,
+                CHECKPOINT_DIR="checkpoints_toposwarm_xl150m",
+                TORUS_TOKEN_CHUNK_SIZE=32,
+            ),
+        }
+        if self.SCALE in _PRESETS:
+            for _k, _v in _PRESETS[self.SCALE].items():
+                setattr(self, _k, _v)
+        elif self.SCALE != "custom":
+            raise ValueError(
+                f"Unknown SCALE={self.SCALE!r}; expected one of "
+                f"{sorted(list(_PRESETS) + ['custom'])}"
+            )
         assert self.D_MODEL % 4 == 0, "D_MODEL must be divisible by 4 for quaternions"
         assert self.D_MODEL % self.N_HEADS == 0, "D_MODEL must be divisible by N_HEADS"
         assert self.N_HEADS % self.N_KV_HEADS == 0, "N_HEADS must be divisible by N_KV_HEADS"
@@ -612,9 +652,10 @@ class SwarmMoE(nn.Module):
     Architecture: N_EXPERTS independent SwiGLU experts + sigmoid gate.
     Each token routes to top_k experts; outputs are weighted-summed.
 
-    For a 2M-param model (D=64, FFN_DIM=128):
+    For the micro model (D=64, FFN_DIM=128):
       - 4 experts, top-2, expert_dim=128 → same FLOP as one dense FFN
         but 4× more representational capacity.
+    For xl150m set MOE_EXPERT_DIM=FFN_HIDDEN_DIM=1792.
     """
 
     def __init__(
@@ -1272,7 +1313,8 @@ class TopoSwarmLayer(nn.Module):
 
 class TopoSwarmModel(nn.Module):
     """
-    Micro quaternionic toroidal transformer for tool-use reasoning.
+    Quaternionic toroidal transformer for tool-use reasoning.
+    Default SCALE='xl150m' (~150M params); SCALE='micro' = legacy model.
 
     Architecture:
     - Token embedding + learned positional bias.
@@ -2558,6 +2600,8 @@ def main() -> None:
         --resume            : Resume training from the latest checkpoint.
         --infer --prompt P  : Load checkpoint and run swarm inference.
         --param-count       : Print model parameter counts and exit.
+        --scale SCALE       : 'xl150m' (default, ~150M), 'micro' (legacy),
+                              or 'custom' (respect manual field values).
     """
     import argparse
 
@@ -2575,9 +2619,14 @@ def main() -> None:
     parser.add_argument("--n-agents", type=int, default=0)
     parser.add_argument("--device", type=str, default="")
     parser.add_argument("--local-data", type=str, default="", help="Path to local JSONL dataset")
+    parser.add_argument("--scale", type=str, default="",
+                        help="'xl150m' (~150M, default), 'micro' (legacy ~3M), or 'custom'")
     args = parser.parse_args()
 
     cfg = SwarmConfig()
+    if args.scale:
+        cfg.SCALE = args.scale
+        cfg.__post_init__()  # re-apply preset after overriding SCALE
     if args.epochs > 0:
         cfg.EPOCHS = args.epochs
     if args.batch_size > 0:
@@ -2594,7 +2643,11 @@ def main() -> None:
     logger = _setup_logger("TopoSwarm", cfg.LOG_LEVEL)
     _set_seed(cfg.RANDOM_SEED, cfg.DEVICE)
 
-    logger.info("Device: %s | AMP: %s", cfg.DEVICE, cfg.USE_AMP)
+    logger.info(
+        "Scale: %s | D=%d L=%d FFN=%d | Device: %s | AMP: %s",
+        cfg.SCALE, cfg.D_MODEL, cfg.N_LAYERS, cfg.FFN_HIDDEN_DIM,
+        cfg.DEVICE, cfg.USE_AMP,
+    )
 
     tokenizer = BPETokenizer(cfg)
 

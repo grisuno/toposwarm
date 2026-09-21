@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:42:29Z",
+  "prompt": "check for path traversal on 192.168.1.1",
+  "success": true,
+  "latency_ms": 13818.825757014565,
+  "context_chars": 1585,
+  "output_chars": 512
+}

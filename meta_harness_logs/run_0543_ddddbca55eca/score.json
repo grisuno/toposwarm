@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-17T00:18:26Z",
+  "prompt": "run nmap on victim.corp",
+  "tool": "lazyown_run_command",
+  "arg_preview": "nmap on victim",
+  "route_source": "draft_verify",
+  "route_confidence": 0.99,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 30037.65,
+  "context_chars": 461,
+  "output_chars": 512
+}

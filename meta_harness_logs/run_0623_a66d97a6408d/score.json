@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:48:07Z",
+  "prompt": "enumerate DNS for victim.corp",
+  "success": true,
+  "latency_ms": 2269.411424000282,
+  "context_chars": 1574,
+  "output_chars": 512
+}

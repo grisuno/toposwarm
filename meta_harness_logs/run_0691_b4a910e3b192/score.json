@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:54:45Z",
+  "prompt": "check network topology for victim.corp",
+  "success": true,
+  "latency_ms": 2351.8355199776124,
+  "context_chars": 1592,
+  "output_chars": 512
+}

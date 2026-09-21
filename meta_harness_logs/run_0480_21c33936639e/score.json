@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-06T04:33:14Z",
+  "prompt": "Add 10.10.11.78 as a target in the campaign",
+  "success": true,
+  "latency_ms": 7.88033299613744,
+  "context_chars": 73,
+  "output_chars": 132
+}

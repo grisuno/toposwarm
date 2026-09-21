@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-17T00:16:48Z",
+  "prompt": "run exploit against victim.corp",
+  "tool": "lazyown_run_command",
+  "arg_preview": "exploit against victim",
+  "route_source": "draft_verify",
+  "route_confidence": 0.99,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 3011.89,
+  "context_chars": 477,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:14:03Z",
+  "prompt": "enumerate DNS for 10.10.11.78",
+  "success": true,
+  "latency_ms": 15107.720968982903,
+  "context_chars": 1575,
+  "output_chars": 512
+}

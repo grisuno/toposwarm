@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:14:27Z",
+  "prompt": "enumerate services on victim.corp",
+  "success": true,
+  "latency_ms": 2492.557321995264,
+  "context_chars": 1582,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:55:10Z",
+  "prompt": "check for command injection on target.local",
+  "success": true,
+  "latency_ms": 2281.709625007352,
+  "context_chars": 1602,
+  "output_chars": 512
+}

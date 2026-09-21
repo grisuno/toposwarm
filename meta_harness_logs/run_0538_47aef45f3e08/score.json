@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:40:42Z",
+  "prompt": "enumerate services on target.local",
+  "success": true,
+  "latency_ms": 2444.3836080026813,
+  "context_chars": 1584,
+  "output_chars": 512
+}

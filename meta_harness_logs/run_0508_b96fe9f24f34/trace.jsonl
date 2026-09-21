@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "Poll for new security events", "tool": "lazyown_poll_events", "arg": "Poll for new security events", "output": "Mock output for command: events", "ok": true, "t_ms": 8.069551986409351}

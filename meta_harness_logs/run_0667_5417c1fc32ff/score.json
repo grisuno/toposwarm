@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:52:39Z",
+  "prompt": "test for SQL injection on victim.corp",
+  "success": true,
+  "latency_ms": 2302.278331015259,
+  "context_chars": 1590,
+  "output_chars": 512
+}

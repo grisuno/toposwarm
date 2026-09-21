@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-17T00:15:46Z",
+  "prompt": "check logs",
+  "tool": "lazyown_run_command",
+  "arg_preview": "[Context] Last action: lazyown_run_command([Context] Last action: lazyown_run_command(enumerate DNS for victim.corp) | Phase: exploit\n\nexploit victim.corp) | Phase: exploit\n\ncheck logs",
+  "route_source": "draft_verify",
+  "route_confidence": 0.99,
+  "neural_disagreement": false,
+  "success": false,
+  "latency_ms": 7.96,
+  "context_chars": 618,
+  "output_chars": 101
+}

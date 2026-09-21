@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:11:53Z",
+  "prompt": "find vulnerabilities on victim.corp",
+  "success": true,
+  "latency_ms": 2460.0260340084787,
+  "context_chars": 1586,
+  "output_chars": 512
+}

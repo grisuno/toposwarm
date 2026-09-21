@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:11:41Z",
+  "prompt": "test for LFI on 10.10.11.78",
+  "success": true,
+  "latency_ms": 14202.445564005757,
+  "context_chars": 1573,
+  "output_chars": 512
+}

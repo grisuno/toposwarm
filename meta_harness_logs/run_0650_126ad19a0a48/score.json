@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:50:48Z",
+  "prompt": "scan target.local",
+  "success": true,
+  "latency_ms": 2337.2894689964596,
+  "context_chars": 1550,
+  "output_chars": 512
+}

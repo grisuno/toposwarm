@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:53:43Z",
+  "prompt": "find vulnerabilities on 172.16.0.5",
+  "success": true,
+  "latency_ms": 2301.5482120099477,
+  "context_chars": 1584,
+  "output_chars": 512
+}

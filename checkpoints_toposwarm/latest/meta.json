@@ -1,3 +1,7 @@
 {
-  "phase": "annealing_done"
+  "epoch": 0,
+  "step": 1548,
+  "task_loss": 0.031006550416350365,
+  "val_acc": 0.0,
+  "ewc_lambda": 10.0
 }

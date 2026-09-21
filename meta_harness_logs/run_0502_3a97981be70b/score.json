@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:15:41Z",
+  "prompt": "check for command injection on 10.10.11.78",
+  "success": true,
+  "latency_ms": 14311.283020011615,
+  "context_chars": 1588,
+  "output_chars": 512
+}

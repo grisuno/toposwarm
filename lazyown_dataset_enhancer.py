@@ -196,16 +196,14 @@ class DatasetEnhancer:
                 safe_output = _sanitize_output(output)
                 records.append(_build_toolbench_record(prompt, tool, arg, safe_output, domain))
 
-                # 2. If failed and we have harness info with the "right" tool, create error-recovery
-                if not ok and harness:
-                    correct_tool = harness.get("tool_name", tool)
-                    if correct_tool != tool:
-                        recovery_prompt = f"CORRECT: {prompt}"
-                        records.append(_build_toolbench_record(
-                            recovery_prompt, correct_tool, arg,
-                            f"[Recovered from {tool} failure] {safe_output}",
-                            "Security/ErrorRecovery"
-                        ))
+                # 2. Error-recovery examples (pattern-based, not harness-dependent)
+                if not ok:
+                    recovery_records = self._generate_recovery_records(prompt, tool, arg, safe_output)
+                    records.extend(recovery_records)
+                # Also generate recovery for successes that are common prerequisites
+                # (teaches the model to set up before acting)
+                setup_records = self._generate_prerequisite_records(prompt, tool, arg, safe_output, ok)
+                records.extend(setup_records)
 
                 # 3. Create a "clean prompt" variant by stripping the snapshot if present
                 clean_prompt = re.sub(r"\[Environment Snapshot\].*?\n\n", "", prompt, flags=re.DOTALL).strip()
@@ -230,6 +228,102 @@ class DatasetEnhancer:
                         safe_out2,
                         "Security/MultiTurn"
                     ))
+
+        return records
+
+    # -----------------------------------------------------------------------
+    # Error-recovery generators (pattern-based)
+    # -----------------------------------------------------------------------
+
+    @staticmethod
+    def _generate_recovery_records(prompt: str, tool: str, arg: str, output: str) -> List[Dict[str, Any]]:
+        """Generate recovery examples based on error patterns in LazyOwn output."""
+        records: List[Dict[str, Any]] = []
+        out_lower = output.lower()
+        prompt_lower = prompt.lower()
+
+        # Pattern 1: Missing target / rhost not set
+        if any(k in out_lower for k in ("no target", "set rhost", "target not set", "rhost is required")):
+            # Extract IP from prompt if possible
+            ip_match = re.search(r"\b(\d{1,3}(?:\.\d{1,3}){3}(?:/\d+)?)\b", prompt)
+            ip = ip_match.group(1) if ip_match else "10.10.11.78"
+            records.append(_build_toolbench_record(
+                f"Fix: {prompt}",
+                "lazyown_set_config",
+                f"rhost={ip}",
+                f"[Recovered from {tool}] Set target host before scanning.",
+                "Security/ErrorRecovery"
+            ))
+
+        # Pattern 2: Nmap / scan prerequisite missing
+        if any(k in out_lower for k in ("not scan file", "run nmap before", "no scan data")):
+            records.append(_build_toolbench_record(
+                f"Fix: {prompt}",
+                "lazyown_run_command",
+                "lazynmap",
+                f"[Recovered from {tool}] Run nmap first to generate scan data.",
+                "Security/ErrorRecovery"
+            ))
+
+        # Pattern 3: No session / beacon / C2 not ready
+        if any(k in out_lower for k in ("no session", "no beacon", "c2 not ready", "listener not active")):
+            records.append(_build_toolbench_record(
+                f"Fix: {prompt}",
+                "lazyown_run_command",
+                "lazymsfconsole",
+                f"[Recovered from {tool}] Start listener/session before C2 action.",
+                "Security/ErrorRecovery"
+            ))
+
+        # Pattern 4: Module not found / unknown command
+        if any(k in out_lower for k in ("module not found", "unknown command", "not recognized")):
+            records.append(_build_toolbench_record(
+                f"Fix: {prompt}",
+                "lazyown_discover_commands",
+                "",
+                f"[Recovered from {tool}] Discover available commands before execution.",
+                "Security/ErrorRecovery"
+            ))
+
+        # Pattern 5: Config-related failure when prompt is about configuration
+        if "config" in prompt_lower and tool != "lazyown_set_config":
+            records.append(_build_toolbench_record(
+                f"Fix: {prompt}",
+                "lazyown_set_config",
+                arg or "rhost=10.10.11.78",
+                f"[Recovered from {tool}] Use set_config for configuration tasks.",
+                "Security/ErrorRecovery"
+            ))
+
+        return records
+
+    @staticmethod
+    def _generate_prerequisite_records(prompt: str, tool: str, arg: str, output: str, ok: bool) -> List[Dict[str, Any]]:
+        """Generate 'setup before action' examples even for successes."""
+        records: List[Dict[str, Any]] = []
+        prompt_lower = prompt.lower()
+
+        # If prompt mentions scanning but tool is NOT config, teach prerequisite
+        if any(k in prompt_lower for k in ("scan", "nmap", "enumerate", "ports")) and tool == "lazyown_run_command":
+            ip_match = re.search(r"\b(\d{1,3}(?:\.\d{1,3}){3}(?:/\d+)?)\b", prompt)
+            ip = ip_match.group(1) if ip_match else "10.10.11.78"
+            records.append(_build_toolbench_record(
+                f"Before scanning {ip}, set it as target",
+                "lazyown_set_config",
+                f"rhost={ip}",
+                "[Prerequisite] Always configure target host before running scans.",
+                "Security/Prerequisite"
+            ))
+
+        # If prompt mentions C2 / beacon / session but tool is action, teach prerequisite
+        if any(k in prompt_lower for k in ("c2", "beacon", "session", "implant", "command")) and "status" not in prompt_lower:
+            records.append(_build_toolbench_record(
+                f"Check C2 status before: {prompt}",
+                "lazyown_c2_status",
+                "",
+                "[Prerequisite] Verify C2 infrastructure is active before issuing commands.",
+                "Security/Prerequisite"
+            ))
 
         return records
 

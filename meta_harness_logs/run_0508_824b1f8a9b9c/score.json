@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:24:46Z",
+  "prompt": "list available tools",
+  "success": true,
+  "latency_ms": 2370.564009004738,
+  "context_chars": 1556,
+  "output_chars": 512
+}

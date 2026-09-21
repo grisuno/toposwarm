@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-06T04:33:15Z",
+  "prompt": "Run an AI agent to plan the attack on 10.10.11.78",
+  "success": true,
+  "latency_ms": 8.085800014669076,
+  "context_chars": 85,
+  "output_chars": 89
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:51:50Z",
+  "prompt": "create a web shell",
+  "success": true,
+  "latency_ms": 2331.457774998853,
+  "context_chars": 1552,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:12:19Z",
+  "prompt": "run fuzzing on target.local",
+  "success": true,
+  "latency_ms": 2360.3762300044764,
+  "context_chars": 1560,
+  "output_chars": 512
+}

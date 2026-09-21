@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:53:07Z",
+  "prompt": "enumerate services on 10.10.11.78",
+  "success": true,
+  "latency_ms": 13703.902813984314,
+  "context_chars": 1579,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:53:00Z",
+  "prompt": "check for CVEs on victim.corp",
+  "success": true,
+  "latency_ms": 2289.568667009007,
+  "context_chars": 1574,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:51:47Z",
+  "prompt": "test for SSRF on victim.corp",
+  "success": true,
+  "latency_ms": 2336.4603739755694,
+  "context_chars": 1572,
+  "output_chars": 512
+}

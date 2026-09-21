@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:47:32Z",
+  "prompt": "run fuzzing on victim.corp",
+  "success": true,
+  "latency_ms": 2294.0784599923063,
+  "context_chars": 1559,
+  "output_chars": 512
+}

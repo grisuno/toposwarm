@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T02:12:09Z",
+  "prompt": "Show collected credentials",
+  "success": true,
+  "latency_ms": 2297.785559989279,
+  "context_chars": 1568,
+  "output_chars": 512
+}

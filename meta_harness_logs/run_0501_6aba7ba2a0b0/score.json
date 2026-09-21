@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-16T16:49:14Z",
+  "prompt": "set rhost to 10.10.11.78",
+  "tool": "lazyown_run_command",
+  "arg_preview": "rhost=to",
+  "route_source": "draft_verify",
+  "route_confidence": 0.2,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 3340.66,
+  "context_chars": 456,
+  "output_chars": 512
+}

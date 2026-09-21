@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:12:30Z",
+  "prompt": "check for cached credentials",
+  "success": true,
+  "latency_ms": 2436.9979769981,
+  "context_chars": 1572,
+  "output_chars": 512
+}

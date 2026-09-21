@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:55:21Z",
+  "prompt": "exploit victim.corp",
+  "success": true,
+  "latency_ms": 2283.573252003407,
+  "context_chars": 1554,
+  "output_chars": 512
+}

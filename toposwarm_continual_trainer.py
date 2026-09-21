@@ -275,7 +275,13 @@ def _encode_record(record: Dict, tok: BPETokenizer, cfg: SwarmConfig) -> Optiona
 
         # Full sequence (same layout as ToolBenchDataset: return full ids, not pre-shifted)
         # Model forward does its own shift: logits[:,:-1] vs targets[:,1:]
-        ids = (instr_ids + [tool_tok] + result_ids)[-cfg.MAX_SEQ_LEN:]
+        # Build full sequence, but truncate from the RIGHT (result side)
+        # to preserve instruction + tool token at the front.
+        seq = instr_ids + [tool_tok] + result_ids
+        if len(seq) > cfg.MAX_SEQ_LEN:
+            keep_instr = min(len(instr_ids), cfg.MAX_SEQ_LEN - 2)
+            seq = instr_ids[:keep_instr] + [tool_tok] + result_ids[:cfg.MAX_SEQ_LEN - keep_instr - 1]
+        ids = seq[-cfg.MAX_SEQ_LEN:]
 
         if len(ids) < 4:
             return None
@@ -285,8 +291,12 @@ def _encode_record(record: Dict, tok: BPETokenizer, cfg: SwarmConfig) -> Optiona
         # set masked[p] = ids[p].  Everything else stays -100 (ignore_index).
         # We supervise only the tool token slot: ids[tool_pos] = tool_tok,
         # predicted from the last instruction token at ids[tool_pos - 1].
-        instr_len_clipped = min(len(instr_ids), len(ids))
-        tool_pos = instr_len_clipped          # index of tool_tok in ids
+        # Find tool_pos by searching for tool_tok in ids.
+        try:
+            tool_pos = ids.index(tool_tok)
+        except ValueError:
+            # Tool token lost during truncation — skip this example
+            return None
         masked = [-100] * len(ids)
         if 0 < tool_pos < len(ids):
             masked[tool_pos] = tool_tok       # model learns: after instr → predict tool
@@ -1448,7 +1458,23 @@ def main() -> None:
             logger.error("LazyOwn dataset not found: %s — run --gen-dataset first", cl_cfg.LAZYOWN_DATASET)
             return
         train_ds = ToolBenchDataset(lazyown_records, tok, cfg)
-        trainer  = ContinualTrainer(model, cfg, cl_cfg, tok, ewc, replay, logger)
+        # Build routing head for --train mode (same logic as run_full_pipeline)
+        all_tool_names = list({
+            rec["api_list"][0]["tool_name"]
+            for rec in lazyown_records
+            if rec.get("api_list") and rec["api_list"]
+        })
+        head_path = Path(RoutingHead.HEAD_CKPT)
+        if head_path.exists():
+            try:
+                routing_head = RoutingHead.load(cfg.D_MODEL, str(head_path))
+            except Exception as e:
+                logger.warning("Routing head load failed (%s) — starting fresh", e)
+                routing_head = RoutingHead(cfg.D_MODEL, all_tool_names)
+        else:
+            routing_head = RoutingHead(cfg.D_MODEL, all_tool_names)
+        trainer = ContinualTrainer(model, cfg, cl_cfg, tok, ewc, replay, logger,
+                                   routing_head=routing_head)
         trainer.train(train_ds)
 
     if args.eval:

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:46:01Z",
+  "prompt": "run exploit against 192.168.1.1",
+  "success": true,
+  "latency_ms": 2314.3363799899817,
+  "context_chars": 1566,
+  "output_chars": 512
+}

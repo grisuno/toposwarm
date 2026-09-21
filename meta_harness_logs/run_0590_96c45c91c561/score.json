@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:45:32Z",
+  "prompt": "try RCE on victim.corp",
+  "success": true,
+  "latency_ms": 2274.1677049780264,
+  "context_chars": 1560,
+  "output_chars": 512
+}

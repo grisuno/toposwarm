@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:11:05Z",
+  "prompt": "test for SSRF on target.local",
+  "success": true,
+  "latency_ms": 2440.7646319887135,
+  "context_chars": 1574,
+  "output_chars": 512
+}

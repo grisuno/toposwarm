@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:53:40Z",
+  "prompt": "find live hosts in target.local",
+  "success": true,
+  "latency_ms": 2387.072426005034,
+  "context_chars": 1578,
+  "output_chars": 512
+}

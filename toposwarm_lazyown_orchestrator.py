@@ -53,39 +53,6 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 _HERE = Path(__file__).parent.resolve()
 
 
-def _resolve_lazyown_dir() -> Path:
-    """
-    Discover LazyOwn installation directory.
-
-    Priority:
-      1. LAZYOWN_DIR environment variable (expanded ~).
-      2. Default relative to this script: <repo>/LazyOwn.
-      3. User home directory: ~/LazyOwn.
-      4. Return the relative default anyway (caller will see available=False).
-    """
-    # 1. Explicit env variable
-    env_dir = os.environ.get("LAZYOWN_DIR", "")
-    if env_dir:
-        p = Path(env_dir).expanduser().resolve()
-        if p.exists():
-            return p
-
-    # 2. Default relative to script location
-    rel = (_HERE.parent.parent / "LazyOwn").resolve()
-    if rel.exists():
-        return rel
-
-    # 3. Fallback to user's home directory
-    home = (Path.home() / "LazyOwn").resolve()
-    if home.exists():
-        return home
-
-    # 4. Final fallback (may not exist, but consistent)
-    return rel
-
-
-_LAZYOWN_DIR = _resolve_lazyown_dir()
-
 # ---------------------------------------------------------------------------
 # Import toposwarm_infer from the same directory
 # ---------------------------------------------------------------------------
@@ -160,6 +127,24 @@ def _import_routing_head() -> Optional[Any]:
 
 _RoutingHeadCls = _import_routing_head()
 
+# ---------------------------------------------------------------------------
+# LazyOwn Bridge (SOLID subprocess integration)
+# ---------------------------------------------------------------------------
+
+def _import_lazyown_bridge() -> Any:
+    candidates = [_HERE / "lazyown_bridge.py", Path.cwd() / "lazyown_bridge.py"]
+    for c in candidates:
+        if c.exists():
+            spec = importlib.util.spec_from_file_location("lazyown_bridge", c)
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules["lazyown_bridge"] = mod
+            spec.loader.exec_module(mod)
+            return mod
+    raise FileNotFoundError("lazyown_bridge.py not found")
+
+_lazyown_bridge_mod = _import_lazyown_bridge()
+LazyOwnBridge = _lazyown_bridge_mod.LazyOwnBridge
+
 
 # ===========================================================================
 # Session Context — multi-turn persistent memory
@@ -224,144 +209,6 @@ class SessionContext:
 # ===========================================================================
 
 
-class LazyOwnBridge:
-    """
-    Thin wrapper around LazyOwn's _run_lazyown_command logic.
-
-    Calls LazyOwn non-interactively via a PTY subprocess so the terminal-size
-    ioctl does not crash.  Strips ANSI codes from output.
-
-    All heavy imports (pty, fcntl, termios, select, struct) are lazy so the
-    bridge can be imported on non-Linux systems for dataset generation.
-    """
-
-    _ANSI = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
-    # Strip noisy LazyOwn bootstrap spam (activation banners, Lua/YAML registration, etc.)
-    _NOISE_PATTERNS = [
-        re.compile(r"Environment Activated\s*"),
-        re.compile(r"\[\+\]\s*Command\s+'[^']+'\s+registere?d?.*?\[.\]"),
-        re.compile(r"\[-\]\s*Not scan file please run nmap before.*?\[.\]"),
-        re.compile(r"\[\+\]\s*LazyOwn framework started.*"),
-        re.compile(r"\[\!\]\s*WARNING:.*"),
-        re.compile(r"\{\s*\"status\"\s*:\s*\"ok\"\s*\}"),
-        # Strip very long lines with no alphabetic characters (banner art, dividers)
-        re.compile(r"^[^a-zA-Z]{80,}\s*$", re.MULTILINE),
-    ]
-
-    def __init__(self, lazyown_dir: Path = _LAZYOWN_DIR, default_timeout: int = 30) -> None:
-        self.lazyown_dir    = lazyown_dir
-        self.default_timeout = default_timeout
-        self._available: Optional[bool] = None
-
-    @property
-    def available(self) -> bool:
-        if self._available is None:
-            self._available = self.lazyown_dir.exists() and (
-                (self.lazyown_dir / "lazyown.py").exists()
-                or (self.lazyown_dir / "run").exists()
-            )
-        return self._available
-
-    def run(self, command: str, timeout: Optional[int] = None) -> str:
-        """Execute a LazyOwn shell command and return cleaned output."""
-        if not self.available:
-            return f"[LazyOwn not found at {self.lazyown_dir}]"
-        timeout = timeout or self.default_timeout
-        try:
-            import fcntl, pty, select, struct, termios
-        except ImportError:
-            return "[PTY not available on this platform]"
-
-        cmd_input = (command.strip() + "\nexit\n").encode()
-        run_script = self.lazyown_dir / "run"
-        argv = (
-            ["bash", str(run_script)]
-            if run_script.is_file()
-            else [sys.executable, "-W", "ignore", str(self.lazyown_dir / "lazyown.py")]
-        )
-        env = {**os.environ, "TERM": "xterm-256color"}
-
-        master_fd, slave_fd = pty.openpty()
-        fcntl.ioctl(slave_fd, termios.TIOCSWINSZ, struct.pack("HHHH", 50, 220, 0, 0))
-        try:
-            proc = subprocess.Popen(
-                argv, stdin=subprocess.PIPE, stdout=slave_fd, stderr=slave_fd,
-                env=env, cwd=str(self.lazyown_dir), start_new_session=True,
-            )
-            os.close(slave_fd)
-            try:
-                proc.stdin.write(cmd_input)
-                proc.stdin.close()
-            except BrokenPipeError:
-                pass
-
-            chunks: List[str] = []
-            deadline = time.monotonic() + timeout
-            while True:
-                remaining = deadline - time.monotonic()
-                if remaining <= 0:
-                    proc.kill()
-                    break
-                r, _, _ = select.select([master_fd], [], [], min(remaining, 0.5))
-                if r:
-                    try:
-                        data = os.read(master_fd, 4096)
-                        if data:
-                            chunks.append(data.decode("utf-8", errors="replace"))
-                    except OSError:
-                        break
-                elif proc.poll() is not None:
-                    try:
-                        while True:
-                            r2, _, _ = select.select([master_fd], [], [], 0.1)
-                            if not r2:
-                                break
-                            data = os.read(master_fd, 4096)
-                            if not data:
-                                break
-                            chunks.append(data.decode("utf-8", errors="replace"))
-                    except OSError:
-                        pass
-                    break
-            try:
-                proc.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                proc.kill()
-        finally:
-            try:
-                os.close(master_fd)
-            except OSError:
-                pass
-
-        raw = "".join(chunks)
-        cleaned = self._ANSI.sub("", raw)
-        for pat in self._NOISE_PATTERNS:
-            cleaned = pat.sub("", cleaned)
-        # Collapse multiple blank lines to a single blank line
-        cleaned = re.sub(r"\n\s*\n+", "\n\n", cleaned)
-        return cleaned.strip()
-
-    def get_config(self) -> Dict[str, Any]:
-        payload_path = self.lazyown_dir / "payload.json"
-        if payload_path.exists():
-            try:
-                return json.loads(payload_path.read_text())
-            except Exception:
-                pass
-        return {}
-
-    def set_config(self, key: str, value: str) -> str:
-        payload_path = self.lazyown_dir / "payload.json"
-        data = self.get_config()
-        try:
-            data[key] = int(value)
-        except ValueError:
-            try:
-                data[key] = float(value)
-            except ValueError:
-                data[key] = value
-        payload_path.write_text(json.dumps(data, indent=2))
-        return f"Set {key}={value!r} in payload.json"
 
 
 # ===========================================================================
@@ -381,19 +228,21 @@ class LazyOwnToolRegistry(ToolRegistry):
 
     # Keyword clusters used by the router to pick a tool
     _KEYWORD_MAP: Dict[str, List[str]] = {
+        # Configuration (check FIRST before generic run_command)
+        "lazyown_set_config":        ["set config", "configure", "set rhost", "set lhost",
+                                      "set port", "set domain", "update config", "rhost =",
+                                      "lhost =", "target host", "assign rhost", "assign lhost"],
+        "lazyown_get_config":        ["get config", "show config", "payload", "configuration",
+                                      "current config", "what is config", "display config"],
         # Reconnaissance
         "lazyown_run_command":       ["nmap", "scan", "enumerate", "lazymsfconsole",
-                                      "lazynmap", "execute", "run", "command", "shell"],
+                                      "lazynmap", "execute", "shell"],
         "lazyown_list_modules":      ["module", "modules", "list modules", "available"],
         "lazyown_discover_commands": ["discover", "commands", "help", "what can"],
         # Targets
         "lazyown_add_target":        ["add target", "new target", "target add"],
         "lazyown_list_targets":      ["list target", "targets", "scope", "hosts"],
         "lazyown_set_active_target": ["active target", "select target", "set target"],
-        # Configuration
-        "lazyown_get_config":        ["get config", "show config", "payload", "configuration"],
-        "lazyown_set_config":        ["set config", "configure", "set rhost", "set lhost",
-                                      "set port", "set domain", "update config"],
         # C2 / Sessions
         "lazyown_get_beacons":       ["beacon", "beacons", "implant", "agent list"],
         "lazyown_list_sessions":     ["session", "sessions", "active sessions"],
@@ -464,7 +313,7 @@ class LazyOwnToolRegistry(ToolRegistry):
         # ── Core command execution ────────────────────────────────────────
         @self.register("lazyown_run_command", "lazyown_cmd", "lazyown_exec")
         def run_command(arg: str) -> str:
-            return b.run(arg)
+            return b.run_clean(arg)
 
         @self.register("lazyown_get_config", "lazyown_config", "lazyown_payload")
         def get_config(_: str) -> str:
@@ -481,19 +330,19 @@ class LazyOwnToolRegistry(ToolRegistry):
 
         @self.register("lazyown_list_modules")
         def list_modules(_: str) -> str:
-            return b.run("list")
+            return b.run_clean("list")
 
         @self.register("lazyown_get_beacons", "lazyown_beacons")
         def get_beacons(_: str) -> str:
-            return b.run("beacons")
+            return b.run_clean("beacons")
 
         @self.register("lazyown_c2_command", "lazyown_c2")
         def c2_command(arg: str) -> str:
-            return b.run(f"c2 {arg}")
+            return b.run_clean(f"c2 {arg}")
 
         @self.register("lazyown_run_api", "lazyown_api")
         def run_api(arg: str) -> str:
-            return b.run(f"lazyapiattack {arg}")
+            return b.run_clean(f"lazyapiattack {arg}")
 
         @self.register("lazyown_list_sessions", "lazyown_sessions")
         def list_sessions(_: str) -> str:
@@ -512,11 +361,11 @@ class LazyOwnToolRegistry(ToolRegistry):
 
         @self.register("lazyown_c2_status", "lazyown_status")
         def c2_status(_: str) -> str:
-            return b.run("status")
+            return b.run_clean("status")
 
         @self.register("lazyown_create_addon", "lazyown_addon")
         def create_addon(arg: str) -> str:
-            return b.run(f"createaddon {arg}")
+            return b.run_clean(f"createaddon {arg}")
 
         @self.register("lazyown_list_addons")
         def list_addons(_: str) -> str:
@@ -534,153 +383,153 @@ class LazyOwnToolRegistry(ToolRegistry):
 
         @self.register("lazyown_poll_events", "lazyown_events")
         def poll_events(_: str) -> str:
-            return b.run("events")
+            return b.run_clean("events")
 
         @self.register("lazyown_ack_event")
         def ack_event(arg: str) -> str:
-            return b.run(f"ackevent {arg}")
+            return b.run_clean(f"ackevent {arg}")
 
         @self.register("lazyown_add_rule", "lazyown_rule")
         def add_rule(arg: str) -> str:
-            return b.run(f"addrule {arg}")
+            return b.run_clean(f"addrule {arg}")
 
         @self.register("lazyown_list_event_rules", "lazyown_rules")
         def list_event_rules(_: str) -> str:
-            return b.run("listrules")
+            return b.run_clean("listrules")
 
         @self.register("lazyown_heartbeat_status", "lazyown_heartbeat")
         def heartbeat_status(_: str) -> str:
-            return b.run("heartbeat")
+            return b.run_clean("heartbeat")
 
         @self.register("lazyown_session_init", "lazyown_init")
         def session_init(arg: str) -> str:
-            return b.run(f"sessioninit {arg}")
+            return b.run_clean(f"sessioninit {arg}")
 
         @self.register("lazyown_discover_commands", "lazyown_discover")
         def discover_commands(arg: str) -> str:
-            return b.run("help")
+            return b.run_clean("help")
 
         @self.register("lazyown_phase_guide", "lazyown_phase")
         def phase_guide(arg: str) -> str:
-            return b.run(f"phase {arg}")
+            return b.run_clean(f"phase {arg}")
 
         @self.register("lazyown_command_help", "lazyown_help")
         def command_help(arg: str) -> str:
-            return b.run(f"help {arg}")
+            return b.run_clean(f"help {arg}")
 
         @self.register("lazyown_add_target", "lazyown_target")
         def add_target(arg: str) -> str:
             parts = arg.split()
             cmd = f"addtarget {' '.join(parts)}"
-            return b.run(cmd)
+            return b.run_clean(cmd)
 
         @self.register("lazyown_list_targets", "lazyown_targets")
         def list_targets(_: str) -> str:
-            return b.run("targets")
+            return b.run_clean("targets")
 
         @self.register("lazyown_run_agent", "lazyown_agent")
         def run_agent(arg: str) -> str:
-            return b.run(f"runagent {arg}")
+            return b.run_clean(f"runagent {arg}")
 
         @self.register("lazyown_agent_status")
         def agent_status(arg: str) -> str:
-            return b.run(f"agentstatus {arg}")
+            return b.run_clean(f"agentstatus {arg}")
 
         @self.register("lazyown_agent_result")
         def agent_result(arg: str) -> str:
-            return b.run(f"agentresult {arg}")
+            return b.run_clean(f"agentresult {arg}")
 
         @self.register("lazyown_list_agents")
         def list_agents(_: str) -> str:
-            return b.run("listagents")
+            return b.run_clean("listagents")
 
         @self.register("lazyown_set_active_target")
         def set_active_target(arg: str) -> str:
-            return b.run(f"settarget {arg}")
+            return b.run_clean(f"settarget {arg}")
 
         @self.register("lazyown_campaign_sitrep", "lazyown_sitrep")
         def campaign_sitrep(_: str) -> str:
-            return b.run("sitrep")
+            return b.run_clean("sitrep")
 
         @self.register("lazyown_c2_notes", "lazyown_notes")
         def c2_notes(arg: str) -> str:
-            return b.run(f"notes {arg}")
+            return b.run_clean(f"notes {arg}")
 
         @self.register("lazyown_credentials", "lazyown_creds")
         def credentials(_: str) -> str:
-            return b.run("creds")
+            return b.run_clean("creds")
 
         @self.register("lazyown_report_update", "lazyown_report")
         def report_update(arg: str) -> str:
-            return b.run(f"report {arg}")
+            return b.run_clean(f"report {arg}")
 
         @self.register("lazyown_campaign_lessons", "lazyown_lessons")
         def campaign_lessons(_: str) -> str:
-            return b.run("lessons")
+            return b.run_clean("lessons")
 
         @self.register("lazyown_auto_populate", "lazyown_autofill")
         def auto_populate(_: str) -> str:
-            return b.run("autopopulate")
+            return b.run_clean("autopopulate")
 
         @self.register("lazyown_session_state")
         def session_state(_: str) -> str:
-            return b.run("sessionstate")
+            return b.run_clean("sessionstate")
 
         @self.register("lazyown_recommend_next", "lazyown_recommend")
         def recommend_next(_: str) -> str:
-            return b.run("recommend")
+            return b.run_clean("recommend")
 
         @self.register("lazyown_timeline")
         def timeline(_: str) -> str:
-            return b.run("timeline")
+            return b.run_clean("timeline")
 
         @self.register("lazyown_c2_vuln_analysis", "lazyown_vulns")
         def c2_vuln_analysis(arg: str) -> str:
-            return b.run(f"vulnanalysis {arg}")
+            return b.run_clean(f"vulnanalysis {arg}")
 
         @self.register("lazyown_c2_redop", "lazyown_redop")
         def c2_redop(arg: str) -> str:
-            return b.run(f"redop {arg}")
+            return b.run_clean(f"redop {arg}")
 
         @self.register("lazyown_c2_search_agent", "lazyown_search")
         def c2_search_agent(arg: str) -> str:
-            return b.run(f"search {arg}")
+            return b.run_clean(f"search {arg}")
 
         @self.register("lazyown_c2_script", "lazyown_script")
         def c2_script(arg: str) -> str:
-            return b.run(f"runscript {arg}")
+            return b.run_clean(f"runscript {arg}")
 
         @self.register("lazyown_c2_adversary", "lazyown_adversary")
         def c2_adversary(arg: str) -> str:
-            return b.run(f"adversary {arg}")
+            return b.run_clean(f"adversary {arg}")
 
         @self.register("lazyown_policy_status", "lazyown_policy")
         def policy_status(_: str) -> str:
-            return b.run("policy")
+            return b.run_clean("policy")
 
         @self.register("lazyown_auto_loop", "lazyown_loop")
         def auto_loop(arg: str) -> str:
-            return b.run(f"autoloop {arg}")
+            return b.run_clean(f"autoloop {arg}")
 
         @self.register("lazyown_create_tool", "lazyown_newtool")
         def create_tool(arg: str) -> str:
-            return b.run(f"createtool {arg}")
+            return b.run_clean(f"createtool {arg}")
 
         @self.register("lazyown_llm_ask", "lazyown_llm")
         def llm_ask(arg: str) -> str:
-            return b.run(f"llmask {arg}")
+            return b.run_clean(f"llmask {arg}")
 
         @self.register("lazyown_inject_objective", "lazyown_objective")
         def inject_objective(arg: str) -> str:
-            return b.run(f"injectobjective {arg}")
+            return b.run_clean(f"injectobjective {arg}")
 
         @self.register("lazyown_next_objective")
         def next_objective(_: str) -> str:
-            return b.run("nextobjective")
+            return b.run_clean("nextobjective")
 
         @self.register("lazyown_read_prompt", "lazyown_prompt")
         def read_prompt(arg: str) -> str:
-            return b.run(f"readprompt {arg}")
+            return b.run_clean(f"readprompt {arg}")
 
 
 # ===========================================================================
@@ -882,6 +731,7 @@ class LazyOwnOrchestrator:
         tool_name = self._routing_head.tool_names[idx.item()]
         arg = _extract_arg(prompt, tool_name)
         self.logger.info("Neural router → %s(%r) conf=%.2f", tool_name, arg[:80], conf.item())
+        self._last_neural_conf = conf.item()
         return tool_name, arg
 
     def run(self, prompt: str) -> InferenceResult:
@@ -893,8 +743,14 @@ class LazyOwnOrchestrator:
 
         # --- Neural routing (primary) ------------------------------------------
         neural = self._neural_route(contextual_prompt)
+        keyword_tool, keyword_arg = infer_lazyown_tool(contextual_prompt)
+        route_source = "keyword"
+        confidence = 0.5
+
         if neural is not None:
             tool_name, tool_arg = neural
+            route_source = "neural"
+            confidence = getattr(self, "_last_neural_conf", 0.5)
         else:
             # --- Meta-Harness routing: draft-verify or fallback keyword ------
             if self._mh and self._mh.draft_verifier is not None:
@@ -902,15 +758,24 @@ class LazyOwnOrchestrator:
                     tool_name, tool_arg, confidence = self._mh.draft_verifier.route(
                         contextual_prompt, self._snapshot_text
                     )
+                    route_source = "draft_verify"
                     self.logger.info("Meta-Harness router → %s(%r) conf=%.2f",
                                      tool_name, tool_arg[:80], confidence)
                 except Exception as exc:
                     self.logger.warning("Meta-Harness draft-verify failed (%s), falling back", exc)
-                    tool_name, tool_arg = infer_lazyown_tool(contextual_prompt)
+                    tool_name, tool_arg = keyword_tool, keyword_arg
+                    route_source = "keyword_fallback"
             else:
-                tool_name, tool_arg = infer_lazyown_tool(contextual_prompt)
+                tool_name, tool_arg = keyword_tool, keyword_arg
         result.tool_name = tool_name
         result.tool_arg  = tool_arg
+
+        # Routing diagnostic: neural vs keyword disagreement signals ambiguity
+        neural_disagreement = False
+        if neural is not None and neural[0] != keyword_tool:
+            neural_disagreement = True
+            self.logger.debug("Routing ambiguity: neural=%s vs keyword=%s",
+                              neural[0], keyword_tool)
 
         # Execute tool
         tool_result = self.registry.execute(tool_name, tool_arg)
@@ -953,8 +818,13 @@ class LazyOwnOrchestrator:
                 ]
                 score = {
                     "prompt": prompt,
+                    "tool": tool_name,
+                    "arg_preview": tool_arg[:200],
+                    "route_source": route_source,
+                    "route_confidence": round(confidence, 3),
+                    "neural_disagreement": neural_disagreement,
                     "success": tool_result.ok,
-                    "latency_ms": latency_ms,
+                    "latency_ms": round(latency_ms, 2),
                     "context_chars": len(prompt) + len(self._snapshot_text) + len(tool_arg),
                     "output_chars": len(tool_result.output),
                 }
@@ -1144,7 +1014,7 @@ def generate_dataset(output_path: Path, bridge: Optional[LazyOwnBridge] = None) 
             cmd = m.group(1).strip() if m else ""
             if cmd:
                 try:
-                    raw = bridge.run(cmd, timeout=10)
+                    raw = bridge.run_clean(cmd, timeout=10)
                     if raw:
                         r["answer"] = re.sub(
                             r"\[real output[^\]]*\]", raw[:300], r["answer"]
@@ -1373,8 +1243,9 @@ def main() -> None:
 
     logger = _setup_logger(args.log_level)
 
-    lazyown_dir = Path(args.lazyown_dir).expanduser().resolve() if args.lazyown_dir else _LAZYOWN_DIR
-    bridge      = LazyOwnBridge(lazyown_dir)
+    if args.lazyown_dir:
+        os.environ["LAZYOWN_DIR"] = str(Path(args.lazyown_dir).expanduser().resolve())
+    bridge = LazyOwnBridge()
     logger.info("LazyOwn dir: %s (available=%s)", bridge.lazyown_dir, bridge.available)
 
     dataset_path = Path(args.dataset_out)

@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "What should be the next step after initial access?", "tool": "lazyown_recommend_next", "arg": "What should be the next step after initial access?", "output": "Mock output for command: recommend", "ok": true, "t_ms": 7.975885004270822}

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-17T00:16:55Z",
+  "prompt": "check network topology for 10.10.11.78",
+  "tool": "lazyown_run_command",
+  "arg_preview": "set rhost 10.10.11.78\nlazynmap",
+  "route_source": "draft_verify",
+  "route_confidence": 0.99,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 1755.52,
+  "context_chars": 492,
+  "output_chars": 512
+}

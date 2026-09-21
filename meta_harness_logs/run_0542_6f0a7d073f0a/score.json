@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:41:33Z",
+  "prompt": "check subdomains of 10.10.11.78",
+  "success": true,
+  "latency_ms": 13862.713175010867,
+  "context_chars": 1577,
+  "output_chars": 512
+}

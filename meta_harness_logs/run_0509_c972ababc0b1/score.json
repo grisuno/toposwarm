@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:14:24Z",
+  "prompt": "check subdomains of 192.168.1.1",
+  "success": true,
+  "latency_ms": 20025.670611008536,
+  "context_chars": 1577,
+  "output_chars": 512
+}

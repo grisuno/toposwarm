@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:53:27Z",
+  "prompt": "run a full port scan on victim.corp",
+  "success": true,
+  "latency_ms": 2437.3417970200535,
+  "context_chars": 1577,
+  "output_chars": 512
+}

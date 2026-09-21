@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-06T04:33:15Z",
+  "prompt": "Poll for new security events",
+  "success": true,
+  "latency_ms": 8.069551986409351,
+  "context_chars": 56,
+  "output_chars": 59
+}

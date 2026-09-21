@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:57:12Z",
+  "prompt": "enumerate DNS for 192.168.1.1",
+  "success": true,
+  "latency_ms": 13854.905526008224,
+  "context_chars": 1575,
+  "output_chars": 512
+}

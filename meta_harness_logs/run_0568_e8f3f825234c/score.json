@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:14:38Z",
+  "prompt": "list sessions",
+  "success": true,
+  "latency_ms": 5.016277980757877,
+  "context_chars": 1542,
+  "output_chars": 113
+}

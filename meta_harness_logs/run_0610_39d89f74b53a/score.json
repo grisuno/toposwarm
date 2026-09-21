@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:46:52Z",
+  "prompt": "create a powershell payload",
+  "success": true,
+  "latency_ms": 2348.6336689966265,
+  "context_chars": 1570,
+  "output_chars": 512
+}

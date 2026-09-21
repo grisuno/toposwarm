@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T02:12:15Z",
+  "prompt": "List all available LazyOwn modules",
+  "success": true,
+  "latency_ms": 2279.2736669944134,
+  "context_chars": 68,
+  "output_chars": 541
+}

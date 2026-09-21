@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:48:41Z",
+  "prompt": "show targets",
+  "success": true,
+  "latency_ms": 2334.8715159809217,
+  "context_chars": 1540,
+  "output_chars": 512
+}

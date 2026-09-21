@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:42:14Z",
+  "prompt": "what ports are open on target.local",
+  "success": true,
+  "latency_ms": 2292.265750002116,
+  "context_chars": 1586,
+  "output_chars": 512
+}

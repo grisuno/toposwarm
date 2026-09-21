@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:40:24Z",
+  "prompt": "test for SQL injection on target.local",
+  "success": true,
+  "latency_ms": 2526.2863929965533,
+  "context_chars": 1592,
+  "output_chars": 512
+}

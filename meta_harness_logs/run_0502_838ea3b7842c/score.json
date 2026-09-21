@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:08:36Z",
+  "prompt": "check for path traversal on victim.corp",
+  "success": true,
+  "latency_ms": 2298.3294750156347,
+  "context_chars": 1594,
+  "output_chars": 512
+}

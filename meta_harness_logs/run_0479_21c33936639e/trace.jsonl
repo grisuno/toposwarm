@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "Add 10.10.11.78 as a target in the campaign", "tool": "lazyown_run_command", "arg": "set rhost 10.10.11.78\nlazynmap", "output": "Mock nmap output for: set rhost 10.10.11.78\nlazynmap\nPORT STATE SERVICE\n22/tcp open ssh\n80/tcp open http", "ok": true, "t_ms": 0.047564011765643954}

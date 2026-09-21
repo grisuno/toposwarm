@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:43:45Z",
+  "prompt": "run traceroute to victim.corp",
+  "success": true,
+  "latency_ms": 2320.7203340134583,
+  "context_chars": 1565,
+  "output_chars": 512
+}

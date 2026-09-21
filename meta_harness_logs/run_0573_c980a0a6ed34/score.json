@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:44:17Z",
+  "prompt": "network reconnaissance on victim.corp",
+  "success": true,
+  "latency_ms": 2347.307300020475,
+  "context_chars": 1590,
+  "output_chars": 512
+}

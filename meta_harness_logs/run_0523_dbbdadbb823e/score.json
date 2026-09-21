@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:10:31Z",
+  "prompt": "try RCE on 10.10.11.78",
+  "success": true,
+  "latency_ms": 13941.49903501966,
+  "context_chars": 1568,
+  "output_chars": 512
+}

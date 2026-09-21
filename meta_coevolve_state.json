@@ -1,0 +1,429 @@
+{
+  "generation": 5,
+  "population": [
+    {
+      "LOG_DIR": "meta_harness_logs",
+      "MAX_LOGGED_RUNS": 500,
+      "COMPRESS_OLD_TRACES": false,
+      "BOOTSTRAP_ENABLED": true,
+      "BOOTSTRAP_MAX_FILES": 30,
+      "BOOTSTRAP_TIMEOUT": 5.0,
+      "DRAFT_VERIFY_ENABLED": true,
+      "DRAFT_VERIFY_THRESHOLD": 0.6,
+      "RETRIEVAL_TOP_K": 5,
+      "FRONTIER_MAX_SIZE": 20,
+      "FRONTIER_METRICS": [
+        "success_rate",
+        "latency_ms",
+        "context_chars"
+      ],
+      "MEMORY_CAPACITY": 2000,
+      "MEMORY_HALFLIFE": 100,
+      "LOG_LEVEL": "INFO"
+    },
+    {
+      "LOG_DIR": "meta_harness_logs",
+      "MAX_LOGGED_RUNS": 500,
+      "COMPRESS_OLD_TRACES": false,
+      "BOOTSTRAP_ENABLED": true,
+      "BOOTSTRAP_MAX_FILES": 31,
+      "BOOTSTRAP_TIMEOUT": 5.0,
+      "DRAFT_VERIFY_ENABLED": false,
+      "DRAFT_VERIFY_THRESHOLD": 0.6218879205246707,
+      "RETRIEVAL_TOP_K": 5,
+      "FRONTIER_MAX_SIZE": 20,
+      "FRONTIER_METRICS": [
+        "success_rate",
+        "latency_ms",
+        "context_chars"
+      ],
+      "MEMORY_CAPACITY": 2000,
+      "MEMORY_HALFLIFE": 100,
+      "LOG_LEVEL": "INFO"
+    }
+  ],
+  "frontier": [
+    [
+      {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 30,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": true,
+        "DRAFT_VERIFY_THRESHOLD": 0.6,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4870.499026131195,
+        "latency_ms_p95": 13924.337212985847,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    ],
+    [
+      {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 31,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": false,
+        "DRAFT_VERIFY_THRESHOLD": 0.6218879205246707,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4848.442483404263,
+        "latency_ms_p95": 13852.585404994898,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    ]
+  ],
+  "history": [
+    {
+      "gen": 1,
+      "idx": 0,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 30,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": true,
+        "DRAFT_VERIFY_THRESHOLD": 0.6,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4870.499026131195,
+        "latency_ms_p95": 13924.337212985847,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 1,
+      "idx": 1,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 31,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": false,
+        "DRAFT_VERIFY_THRESHOLD": 0.6218879205246707,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4848.442483404263,
+        "latency_ms_p95": 13852.585404994898,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 2,
+      "idx": 0,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 30,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": true,
+        "DRAFT_VERIFY_THRESHOLD": 0.6,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4873.805522870195,
+        "latency_ms_p95": 13939.140681992285,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 2,
+      "idx": 1,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 31,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": false,
+        "DRAFT_VERIFY_THRESHOLD": 0.6218879205246707,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4890.096836203399,
+        "latency_ms_p95": 13996.64455698803,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 3,
+      "idx": 0,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 30,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": true,
+        "DRAFT_VERIFY_THRESHOLD": 0.6,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4867.6241982670035,
+        "latency_ms_p95": 13830.251948995283,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 3,
+      "idx": 1,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 31,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": false,
+        "DRAFT_VERIFY_THRESHOLD": 0.6218879205246707,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4919.165177001075,
+        "latency_ms_p95": 14193.287069007056,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 4,
+      "idx": 0,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 30,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": true,
+        "DRAFT_VERIFY_THRESHOLD": 0.6,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 5206.829260466232,
+        "latency_ms_p95": 18964.248111005872,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 4,
+      "idx": 1,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 31,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": false,
+        "DRAFT_VERIFY_THRESHOLD": 0.6218879205246707,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4905.151312060964,
+        "latency_ms_p95": 14124.0971449879,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 5,
+      "idx": 0,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 30,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": true,
+        "DRAFT_VERIFY_THRESHOLD": 0.6,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4883.953631731371,
+        "latency_ms_p95": 14082.609100005357,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    },
+    {
+      "gen": 5,
+      "idx": 1,
+      "cfg": {
+        "LOG_DIR": "meta_harness_logs",
+        "MAX_LOGGED_RUNS": 500,
+        "COMPRESS_OLD_TRACES": false,
+        "BOOTSTRAP_ENABLED": true,
+        "BOOTSTRAP_MAX_FILES": 31,
+        "BOOTSTRAP_TIMEOUT": 5.0,
+        "DRAFT_VERIFY_ENABLED": false,
+        "DRAFT_VERIFY_THRESHOLD": 0.6218879205246707,
+        "RETRIEVAL_TOP_K": 5,
+        "FRONTIER_MAX_SIZE": 20,
+        "FRONTIER_METRICS": [
+          "success_rate",
+          "latency_ms",
+          "context_chars"
+        ],
+        "MEMORY_CAPACITY": 2000,
+        "MEMORY_HALFLIFE": 100,
+        "LOG_LEVEL": "INFO"
+      },
+      "metrics": {
+        "success_rate": 1.0,
+        "latency_ms_avg": 4876.259359536925,
+        "latency_ms_p95": 13884.919780975906,
+        "context_chars_avg": 69.73333333333333,
+        "output_chars_avg": 514.4666666666667,
+        "errors": []
+      }
+    }
+  ]
+}

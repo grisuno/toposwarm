@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:45:15Z",
+  "prompt": "check for open ports on victim.corp",
+  "success": true,
+  "latency_ms": 2295.6630749977194,
+  "context_chars": 1586,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:13:39Z",
+  "prompt": "check for CVEs on target.local",
+  "success": true,
+  "latency_ms": 2485.43573502684,
+  "context_chars": 1576,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:56:14Z",
+  "prompt": "find live hosts in 192.168.1.1",
+  "success": true,
+  "latency_ms": 2305.1413299981505,
+  "context_chars": 1576,
+  "output_chars": 512
+}

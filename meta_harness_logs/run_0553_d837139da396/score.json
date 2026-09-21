@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:42:12Z",
+  "prompt": "run exploit against target.local",
+  "success": true,
+  "latency_ms": 2357.948024990037,
+  "context_chars": 1570,
+  "output_chars": 512
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:48:46Z",
+  "prompt": "find live hosts in victim.corp",
+  "success": true,
+  "latency_ms": 2262.807679013349,
+  "context_chars": 1576,
+  "output_chars": 512
+}

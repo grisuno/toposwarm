@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:16:56Z",
+  "prompt": "check C2 beacons",
+  "success": true,
+  "latency_ms": 2353.7414260208607,
+  "context_chars": 1548,
+  "output_chars": 512
+}

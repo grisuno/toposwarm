@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:48:35Z",
+  "prompt": "get NTLM hashes",
+  "success": true,
+  "latency_ms": 2275.996403011959,
+  "context_chars": 1546,
+  "output_chars": 512
+}

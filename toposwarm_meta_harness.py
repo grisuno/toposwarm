@@ -765,7 +765,7 @@ class DraftVerifier:
 
     def route(self, prompt: str, snapshot_text: str = "") -> Tuple[str, str, float]:
         """
-        Draft-verify routing.
+        Draft-verify routing with semantic evidence weighting.
 
         Returns:
             Tuple of (tool_name, tool_arg, confidence).
@@ -782,39 +782,83 @@ class DraftVerifier:
             draft_tool, prompt, top_k=self.cfg.RETRIEVAL_TOP_K
         )
 
-        # If we have strong confirmers and no strong challengers, boost confidence
-        conf_success = sum(1 for c in confirmers if c.get("score", {}).get("success", False))
-        chall_failures = sum(1 for c in challengers if not c.get("score", {}).get("success", False))
+        # Compute weighted evidence scores using retrieval similarity
+        conf_weight = sum(
+            self._episode_weight(c, prompt) for c in confirmers
+        )
+        chall_weight = sum(
+            self._episode_weight(c, prompt) for c in challengers
+        )
 
         if confirmers and not challengers:
-            confidence = min(0.99, confidence + 0.15)
+            confidence = min(0.99, confidence + 0.15 * min(conf_weight, 3.0))
         elif challengers and not confirmers:
-            confidence = max(0.2, confidence - 0.25)
-            # Try to find the most common successful tool among challengers
-            tool_votes: Dict[str, int] = {}
-            for ch in challengers:
-                tr = ch.get("traces", [])
-                tname = tr[0].get("tool", "") if tr else ""
-                if tname:
-                    tool_votes[tname] = tool_votes.get(tname, 0) + 1
-            if tool_votes:
-                best_alt = max(tool_votes, key=tool_votes.get)
-                if best_alt != draft_tool:
-                    self.logger.info(
-                        "DraftVerifier: revised %s → %s (challenger evidence)",
-                        draft_tool, best_alt,
-                    )
-                    draft_tool = best_alt
-                    # Keep original arg unless the alternative implies a different extraction
-                    draft_arg = self._reextract_arg(prompt, draft_tool, draft_arg)
+            confidence = max(0.2, confidence - 0.25 * min(chall_weight, 3.0))
+            draft_tool, draft_arg = self._revise_from_challengers(
+                draft_tool, draft_arg, prompt, challengers
+            )
         else:
-            # Mixed evidence — neutral confidence
-            confidence = 0.6 + 0.1 * (conf_success - chall_failures)
+            # Mixed evidence — weighted confidence adjustment
+            net = conf_weight - chall_weight
+            confidence = 0.6 + 0.1 * net
             confidence = max(0.3, min(0.9, confidence))
+            if net < -0.5:
+                draft_tool, draft_arg = self._revise_from_challengers(
+                    draft_tool, draft_arg, prompt, challengers
+                )
 
-        # Snapshot is kept in prompt context; never inject into tool_arg
-        # (injecting it breaks command parsing and bloats arguments)
         return draft_tool, draft_arg, confidence
+
+    @staticmethod
+    def _episode_weight(ep: Dict[str, Any], query_prompt: str) -> float:
+        """Weight an episode by its retrieval relevance + success recency."""
+        score = ep.get("score", {})
+        # Base weight from success (success = 1.0, failure = 0.5)
+        w = 1.0 if score.get("success") else 0.5
+        # Boost by prompt similarity if we can compute it
+        ep_text = ep.get("text", "")
+        if ep_text:
+            # Simple token overlap similarity
+            query_tokens = set(re.findall(r"[a-z0-9_]+", query_prompt.lower()))
+            ep_tokens = set(re.findall(r"[a-z0-9_]+", ep_text.lower()))
+            if query_tokens and ep_tokens:
+                inter = len(query_tokens & ep_tokens)
+                union = len(query_tokens | ep_tokens)
+                jaccard = inter / union if union else 0.0
+                w *= (1.0 + jaccard)
+        return w
+
+    def _revise_from_challengers(
+        self,
+        draft_tool: str,
+        draft_arg: str,
+        prompt: str,
+        challengers: List[Dict[str, Any]],
+    ) -> Tuple[str, str]:
+        """Select the best alternative tool using weighted challenger votes."""
+        tool_scores: Dict[str, float] = {}
+        for ch in challengers:
+            tr = ch.get("traces", [])
+            tname = tr[0].get("tool", "") if tr else ""
+            if not tname:
+                continue
+            w = self._episode_weight(ch, prompt)
+            if not ch.get("score", {}).get("success", False):
+                w *= 0.3  # downgrade failed challengers
+            tool_scores[tname] = tool_scores.get(tname, 0.0) + w
+
+        if not tool_scores:
+            return draft_tool, draft_arg
+
+        best_alt = max(tool_scores, key=tool_scores.get)
+        if best_alt != draft_tool and tool_scores[best_alt] > tool_scores.get(draft_tool, 0.0) + 0.5:
+            self.logger.info(
+                "DraftVerifier: revised %s → %s (weighted challenger evidence)",
+                draft_tool, best_alt,
+            )
+            draft_tool = best_alt
+            draft_arg = self._reextract_arg(prompt, draft_tool, draft_arg)
+        return draft_tool, draft_arg
 
     @staticmethod
     def _reextract_arg(prompt: str, tool_name: str, fallback: str) -> str:

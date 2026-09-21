@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:53:38Z",
+  "prompt": "create a stager",
+  "success": true,
+  "latency_ms": 2307.4114350019954,
+  "context_chars": 1546,
+  "output_chars": 512
+}

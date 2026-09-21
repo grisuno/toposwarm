@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:52:11Z",
+  "prompt": "run nmap on target.local",
+  "success": true,
+  "latency_ms": 13982.03621400171,
+  "context_chars": 1554,
+  "output_chars": 512
+}

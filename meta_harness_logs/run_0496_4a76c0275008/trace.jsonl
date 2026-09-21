@@ -1,0 +1,1 @@
+{"step": 1, "prompt": "Show collected credentials", "tool": "lazyown_credentials", "arg": "Show collected credentials", "output": "admin:password123\nroot:toor", "ok": true, "t_ms": 7.859122997615486}

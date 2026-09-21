@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T02:12:07Z",
+  "prompt": "Generate a campaign situation report",
+  "success": true,
+  "latency_ms": 7180.9574229991995,
+  "context_chars": 1588,
+  "output_chars": 512
+}

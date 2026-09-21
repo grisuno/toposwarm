@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:13:06Z",
+  "prompt": "run fuzzing on 172.16.0.5",
+  "success": true,
+  "latency_ms": 2482.3600859963335,
+  "context_chars": 1555,
+  "output_chars": 512
+}

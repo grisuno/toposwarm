@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-16T16:49:49Z",
+  "prompt": "show current config",
+  "tool": "lazyown_c2_search_agent",
+  "arg_preview": "show current config",
+  "route_source": "draft_verify",
+  "route_confidence": 0.61,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 2925.56,
+  "context_chars": 462,
+  "output_chars": 512
+}

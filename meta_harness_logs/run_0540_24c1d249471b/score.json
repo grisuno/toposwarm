@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-05-17T00:17:51Z",
+  "prompt": "run fuzzing on 10.10.11.78",
+  "tool": "lazyown_run_command",
+  "arg_preview": "fuzzing on 10",
+  "route_source": "draft_verify",
+  "route_confidence": 0.99,
+  "neural_disagreement": false,
+  "success": true,
+  "latency_ms": 3111.37,
+  "context_chars": 463,
+  "output_chars": 512
+}

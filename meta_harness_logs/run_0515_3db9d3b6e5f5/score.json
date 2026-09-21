@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:25:10Z",
+  "prompt": "dump LSASS",
+  "success": true,
+  "latency_ms": 2374.652144993888,
+  "context_chars": 1536,
+  "output_chars": 512
+}

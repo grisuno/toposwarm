@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T00:54:00Z",
+  "prompt": "poll C2 events",
+  "success": true,
+  "latency_ms": 2344.3949409993365,
+  "context_chars": 1544,
+  "output_chars": 512
+}

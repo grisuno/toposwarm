@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T01:13:59Z",
+  "prompt": "scan victim.corp",
+  "success": true,
+  "latency_ms": 2605.1114080182742,
+  "context_chars": 1548,
+  "output_chars": 512
+}

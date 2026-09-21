@@ -1,0 +1,6 @@
+{
+  "proposer": true,
+  "target": "toposwarm_lazyown_orchestrator.py",
+  "applied": false,
+  "model": "llama3.1:8b"
+}

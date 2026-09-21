@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-05-07T02:12:00Z",
+  "prompt": "Search for SMB exploitation techniques",
+  "success": true,
+  "latency_ms": 2320.2819080033805,
+  "context_chars": 1592,
+  "output_chars": 512
+}
