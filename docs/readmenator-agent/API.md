@@ -1,0 +1,484 @@
+# API
+
+## diagnose_accuracy.py
+Depends on: `topo_swarm_agent.py`, `ts_utils.py`
+- `load_model` (function) `diagnose_accuracy.py:13` `def load_model()`
+- `main` (function) `diagnose_accuracy.py:33` `def main()`
+
+## lazyown_bridge.py
+- `LazyOwnPathResolver.__init__` (method) `lazyown_bridge.py:104` `def __init__(self)`
+- `LazyOwnPathResolver.resolve` (method) `lazyown_bridge.py:107` `def resolve(self)` -- Return the discovered LazyOwn directory.
+- `LazyOwnPayloadManager.__init__` (method) `lazyown_bridge.py:171` `def __init__(self, lazyown_dir)`
+- `LazyOwnPayloadManager.payload_path` (method) `lazyown_bridge.py:176` `def payload_path(self)`
+- `LazyOwnPayloadManager.read` (method) `lazyown_bridge.py:179` `def read(self)` -- Return the current payload.json as a dictionary.
+- `LazyOwnPayloadManager.write` (method) `lazyown_bridge.py:189` `def write(self, data)` -- Atomically overwrite payload.json with the provided dictionary.
+- `LazyOwnPayloadManager.get` (method) `lazyown_bridge.py:198` `def get(self, key, default)` -- Read a single key from payload.json.
+- `LazyOwnPayloadManager.set` (method) `lazyown_bridge.py:202` `def set(self, key, value)` -- Update a single key in payload.json without overwriting other keys.
+- `LazyOwnPayloadManager.update` (method) `lazyown_bridge.py:208` `def update(self, mapping)` -- Merge a dictionary into payload.json.
+- `LazyOwnCommandBuilder.__init__` (method) `lazyown_bridge.py:237` `def __init__(self, lazyown_dir)`
+- `LazyOwnCommandBuilder.build_argv` (method) `lazyown_bridge.py:242` `def build_argv(self, command)` -- Return the subprocess argv and the stdin payload.
+- `LazyOwnProcessExecutor.__init__` (method) `lazyown_bridge.py:331` `def __init__(self, lazyown_dir)`
+- `LazyOwnProcessExecutor.execute` (method) `lazyown_bridge.py:343` `def execute(self, argv, stdin_payload, timeout)` -- Run a command and return (raw_stdout, returncode, latency_ms).
+- `LazyOwnOutputSanitizer.sanitize` (method) `lazyown_bridge.py:527` `def sanitize(self, text)` -- Return a cleaned version of the raw LazyOwn output.
+- `LazyOwnBridge.__init__` (method) `lazyown_bridge.py:556` `def __init__(self)`
+- `LazyOwnBridge.lazyown_dir` (method) `lazyown_bridge.py:565` `def lazyown_dir(self)`
+- `LazyOwnBridge.payload` (method) `lazyown_bridge.py:571` `def payload(self)`
+- `LazyOwnBridge.builder` (method) `lazyown_bridge.py:577` `def builder(self)`
+- `LazyOwnBridge.executor` (method) `lazyown_bridge.py:583` `def executor(self)`
+- `LazyOwnBridge.available` (method) `lazyown_bridge.py:589` `def available(self)`
+- `LazyOwnBridge.run` (method) `lazyown_bridge.py:598` `def run(self, command, timeout)` -- Execute a LazyOwn command and return a structured result.
+- `LazyOwnBridge.run_clean` (method) `lazyown_bridge.py:634` `def run_clean(self, command, timeout)` -- Execute a LazyOwn command and return the cleaned output string.
+- `LazyOwnBridge.get_config` (method) `lazyown_bridge.py:642` `def get_config(self)` -- Return the current LazyOwn configuration from payload.json.
+- `LazyOwnBridge.set_config` (method) `lazyown_bridge.py:646` `def set_config(self, key, value)` -- Update a single configuration key in payload.json.
+- `LazyOwnBridge.set_target` (method) `lazyown_bridge.py:655` `def set_target(self, ip)` -- Convenience method to set the remote target host.
+- `LazyOwnBridge.get_target` (method) `lazyown_bridge.py:659` `def get_target(self)` -- Return the currently configured remote target host.
+
+## lazyown_dataset_enhancer.py
+- `ExperienceStoreReader.__init__` (method) `lazyown_dataset_enhancer.py:88` `def __init__(self, log_dir)`
+- `ExperienceStoreReader.list_runs` (method) `lazyown_dataset_enhancer.py:91` `def list_runs(self)`
+- `ExperienceStoreReader.read_trace` (method) `lazyown_dataset_enhancer.py:98` `def read_trace(self, run_dir)`
+- `ExperienceStoreReader.read_score` (method) `lazyown_dataset_enhancer.py:113` `def read_score(self, run_dir)`
+- `ExperienceStoreReader.read_harness` (method) `lazyown_dataset_enhancer.py:122` `def read_harness(self, run_dir)`
+- `DatasetEnhancer.__init__` (method) `lazyown_dataset_enhancer.py:166` `def __init__(self, log_dir, max_runs)`
+- `DatasetEnhancer.enhance` (method) `lazyown_dataset_enhancer.py:171` `def enhance(self)`
+- `DatasetEnhancer.add_negative_examples` (method) `lazyown_dataset_enhancer.py:330` `def add_negative_examples(self, records, n)` -- Add examples where the prompt is ambiguous and the model must NOT pick a random tool, or where the user asks...
+- `DatasetEnhancer.curriculum_sort` (method) `lazyown_dataset_enhancer.py:355` `def curriculum_sort(self, records)` -- Sort by difficulty (easy → hard).
+- `DatasetEnhancer.deduplicate` (method) `lazyown_dataset_enhancer.py:359` `def deduplicate(self, records)` -- Deduplicate by instruction text only (same prompt can have different outputs).
+- `DatasetEnhancer.augment_simple` (method) `lazyown_dataset_enhancer.py:370` `def augment_simple(self, records, multiplier)` -- Lightweight augmentation: replace IP addresses, hostnames, and common keywords with variants to increase diversity...
+- `DatasetEnhancer.run` (method) `lazyown_dataset_enhancer.py:395` `def run(self, merge_with)`
+- `DatasetEnhancer.print_stats` (method) `lazyown_dataset_enhancer.py:442` `def print_stats(records)`
+- `DatasetEnhancer.main` (method) `lazyown_dataset_enhancer.py:469` `def main()`
+
+## lazyown_dataset_generator.py
+- `build_dataset` (function) `lazyown_dataset_generator.py:3571` `def build_dataset()`
+- `write_jsonl` (function) `lazyown_dataset_generator.py:3595` `def write_jsonl(records, path)`
+- `print_stats` (function) `lazyown_dataset_generator.py:3602` `def print_stats(records)`
+- `main` (function) `lazyown_dataset_generator.py:3616` `def main()`
+
+## meta_harness_proposer.py
+Depends on: `toposwarm_meta_harness.py`
+- `LLMClient.__init__` (method) `meta_harness_proposer.py:93` `def __init__(self, cfg, logger)`
+- `LLMClient.chat` (method) `meta_harness_proposer.py:121` `def chat(self, system, user)` -- Send a chat request and return the assistant message content.
+- `ExperienceReader.__init__` (method) `meta_harness_proposer.py:153` `def __init__(self, log_dir, logger)`
+- `ExperienceReader.list_runs` (method) `meta_harness_proposer.py:157` `def list_runs(self, n)`
+- `ExperienceReader.load_run` (method) `meta_harness_proposer.py:165` `def load_run(self, run_dir)`
+- `ExperienceReader.build_diagnostic_context` (method) `meta_harness_proposer.py:193` `def build_diagnostic_context(self, top_k)` -- Build a rich diagnostic string containing: - failed runs with their traces - successful runs for contrast...
+- `PatchEngine.__init__` (method) `meta_harness_proposer.py:246` `def __init__(self, logger)`
+- `PatchEngine.validate_syntax` (method) `meta_harness_proposer.py:249` `def validate_syntax(self, code)` -- Return (ok, error_message).
+- `PatchEngine.apply_full_rewrite` (method) `meta_harness_proposer.py:265` `def apply_full_rewrite(self, target_path, new_code, dry_run)` -- Validate and optionally write a full file rewrite.
+- `PatchEngine.apply_line_range` (method) `meta_harness_proposer.py:287` `def apply_line_range(self, target_path, line_start, line_end, new_string, dry_run)` -- Replace a range of lines (1-indexed) with new text.
+- `PatchEngine.apply_diff_hunk` (method) `meta_harness_proposer.py:316` `def apply_diff_hunk(self, target_path, old_string, new_string, dry_run)` -- Apply a targeted string replacement after validation.
+- `MetaHarnessProposer.__init__` (method) `meta_harness_proposer.py:434` `def __init__(self, log_dir, llm_cfg, logger)`
+- `MetaHarnessProposer.propose_patch` (method) `meta_harness_proposer.py:445` `def propose_patch(self, target_path, top_k, dry_run)` -- End-to-end propose-and-apply cycle.
+- `MetaHarnessProposer.main` (method) `meta_harness_proposer.py:572` `def main()`
+
+## neurologos_tricameral_loss2.7.py
+- `setup_flickr8k_with_audio` (function) `neurologos_tricameral_loss2.7.py:53` `def setup_flickr8k_with_audio(data_dir)` -- Descarga y organiza Flickr8k + Audio del dataset de Kaggle.
+- `build_vocab_flickr` (function) `neurologos_tricameral_loss2.7.py:241` `def build_vocab_flickr(captions_file, vocab_size)` -- Construye vocabulario desde el archivo de captions
+- `HierarchicalEpisodicMemory.__init__` (method) `neurologos_tricameral_loss2.7.py:266` `def __init__(self, working_capacity, short_term_capacity, importance_threshold)`
+- `HierarchicalEpisodicMemory.compute_surprise` (method) `neurologos_tricameral_loss2.7.py:292` `def compute_surprise(self, predicted_logits, ground_truth, gate_mean)`
+- `HierarchicalEpisodicMemory.calculate_importance` (method) `neurologos_tricameral_loss2.7.py:302` `def calculate_importance(self, episode, surprise_score)`
+- `HierarchicalEpisodicMemory.store_episode` (method) `neurologos_tricameral_loss2.7.py:335` `def store_episode(self, image, audio, caption, surprise_score)`
+- `HierarchicalEpisodicMemory.add` (method) `neurologos_tricameral_loss2.7.py:385` `def add(self, image, audio, caption, surprise_score)`
+- `HierarchicalEpisodicMemory.apply_forgetting_curve` (method) `neurologos_tricameral_loss2.7.py:388` `def apply_forgetting_curve(self)`
+- `HierarchicalEpisodicMemory.sample` (method) `neurologos_tricameral_loss2.7.py:430` `def sample(self, batch_size, memory_level)`
+- `HierarchicalEpisodicMemory.get_total_size` (method) `neurologos_tricameral_loss2.7.py:488` `def get_total_size(self)`
+- `NeurocognitiveSystem.__init__` (method) `neurologos_tricameral_loss2.7.py:497` `def __init__(self)`
+- `NeurocognitiveSystem.assess_reasoning_state` (method) `neurologos_tricameral_loss2.7.py:517` `def assess_reasoning_state(self, mtp_loss, reasoning_steps, logical_coherence, epoch)` -- Evalúa estado del sistema de razonamiento (MTP + Chain-of-Thought)
+- `NeurocognitiveSystem.assess_cognitive_state` (method) `neurologos_tricameral_loss2.7.py:561` `def assess_cognitive_state(self, cider_score, spice_score, combined_reward, epoch)` -- Evalúa estado cognitivo lingüístico (planteau, déficits, sobreajuste)
+- `NeurocognitiveSystem.apply_cognitive_intervention` (method) `neurologos_tricameral_loss2.7.py:607` `def apply_cognitive_intervention(self, model, issues, severity, confidence, epoch, diagnostics)` -- Aplica intervenciones basadas en estado lingüístico y de razonamiento
+- `LanguageMetrics.sentence_bleu` (method) `neurologos_tricameral_loss2.7.py:697` `def sentence_bleu(reference, hypothesis, weights)` -- BLEU simplificado a nivel de oración
+- `LanguageMetrics.token_accuracy` (method) `neurologos_tricameral_loss2.7.py:740` `def token_accuracy(reference, hypothesis)` -- Porcentaje de tokens correctos en posición
+- `LanguageMetrics.word_overlap` (method) `neurologos_tricameral_loss2.7.py:753` `def word_overlap(reference, hypothesis)` -- Jaccard similarity entre palabras
+- `LinguisticFeedbackLoop.__init__` (method) `neurologos_tricameral_loss2.7.py:768` `def __init__(self, alpha, beta)`
+- `LinguisticFeedbackLoop.compute_linguistic_reward` (method) `neurologos_tricameral_loss2.7.py:791` `def compute_linguistic_reward(self, references, hypotheses)`
+- `LinguisticFeedbackLoop.compute_cider` (method) `neurologos_tricameral_loss2.7.py:830` `def compute_cider(self, reference, hypothesis)` -- FIX: Uso correcto del cache estático
+- `LinguisticFeedbackLoop.compute_spice` (method) `neurologos_tricameral_loss2.7.py:844` `def compute_spice(self, reference, hypothesis)`
+- `LinguisticFeedbackLoop.get_cache_stats` (method) `neurologos_tricameral_loss2.7.py:856` `def get_cache_stats(self)` -- FIX: Estadísticas de cache actualizadas
+- `LanguageMetrics.sentence_bleu` (method) `neurologos_tricameral_loss2.7.py:886` `def sentence_bleu(reference, hypothesis, weights)`
+- `LanguageMetrics.token_accuracy` (method) `neurologos_tricameral_loss2.7.py:909` `def token_accuracy(reference, hypothesis)`
+- `LanguageMetrics.word_overlap` (method) `neurologos_tricameral_loss2.7.py:919` `def word_overlap(reference, hypothesis)`
+- `CausalReasoningEngine.__init__` (method) `neurologos_tricameral_loss2.7.py:928` `def __init__(self, hidden_dim)`
+- `CausalReasoningEngine.reason_causally` (method) `neurologos_tricameral_loss2.7.py:955` `def reason_causally(self, observation, context)`
+- `CausalReasoningEngine.update_knowledge_graph` (method) `neurologos_tricameral_loss2.7.py:986` `def update_knowledge_graph(self, cause, effect, strength)`
+- `CausalReasoningEngine.query_causal_chain` (method) `neurologos_tricameral_loss2.7.py:992` `def query_causal_chain(self, start_node, end_node)`
+- `LanguageMetrics.sentence_bleu` (method) `neurologos_tricameral_loss2.7.py:1008` `def sentence_bleu(reference, hypothesis, weights)`
+- `LanguageMetrics.token_accuracy` (method) `neurologos_tricameral_loss2.7.py:1031` `def token_accuracy(reference, hypothesis)`
+- `LanguageMetrics.word_overlap` (method) `neurologos_tricameral_loss2.7.py:1041` `def word_overlap(reference, hypothesis)`
+- `StableLiquidNeuron.__init__` (method) `neurologos_tricameral_loss2.7.py:1054` `def __init__(self, in_dim, out_dim)`
+- `StableLiquidNeuron.forward` (method) `neurologos_tricameral_loss2.7.py:1096` `def forward(self, x)`
+- `StableLiquidNeuron.hebbian_update` (method) `neurologos_tricameral_loss2.7.py:1121` `def hebbian_update(self, post, pre, plasticity)`
+- `StableLiquidNeuron.update_physiology_advanced` (method) `neurologos_tricameral_loss2.7.py:1159` `def update_physiology_advanced(self, loss_value)`
+- `TriangulatedMedicalSystem.__init__` (method) `neurologos_tricameral_loss2.7.py:1193` `def __init__(self)`
+- `TriangulatedMedicalSystem.triangulate_signals` (method) `neurologos_tricameral_loss2.7.py:1200` `def triangulate_signals(self, health_score, liquid_norm, gate_mean, gate_std, callosal_flow)`
+- `TriangulatedMedicalSystem.count_convergent_signals` (method) `neurologos_tricameral_loss2.7.py:1211` `def count_convergent_signals(self, signals, pattern)`
+- `TriangulatedMedicalSystem.diagnose_with_triangulation` (method) `neurologos_tricameral_loss2.7.py:1214` `def diagnose_with_triangulation(self, health_score, liquid_norm, gate_mean, gate_std, callosal_flow, epoch)`
+- `TriangulatedMedicalSystem.apply_triangulated_intervention` (method) `neurologos_tricameral_loss2.7.py:1259` `def apply_triangulated_intervention(self, model, issues, severity, confidence, epoch)`
+- `LeftHemisphere.__init__` (method) `neurologos_tricameral_loss2.7.py:1344` `def __init__(self, vocab_size, embed_dim, hidden_dim)`
+- `LeftHemisphere.forward` (method) `neurologos_tricameral_loss2.7.py:1426` `def forward(self, visual_context, captions, channels, max_len, epoch)`
+- `AudioEncoder.__init__` (method) `neurologos_tricameral_loss2.7.py:1655` `def __init__(self, output_dim)`
+- `AudioEncoder.forward` (method) `neurologos_tricameral_loss2.7.py:1689` `def forward(self, mel_spec)`
+- `RightHemisphereTricameral.__init__` (method) `neurologos_tricameral_loss2.7.py:1705` `def __init__(self, output_dim)`
+- `RightHemisphereTricameral.forward` (method) `neurologos_tricameral_loss2.7.py:1745` `def forward(self, image, audio)` -- Args: image: (B, 3, H, W) audio: (B, 80, T) Returns: fused_features: (B, output_dim) visual_post, visual_pre...
+- `CorpusCallosumTrimodal.__init__` (method) `neurologos_tricameral_loss2.7.py:1787` `def __init__(self, dim)`
+- `CorpusCallosumTrimodal.forward` (method) `neurologos_tricameral_loss2.7.py:1835` `def forward(self, right_features)`
+- `CorpusCallosumTrimodal.update_channel_fatigue` (method) `neurologos_tricameral_loss2.7.py:1896` `def update_channel_fatigue(self, visual_channel, audio_channel, semantic_channel)`
+- `CorpusCallosumTrimodal.adjust_gates_by_fatigue` (method) `neurologos_tricameral_loss2.7.py:1918` `def adjust_gates_by_fatigue(self)`
+- `EnhancedDiagnosticsTricameral.__init__` (method) `neurologos_tricameral_loss2.7.py:1940` `def __init__(self)`
+- `EnhancedDiagnosticsTricameral.measure_callosal_flow` (method) `neurologos_tricameral_loss2.7.py:1980` `def measure_callosal_flow(self, right_features, left_context, channels)`
+- `EnhancedDiagnosticsTricameral.evaluate_reasoning_quality` (method) `neurologos_tricameral_loss2.7.py:2010` `def evaluate_reasoning_quality(self, generated_texts, reference_texts, reasoning_steps)`
+- `EnhancedDiagnosticsTricameral.calculate_synergy` (method) `neurologos_tricameral_loss2.7.py:2047` `def calculate_synergy(self, visual_node, audio_node, callosal_flow, left_gate_mean, left_gate_std)`
+- `EnhancedDiagnosticsTricameral.calculate_health` (method) `neurologos_tricameral_loss2.7.py:2058` `def calculate_health(self, visual_node, audio_node, callosal_flow, left_gate_mean, left_gate_std, liquid_norm)`
+- `EnhancedDiagnosticsTricameral.update` (method) `neurologos_tricameral_loss2.7.py:2067` `def update(self)`
+- `EnhancedDiagnosticsTricameral.get_recent_avg` (method) `neurologos_tricameral_loss2.7.py:2084` `def get_recent_avg(self, key, n)`
+- `EnhancedDiagnosticsTricameral.visualize_fatigue_distribution` (method) `neurologos_tricameral_loss2.7.py:2100` `def visualize_fatigue_distribution(self, epoch)`
+- `EnhancedDiagnosticsTricameral.visualize_reasoning_metrics` (method) `neurologos_tricameral_loss2.7.py:2124` `def visualize_reasoning_metrics(self, epoch)`
+- `EnhancedDiagnosticsTricameral.report` (method) `neurologos_tricameral_loss2.7.py:2136` `def report(self, epoch)`
+- `NeuroLogosTricameral.__init__` (method) `neurologos_tricameral_loss2.7.py:2218` `def __init__(self, vocab_size)`
+- `NeuroLogosTricameral.forward` (method) `neurologos_tricameral_loss2.7.py:2224` `def forward(self, image, audio, captions, epoch)`
+- `Flickr8kMultimodalDataset.__init__` (method) `neurologos_tricameral_loss2.7.py:2253` `def __init__(self, images_dir, audio_dir, captions_file, vocab, img_transform, max_len, sample_rate)`
+- `Flickr8kMultimodalDataset.compute_alignment_loss` (method) `neurologos_tricameral_loss2.7.py:2354` `def compute_alignment_loss(visual_features, channels, alpha, epoch)` -- FIX: Pérdida auxiliar para alineación temprana de canales multimodales Solo activa en épocas iniciales (epoch < 6)
+- `Flickr8kMultimodalDataset.compute_tricameral_loss` (method) `neurologos_tricameral_loss2.7.py:2382` `def compute_tricameral_loss(logits, captions, gate, vocab, visual_post, audio_post, mtp_loss, linguistic_reward...`
+- `Flickr8kMultimodalDataset.train_tricameral` (method) `neurologos_tricameral_loss2.7.py:2429` `def train_tricameral()`
+
+## topo_swarm_agent.py
+Depends on: `ts_utils.py`
+Imported by: `debug_routing.py`, `diagnose_accuracy.py`, `toposwarm_coevolve.py`, `toposwarm_lazyown_sweep.py`
+- `QuaternionOps.hamilton_product` (method) `topo_swarm_agent.py:329` `def hamilton_product(q1, q2)` -- Hamilton (cross) product q1 ⊗ q2 for tensors of shape [..., 4].
+- `QuaternionOps.normalize` (method) `topo_swarm_agent.py:344` `def normalize(q, eps)` -- Unit-normalise quaternion tensors.
+- `QuaternionOps.berry_phase_rotation` (method) `topo_swarm_agent.py:349` `def berry_phase_rotation(q, phase)` -- Apply a Berry-phase rotation around the w-axis of the quaternion manifold.
+- `QuaternionLinear.__init__` (method) `topo_swarm_agent.py:381` `def __init__(self, in_features, out_features, bias, init_std)` -- Initialise quaternion weight matrices.
+- `QuaternionLinear.forward` (method) `topo_swarm_agent.py:410` `def forward(self, x)` -- Fused Hamilton product via a single batched einsum.
+- `SpectralBottleneck.__init__` (method) `topo_swarm_agent.py:446` `def __init__(self, cfg)` -- Build encoder/decoder spectral kernels and quaternion projections.
+- `SpectralBottleneck.forward` (method) `topo_swarm_agent.py:476` `def forward(self, x)` -- Encode x through the spectral bottleneck.
+- `RMSNorm.__init__` (method) `topo_swarm_agent.py:508` `def __init__(self, d_model, eps)` -- Args: d_model: Feature dimension. eps: Numerical stability epsilon.
+- `RMSNorm.forward` (method) `topo_swarm_agent.py:518` `def forward(self, x)` -- Normalise by the RMS of x and rescale by learned weight.
+- `RotaryEmbedding.__init__` (method) `topo_swarm_agent.py:537` `def __init__(self, d_head, max_seq_len, base, ntk_factor)` -- Args: d_head: Attention head dimension. max_seq_len: Maximum sequence length to pre-cache. base: RoPE base...
+- `RotaryEmbedding.forward` (method) `topo_swarm_agent.py:574` `def forward(self, x, seq_len)` -- Apply rotary embedding to query or key tensor [B, H, S, d_head].
+- `SwiGLU.__init__` (method) `topo_swarm_agent.py:591` `def __init__(self, d_model, hidden_dim, dropout)` -- Args: d_model: Input and output feature dimension. hidden_dim: Intermediate expansion dimension. dropout: Dropout...
+- `SwiGLU.forward` (method) `topo_swarm_agent.py:606` `def forward(self, x)` -- Gated SiLU activation with residual dropout.
+- `SwarmMoEGate.__init__` (method) `topo_swarm_agent.py:630` `def __init__(self, d_model, n_experts, top_k)`
+- `SwarmMoEGate.forward` (method) `topo_swarm_agent.py:637` `def forward(self, x)` -- x: [..., D] → (topk_idx [...
+- `SwarmMoE.__init__` (method) `topo_swarm_agent.py:661` `def __init__(self, d_model, expert_hidden_dim, n_experts, top_k, dropout)`
+- `SwarmMoE.forward` (method) `topo_swarm_agent.py:678` `def forward(self, x)` -- x: [B, S, D] → [B, S, D]  (autograd-safe, no in-place scatter)
+- `SwarmMoEAdapter.__init__` (method) `topo_swarm_agent.py:720` `def __init__(self, d_model, n_experts, top_k, bottleneck, dropout)`
+- `SwarmMoEAdapter.forward` (method) `topo_swarm_agent.py:746` `def forward(self, x)` -- x: [B, S, D] → [B, S, D]  (residual)
+- `SwarmMoEAdapter.save` (method) `topo_swarm_agent.py:768` `def save(self, path)`
+- `SwarmMoEAdapter.load` (method) `topo_swarm_agent.py:779` `def load(cls, path)`
+- `SwarmMoEAdapter.inject_moe_adapter` (method) `topo_swarm_agent.py:790` `def inject_moe_adapter(model, n_experts, top_k, dropout, freeze_backbone, adapter_path)` -- Inject a SwarmMoEAdapter into an already-loaded TopoSwarmModel.
+- `QuaternionTorusBrain.__init__` (method) `topo_swarm_agent.py:866` `def __init__(self, cfg)` -- Args: cfg: Swarm configuration.
+- `QuaternionTorusBrain.forward` (method) `topo_swarm_agent.py:981` `def forward(self, x, berry_phase)` -- Full torus forward with optional Berry-phase offset for swarm slots.
+- `QuaternionAttention.__init__` (method) `topo_swarm_agent.py:1047` `def __init__(self, cfg)` -- Args: cfg: Swarm configuration.
+- `QuaternionAttention.forward` (method) `topo_swarm_agent.py:1086` `def forward(self, x, is_causal)` -- GQA forward pass with RoPE and optional gradient checkpointing.
+- `HRMModule.__init__` (method) `topo_swarm_agent.py:1160` `def __init__(self, cfg)` -- Args: cfg: Swarm configuration.
+- `HRMModule.forward` (method) `topo_swarm_agent.py:1208` `def forward(self, x)` -- Run the HRM hierarchy and return the updated state with ACT signal.
+- `TopoSwarmLayer.__init__` (method) `topo_swarm_agent.py:1254` `def __init__(self, cfg)` -- Args: cfg: Swarm configuration.
+- `TopoSwarmLayer.forward` (method) `topo_swarm_agent.py:1281` `def forward(self, x, berry_phase)` -- Pre-norm layer forward.
+- `TopoSwarmModel.__init__` (method) `topo_swarm_agent.py:1329` `def __init__(self, cfg)` -- Args: cfg: Swarm configuration.
+- `TopoSwarmModel.forward` (method) `topo_swarm_agent.py:1353` `def forward(self, input_ids, berry_phase, targets)` -- Full forward pass for one agent slot.
+- `TopoSwarmModel.generate` (method) `topo_swarm_agent.py:1434` `def generate(self, input_ids, max_new_tokens, temperature, top_k, berry_phase, act_halt_threshold)` -- Autoregressive generation with ACT-driven early stopping.
+- `EpisodicMemory.__init__` (method) `topo_swarm_agent.py:1539` `def __init__(self, cfg)` -- Args: cfg: Swarm configuration for capacity and threshold parameters.
+- `EpisodicMemory.compute_surprise` (method) `topo_swarm_agent.py:1554` `def compute_surprise(logits, targets, gate_mean)` -- Surprise = cross-entropy × (1 - gate_mean), clipped to [0, 10].
+- `EpisodicMemory.store` (method) `topo_swarm_agent.py:1579` `def store(self, episode, surprise)` -- Store an episode in the appropriate memory tier.
+- `EpisodicMemory.sample` (method) `topo_swarm_agent.py:1600` `def sample(self, n)` -- Sample n episodes with priority proportional to surprise / importance.
+- `SwarmOrchestrator.__init__` (method) `topo_swarm_agent.py:1664` `def __init__(self, model, cfg)` -- Args: model: Shared TopoSwarmModel instance. cfg: Swarm configuration.
+- `SwarmOrchestrator.infer` (method) `topo_swarm_agent.py:1682` `def infer(self, input_ids, tokenizer, max_new_tokens, temperature, top_k)` -- Run swarm inference and return the decoded output string.
+- `BPETokenizer.__init__` (method) `topo_swarm_agent.py:1743` `def __init__(self, cfg)` -- Args: cfg: Swarm config (provides TOOL_TOKEN_OFFSET and TOOL_VOCAB_SIZE).
+- `BPETokenizer.encode` (method) `topo_swarm_agent.py:1781` `def encode(self, text)` -- Encode text to BPE token ids, clamped to the BPE vocab ceiling.
+- `BPETokenizer.decode` (method) `topo_swarm_agent.py:1793` `def decode(self, ids)` -- Decode token ids to text, silently dropping tool tokens.
+- `BPETokenizer.tool_token` (method) `topo_swarm_agent.py:1798` `def tool_token(self, tool_name)` -- Return a stable integer token id for a named tool.
+- `BPETokenizer.encode_tool_trace` (method) `topo_swarm_agent.py:1820` `def encode_tool_trace(self, instruction, tool_name, result)` -- Encode a ToolBench-style (instruction, tool, result) triple.
+- `ToolBenchDataset.__init__` (method) `topo_swarm_agent.py:1866` `def __init__(self, cfg, tokenizer, split, logger)` -- Args: cfg: Swarm configuration. tokenizer: BPETokenizer for encoding traces. split: Dataset split name. logger...
+- `CheckpointManager.__init__` (method) `topo_swarm_agent.py:2096` `def __init__(self, cfg, logger)` -- Args: cfg: Swarm configuration. logger: Logger instance.
+- `CheckpointManager.save` (method) `topo_swarm_agent.py:2108` `def save(self, model, optimizer, meta, force)` -- Save model weights and metadata if the interval has elapsed.
+- `CheckpointManager.load` (method) `topo_swarm_agent.py:2150` `def load(self, model, optimizer, device)` -- Load model weights and metadata from the latest checkpoint.
+- `KappaDetector.__init__` (method) `topo_swarm_agent.py:2201` `def __init__(self, cfg)` -- Args: cfg: Swarm configuration (window and threshold).
+- `KappaDetector.update` (method) `topo_swarm_agent.py:2209` `def update(self, loss)` -- Update the detector with the latest loss value.
+- `SwarmTrainer.__init__` (method) `topo_swarm_agent.py:2248` `def __init__(self, model, cfg, tokenizer, logger)` -- Args: model: TopoSwarmModel instance. cfg: Swarm configuration. tokenizer: BPETokenizer. logger: Logger instance.
+- `SwarmTrainer.train` (method) `topo_swarm_agent.py:2405` `def train(self, train_dl, val_dl, resume)` -- Full three-phase training loop.
+- `SwarmTrainer.build_dataloaders` (method) `topo_swarm_agent.py:2551` `def build_dataloaders(cfg, tokenizer, logger)` -- Build train and validation DataLoaders from the ToolBench dataset.
+- `SwarmTrainer.main` (method) `topo_swarm_agent.py:2594` `def main()` -- CLI entry point.
+
+## topogpt2_1.py
+- `TopoGPT2Config.setup_logger` (method) `topogpt2_1.py:155` `def setup_logger(name, level)`
+- `TopoGPT2Config.set_seed` (method) `topogpt2_1.py:165` `def set_seed(seed, device)`
+- `QuaternionOps.hamilton_product` (method) `topogpt2_1.py:185` `def hamilton_product(q1, q2)` -- Producto de Hamilton q1 ⊗ q2.
+- `QuaternionOps.normalize` (method) `topogpt2_1.py:197` `def normalize(q, eps)`
+- `QuaternionOps.conjugate` (method) `topogpt2_1.py:201` `def conjugate(q)`
+- `QuaternionOps.rotate_vector` (method) `topogpt2_1.py:206` `def rotate_vector(v, q)` -- Rota vector 3D v por cuaternión unitario q. v:[...,3] q:[...,4]
+- `QuaternionLinear.__init__` (method) `topogpt2_1.py:228` `def __init__(self, in_features, out_features, bias)`
+- `QuaternionLinear.forward` (method) `topogpt2_1.py:244` `def forward(self, x)` -- x: [..., in_features] → [..., out_features]
+- `QuaternionSpectralLayer.__init__` (method) `topogpt2_1.py:281` `def __init__(self, in_q, out_q, grid_h, grid_w, init_scale)`
+- `QuaternionSpectralLayer.forward` (method) `topogpt2_1.py:307` `def forward(self, x)` -- x: [B, 4*in_q, H, W]  (4 canales cuaterniones sobre grid espacial) → [B, 4*out_q, H, W]
+- `SpectralAutoencoder.__init__` (method) `topogpt2_1.py:361` `def __init__(self, config)`
+- `SpectralAutoencoder.encode` (method) `topogpt2_1.py:399` `def encode(self, x)` -- x: [..., D_MODEL] → latent: [..., D_LAT]
+- `SpectralAutoencoder.decode` (method) `topogpt2_1.py:404` `def decode(self, z)` -- z: [..., D_LAT] → recon: [..., D_MODEL]
+- `SpectralAutoencoder.forward` (method) `topogpt2_1.py:409` `def forward(self, x)` -- Devuelve (latent, recon_loss)
+- `SpectralAutoencoder.process_torus_grid` (method) `topogpt2_1.py:416` `def process_torus_grid(self, grid)` -- Procesa el grid del toro con QuaternionSpectralLayer. grid: [B, 4*D_QUAT, RADIAL, ANGULAR]  →  [B, 4*D_QUAT, RADIAL...
+- `QuaternionTorusBrain.__init__` (method) `topogpt2_1.py:449` `def __init__(self, d_model, config)`
+- `QuaternionTorusBrain.forward` (method) `topogpt2_1.py:587` `def forward(self, x)` -- x: [B, S, D_MODEL] → output: [B, S, D_MODEL], recon_loss: scalar
+- `RotaryEmbedding.__init__` (method) `topogpt2_1.py:655` `def __init__(self, d_head, max_seq_len, base)`
+- `RotaryEmbedding.forward` (method) `topogpt2_1.py:672` `def forward(self, q, k, seq_len, offset)` -- q, k: [B, n_heads, S_q/S_k, d_head] offset: posicion inicial (para KV cache: longitud del cache existente) Aplica...
+- `RMSNorm.__init__` (method) `topogpt2_1.py:699` `def __init__(self, d_model, eps)`
+- `RMSNorm.forward` (method) `topogpt2_1.py:704` `def forward(self, x)`
+- `SwiGLU.__init__` (method) `topogpt2_1.py:720` `def __init__(self, d_model, expansion, dropout)`
+- `SwiGLU.forward` (method) `topogpt2_1.py:734` `def forward(self, x)`
+- `TopoMoEBrain.__init__` (method) `topogpt2_1.py:757` `def __init__(self, d_model, config)`
+- `TopoMoEBrain.forward` (method) `topogpt2_1.py:820` `def forward(self, x)` -- → output: [B, S, D], aux_loss: escalar
+- `MultiHeadAttention.__init__` (method) `topogpt2_1.py:857` `def __init__(self, d_model, n_heads, config)`
+- `MultiHeadAttention.forward` (method) `topogpt2_1.py:875` `def forward(self, x, is_causal, past_kv)` -- Args: is_causal: usar mascara causal past_kv:  (K_cache, V_cache) de pasos anteriores o None Returns: out:      [B...
+- `TopoGPT2Layer.__init__` (method) `topogpt2_1.py:938` `def __init__(self, d_model, n_heads, config)`
+- `TopoGPT2Layer.forward` (method) `topogpt2_1.py:956` `def forward(self, x, past_kv)` -- Retorna (x_out, aux_loss, kv_cache).
+- `TopoGPT2Layer.ckpt_fn` (method) `topogpt2_1.py:964` `def ckpt_fn(x_in)`
+- `TopoGPT2.__init__` (method) `topogpt2_1.py:987` `def __init__(self, config)`
+- `TopoGPT2.forward` (method) `topogpt2_1.py:1013` `def forward(self, token_ids, past_kvs)` -- token_ids: [B, S]  (enteros) past_kvs:  lista de (K, V) por capa, o None para entrenamiento → logits: [B, S...
+- `TopoGPT2.count_params` (method) `topogpt2_1.py:1036` `def count_params(self)`
+- `TopoGPT2.generate` (method) `topogpt2_1.py:1042` `def generate(self, token_ids, max_new_tokens, temperature, top_k)` -- Generacion autoregresiva con KV cache y muestreo top-k.
+- `BPETokenizer.__init__` (method) `topogpt2_1.py:1085` `def __init__(self, encoding)`
+- `BPETokenizer.encode` (method) `topogpt2_1.py:1093` `def encode(self, text)`
+- `BPETokenizer.decode` (method) `topogpt2_1.py:1096` `def decode(self, tokens)`
+- `BPETokenizer.eot_token` (method) `topogpt2_1.py:1099` `def eot_token(self)`
+- `CorpusDownloader.__init__` (method) `topogpt2_1.py:1119` `def __init__(self, corpus, data_dir, logger)`
+- `CorpusDownloader.get_text` (method) `topogpt2_1.py:1125` `def get_text(self, split)` -- Devuelve el texto del corpus.
+- `TokenizedDataset.__init__` (method) `topogpt2_1.py:1179` `def __init__(self, text, tokenizer, seq_len, max_tokens, cache_dir, split_tag)`
+- `CheckpointManager.__init__` (method) `topogpt2_1.py:1245` `def __init__(self, config, logger)`
+- `CheckpointManager.patch_config_for_resume` (method) `topogpt2_1.py:1255` `def patch_config_for_resume(self, cfg)` -- Lee el checkpoint 'latest' y ajusta cfg.N_KV_HEADS / cfg.GQA_GROUPS para que coincidan con la arquitectura guardada.
+- `CheckpointManager.should_save` (method) `topogpt2_1.py:1356` `def should_save(self)`
+- `CheckpointManager.save` (method) `topogpt2_1.py:1359` `def save(self, model, optimizer, state, is_best)` -- Guarda checkpoint completo.
+- `CheckpointManager.load_latest` (method) `topogpt2_1.py:1404` `def load_latest(self, model, optimizer)` -- Carga el ultimo checkpoint guardado.
+- `CheckpointManager.load_best` (method) `topogpt2_1.py:1431` `def load_best(self, model)` -- Carga el mejor modelo guardado (solo pesos, sin optimizador).
+- `CheckpointManager.has_checkpoint` (method) `topogpt2_1.py:1443` `def has_checkpoint(self)`
+- `TopoGPT2Trainer.__init__` (method) `topogpt2_1.py:1465` `def __init__(self, model, config, tokenizer)`
+- `TopoGPT2Trainer.resume` (method) `topogpt2_1.py:1500` `def resume(self)` -- Carga el ultimo checkpoint disponible.
+- `TopoGPT2Trainer.train` (method) `topogpt2_1.py:1548` `def train(self, train_dl, val_dl)` -- Entrena cfg.EPOCHS epocas adicionales a partir de completed_epochs.
+- `TopoGPT2Trainer.evaluate` (method) `topogpt2_1.py:1716` `def evaluate(self, dataloader)`
+- `MechanisticMetrics.__init__` (method) `topogpt2_1.py:1766` `def __init__(self, config)`
+- `MechanisticMetrics.compute_delta` (method) `topogpt2_1.py:1774` `def compute_delta(self, model)`
+- `MechanisticMetrics.compute_alpha` (method) `topogpt2_1.py:1781` `def compute_alpha(self, delta)`
+- `MechanisticMetrics.update_grad_buffer` (method) `topogpt2_1.py:1786` `def update_grad_buffer(self, model)` -- Captura gradientes de forma segura, ignorando tensores corruptos.
+- `MechanisticMetrics.compute_t_eff` (method) `topogpt2_1.py:1812` `def compute_t_eff(self, lr)` -- T_eff = lr/2 * Var(gradiente).
+- `MechanisticMetrics.compute_kappa` (method) `topogpt2_1.py:1820` `def compute_kappa(self, model, dataloader, n_batches)` -- κ = λ_max / λ_min de la covarianza del gradiente.
+- `MechanisticMetrics.compute_berry_phase` (method) `topogpt2_1.py:1878` `def compute_berry_phase(self, model)` -- Fase de Berry de los kernels espectrales imaginarios.
+- `MechanisticMetrics.compute_lc` (method) `topogpt2_1.py:1891` `def compute_lc(self, model)` -- Complejidad local: 1 - similitud coseno promedio entre filas de pesos.
+- `MechanisticMetrics.compute_sp` (method) `topogpt2_1.py:1905` `def compute_sp(self, model)` -- Superposicion: correlacion inter-fila promedio (entrelazamiento de features).
+- `MechanisticMetrics.classify_phase` (method) `topogpt2_1.py:1921` `def classify_phase(self, delta, kappa, berry)` -- Clasificacion de fase segun Book.md:
+- `MechanisticMetrics.compute_all` (method) `topogpt2_1.py:1940` `def compute_all(self, model, lr, dataloader, compute_kappa)` -- Calcula todas las metricas. compute_kappa=True hace pasadas backward adicionales (caro, usar cada N epochs).
+- `MechanisticMetrics.format_log` (method) `topogpt2_1.py:1965` `def format_log(self, m)`
+- `Phase0_KernelOptimizer.__init__` (method) `topogpt2_1.py:2001` `def __init__(self, config, logger)`
+- `Phase0_KernelOptimizer.optimize` (method) `topogpt2_1.py:2034` `def optimize(self, dataloader)` -- Retorna el mejor ratio de inicializacion de kernels espectrales.
+- `Phase1_BatchProspector.__init__` (method) `topogpt2_1.py:2074` `def __init__(self, config, logger)`
+- `Phase1_BatchProspector.prospect` (method) `topogpt2_1.py:2078` `def prospect(self, candidates, train_dataset, prospect_steps)` -- Retorna el mejor batch size segun delta y T_eff.
+- `Phase2_SeedMiner.__init__` (method) `topogpt2_1.py:2157` `def __init__(self, config, logger)`
+- `Phase2_SeedMiner.mine` (method) `topogpt2_1.py:2161` `def mine(self, seed_start, n_seeds, train_dataset, prospect_steps)` -- Retorna la semilla con la mejor trayectoria de delta.
+- `Phase4_AnnealingRefiner.__init__` (method) `topogpt2_1.py:2243` `def __init__(self, trainer, t0, cooling_rate, stagnation_patience)`
+- `Phase4_AnnealingRefiner.refine` (method) `topogpt2_1.py:2252` `def refine(self, train_dl, val_dl, refine_epochs)` -- Ejecuta refine_epochs epocas de recocido simulado.
+- `TopoPhasePipeline.__init__` (method) `topogpt2_1.py:2404` `def __init__(self, config, train_dataset, val_dataset, tokenizer, logger)`
+- `TopoPhasePipeline.run` (method) `topogpt2_1.py:2426` `def run(self, run_prospect, refine_epochs, resume, prospect_steps, probe_seeds, seed_start)` -- Ejecuta el pipeline completo.
+- `TopoPhasePipeline.main` (method) `topogpt2_1.py:2506` `def main()`
+
+## toposwarm_coevolve.py
+Depends on: `topo_swarm_agent.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `HarnessMutation.mutate` (method) `toposwarm_coevolve.py:132` `def mutate(cfg_dict)`
+- `HarnessMutation.crossover` (method) `toposwarm_coevolve.py:167` `def crossover(a, b)`
+- `MockLazyOwnBridge.__init__` (method) `toposwarm_coevolve.py:190` `def __init__(self)`
+- `MockLazyOwnBridge.available` (method) `toposwarm_coevolve.py:196` `def available(self)`
+- `MockLazyOwnBridge.run` (method) `toposwarm_coevolve.py:199` `def run(self, command, timeout)`
+- `MockLazyOwnBridge.get_config` (method) `toposwarm_coevolve.py:222` `def get_config(self)`
+- `MockLazyOwnBridge.set_config` (method) `toposwarm_coevolve.py:225` `def set_config(self, key, value)`
+- `HarnessEvaluator.__init__` (method) `toposwarm_coevolve.py:244` `def __init__(self, prompts, lazyown_dir, logger, use_mock_bridge)`
+- `HarnessEvaluator.evaluate` (method) `toposwarm_coevolve.py:256` `def evaluate(self, cfg_dict)` -- Run each prompt through the orchestrator and collect metrics.
+- `WeightTrainer.__init__` (method) `toposwarm_coevolve.py:398` `def __init__(self, logger)`
+- `WeightTrainer.is_available` (method) `toposwarm_coevolve.py:416` `def is_available(self)`
+- `WeightTrainer.fine_tune` (method) `toposwarm_coevolve.py:419` `def fine_tune(self, dataset_path, steps, learning_rate)` -- Run a short fine-tuning burst and return metrics.
+- `CoEvolutionEngine.__init__` (method) `toposwarm_coevolve.py:457` `def __init__(self, generations, population_size, train_steps_per_gen, proposer_interval, lazyown_dir, logger)`
+- `CoEvolutionEngine.run` (method) `toposwarm_coevolve.py:491` `def run(self)`
+- `CoEvolutionEngine.load_state` (method) `toposwarm_coevolve.py:631` `def load_state(self, path)`
+- `CoEvolutionEngine.main` (method) `toposwarm_coevolve.py:649` `def main()`
+
+## toposwarm_continual_trainer.py
+Depends on: `ts_utils.py`
+- `SurpriseBuffer.__init__` (method) `toposwarm_continual_trainer.py:180` `def __init__(self, maxsize, replay_ratio)`
+- `SurpriseBuffer.update` (method) `toposwarm_continual_trainer.py:186` `def update(self, records, task_losses, logits)` -- Add batch examples to buffer, keyed by surprise score.
+- `SurpriseBuffer.sample` (method) `toposwarm_continual_trainer.py:213` `def sample(self, batch_size)` -- Return a priority-weighted sample of hard examples.
+- `ToolBenchDataset.__init__` (method) `toposwarm_continual_trainer.py:311` `def __init__(self, records, tok, cfg)`
+- `ReplayBuffer.__init__` (method) `toposwarm_continual_trainer.py:353` `def __init__(self, records, max_size, tok, cfg)`
+- `ReplayBuffer.sample` (method) `toposwarm_continual_trainer.py:361` `def sample(self, n)`
+- `EWC.__init__` (method) `toposwarm_continual_trainer.py:390` `def __init__(self, model, cfg, cl_cfg, tok, logger)`
+- `EWC.compute` (method) `toposwarm_continual_trainer.py:411` `def compute(self, toolbench_records)` -- Compute Fisher diagonal on a sample of ToolBench records and snapshot θ*.
+- `EWC.save` (method) `toposwarm_continual_trainer.py:475` `def save(self, path)`
+- `EWC.load` (method) `toposwarm_continual_trainer.py:480` `def load(self, path)`
+- `EWC.penalty` (method) `toposwarm_continual_trainer.py:491` `def penalty(self)` -- Returns the EWC penalty term to add to the task loss.
+- `SwarmLiquidNeuron.__init__` (method) `toposwarm_continual_trainer.py:544` `def __init__(self, d_model, n_tools)`
+- `SwarmLiquidNeuron.forward` (method) `toposwarm_continual_trainer.py:561` `def forward(self, x)` -- x: [B, d_model] → logits [B, n_tools]
+- `SwarmLiquidNeuron.hebbian_update` (method) `toposwarm_continual_trainer.py:580` `def hebbian_update(self, pre, labels)` -- Strengthen W_fast associations after correct predictions.
+- `RoutingHead.__init__` (method) `toposwarm_continual_trainer.py:624` `def __init__(self, d_model, tool_names, n_experts, top_k, hidden_dim)`
+- `RoutingHead.n_tools` (method) `toposwarm_continual_trainer.py:661` `def n_tools(self)`
+- `RoutingHead.forward` (method) `toposwarm_continual_trainer.py:664` `def forward(self, hidden)` -- hidden: [B, d_model] → logits [B, n_tools]
+- `RoutingHead.label` (method) `toposwarm_continual_trainer.py:695` `def label(self, tool_name)`
+- `RoutingHead.predict` (method) `toposwarm_continual_trainer.py:698` `def predict(self, hidden)` -- hidden: [B, d_model] → list of predicted tool name strings
+- `RoutingHead.save` (method) `toposwarm_continual_trainer.py:705` `def save(self, path)`
+- `RoutingHead.load` (method) `toposwarm_continual_trainer.py:716` `def load(cls, d_model, path)`
+- `ContinualTrainer.__init__` (method) `toposwarm_continual_trainer.py:756` `def __init__(self, model, cfg, cl_cfg, tok, ewc, replay, logger, routing_head)`
+- `ContinualTrainer.train` (method) `toposwarm_continual_trainer.py:933` `def train(self, lazyown_dataset, train_records, val_records)`
+- `ContinualTrainer.evaluate_routing` (method) `toposwarm_continual_trainer.py:1147` `def evaluate_routing(model, cfg, tok, lazyown_records, toolbench_records, logger)` -- Measure routing accuracy on a held-out subset of both datasets.
+- `ContinualTrainer.build_model_and_tok` (method) `toposwarm_continual_trainer.py:1205` `def build_model_and_tok(cl_cfg, logger)`
+- `ContinualTrainer.run_full_pipeline` (method) `toposwarm_continual_trainer.py:1227` `def run_full_pipeline(cl_cfg, logger)` -- Generate dataset → compute Fisher → fine-tune → evaluate.
+- `ContinualTrainer.main` (method) `toposwarm_continual_trainer.py:1394` `def main()`
+
+## toposwarm_hybrid.py
+- `ToolResult.__init__` (method) `toposwarm_hybrid.py:221` `def __init__(self, tool_name, arg, output, ok)`
+- `ToolRegistry.__init__` (method) `toposwarm_hybrid.py:234` `def __init__(self, cfg)`
+- `ToolRegistry.decorator` (method) `toposwarm_hybrid.py:241` `def decorator(fn)`
+- `ToolRegistry.resolve` (method) `toposwarm_hybrid.py:249` `def resolve(self, raw)` -- Resolve tool name to canonical key via exact match, alias, or substring.
+- `ToolRegistry.route` (method) `toposwarm_hybrid.py:261` `def route(self, prompt)` -- Infer tool name and argument from prompt keywords.
+- `ToolRegistry.execute` (method) `toposwarm_hybrid.py:287` `def execute(self, tool_name, arg)` -- Execute a tool by canonical name.
+- `ToolRegistry.get_weather` (method) `toposwarm_hybrid.py:308` `def get_weather(city)`
+- `ToolRegistry.search_web` (method) `toposwarm_hybrid.py:319` `def search_web(query)`
+- `ToolRegistry.calc_expr` (method) `toposwarm_hybrid.py:331` `def calc_expr(expr)`
+- `ToolRegistry.get_datetime` (method) `toposwarm_hybrid.py:335` `def get_datetime(tz_hint)`
+- `ToolRegistry.translate` (method) `toposwarm_hybrid.py:341` `def translate(text)`
+- `ToolRegistry.get_news` (method) `toposwarm_hybrid.py:373` `def get_news(topic)`
+- `ToolRegistry.echo` (method) `toposwarm_hybrid.py:383` `def echo(text)`
+- `ToolRegistry.tool_names` (method) `toposwarm_hybrid.py:387` `def tool_names(self)`
+- `TopoSwarmRouter.__init__` (method) `toposwarm_hybrid.py:409` `def __init__(self, cfg, registry, logger)` -- Args: cfg: Hybrid configuration. registry: ToolRegistry used for routing via registry.route(). logger: Logger instance.
+- `TopoSwarmRouter.route` (method) `toposwarm_hybrid.py:441` `def route(self, prompt)` -- Determine the tool and argument for a prompt.
+- `LanguageBackend.__init__` (method) `toposwarm_hybrid.py:475` `def __init__(self, cfg, logger)` -- Args: cfg: Hybrid configuration (BACKEND_TYPE, BACKEND_MODEL_ID, etc.). logger: Logger instance.
+- `LanguageBackend.generate` (method) `toposwarm_hybrid.py:859` `def generate(self, prompt, tool_result)` -- Generate a natural-language answer from the prompt and tool result.
+- `HybridResult.pretty` (method) `toposwarm_hybrid.py:958` `def pretty(self)` -- Render a human-readable summary.
+- `HybridOrchestrator.__init__` (method) `toposwarm_hybrid.py:988` `def __init__(self, cfg, logger)` -- Args: cfg: Hybrid configuration. logger: Logger instance.
+- `HybridOrchestrator.run` (method) `toposwarm_hybrid.py:1000` `def run(self, prompt)` -- Execute the full hybrid pipeline for one user prompt.
+- `HybridOrchestrator.main` (method) `toposwarm_hybrid.py:1051` `def main()` -- CLI entry point.
+
+## toposwarm_infer.py
+Imported by: `toposwarm_coevolve.py`
+- `ToolResult.__init__` (method) `toposwarm_infer.py:192` `def __init__(self, tool_name, arg, output, ok)` -- Args: tool_name: Name of the tool that was called. arg: Raw argument string passed to the tool. output...
+- `ToolRegistry.__init__` (method) `toposwarm_infer.py:219` `def __init__(self, cfg)` -- Args: cfg: Inference configuration (provides timeout and result limits).
+- `ToolRegistry.register` (method) `toposwarm_infer.py:229` `def register(self)` -- Decorator that registers a function under one or more tool names.
+- `ToolRegistry.decorator` (method) `toposwarm_infer.py:231` `def decorator(fn)`
+- `ToolRegistry.resolve` (method) `toposwarm_infer.py:239` `def resolve(self, raw_name)` -- Resolve a raw tool name to its canonical registry key.
+- `ToolRegistry.execute` (method) `toposwarm_infer.py:262` `def execute(self, raw_name, arg)` -- Execute a tool by name with the given argument string.
+- `ToolRegistry.get_weather` (method) `toposwarm_infer.py:305` `def get_weather(city)` -- Fetch current weather from wttr.in (no API key required).
+- `ToolRegistry.search_web` (method) `toposwarm_infer.py:323` `def search_web(query)` -- Instant-answer search via DuckDuckGo JSON API (no API key).
+- `ToolRegistry.calc_expr` (method) `toposwarm_infer.py:340` `def calc_expr(expr)` -- Evaluate a mathematical expression safely.
+- `ToolRegistry.get_datetime` (method) `toposwarm_infer.py:345` `def get_datetime(tz_hint)` -- Return the current UTC datetime (tz_hint is informational only).
+- `ToolRegistry.translate` (method) `toposwarm_infer.py:351` `def translate(text)` -- Translate text using MyMemory free API (no key, 5k chars/day limit).
+- `ToolRegistry.get_news` (method) `toposwarm_infer.py:409` `def get_news(topic)` -- Fetch recent news headlines via DuckDuckGo news search.
+- `ToolRegistry.echo` (method) `toposwarm_infer.py:428` `def echo(text)` -- Return the input unchanged.
+- `ToolCallParser.__init__` (method) `toposwarm_infer.py:446` `def __init__(self, cfg)` -- Args: cfg: Inference config (provides TOOL_TAG_RE pattern).
+- `ToolCallParser.parse` (method) `toposwarm_infer.py:453` `def parse(self, text)` -- Extract the first tool call from text.
+- `InferenceEngine.__init__` (method) `toposwarm_infer.py:495` `def __init__(self, cfg, agent_cfg, logger)` -- Args: cfg: Inference configuration. agent_cfg: SwarmConfig used to instantiate the model. logger: Logger instance.
+- `InferenceEngine.run` (method) `toposwarm_infer.py:679` `def run(self, prompt)` -- Full agentic inference loop for one user prompt.
+- `InferenceResult.pretty` (method) `toposwarm_infer.py:895` `def pretty(self)` -- Render a human-readable summary of the inference run.
+- `InferenceResult.main` (method) `toposwarm_infer.py:938` `def main()` -- CLI entry point.
+
+## toposwarm_lazyown_orchestrator.py
+Imported by: `tests/test_orchestrator.py`, `toposwarm_coevolve.py`, `toposwarm_lazyown_sweep.py`
+- `SessionContext.to_prompt_prefix` (method) `toposwarm_lazyown_orchestrator.py:166` `def to_prompt_prefix(self)` -- Compact context block injected before the user prompt.
+- `SessionContext.update` (method) `toposwarm_lazyown_orchestrator.py:180` `def update(self, tool_name, arg, output, ok)`
+- `LazyOwnToolRegistry.__init__` (method) `toposwarm_lazyown_orchestrator.py:304` `def __init__(self, cfg, bridge)`
+- `LazyOwnToolRegistry.run_command` (method) `toposwarm_lazyown_orchestrator.py:315` `def run_command(arg)`
+- `LazyOwnToolRegistry.get_config` (method) `toposwarm_lazyown_orchestrator.py:319` `def get_config(_)`
+- `LazyOwnToolRegistry.set_config` (method) `toposwarm_lazyown_orchestrator.py:324` `def set_config(arg)`
+- `LazyOwnToolRegistry.list_modules` (method) `toposwarm_lazyown_orchestrator.py:332` `def list_modules(_)`
+- `LazyOwnToolRegistry.get_beacons` (method) `toposwarm_lazyown_orchestrator.py:336` `def get_beacons(_)`
+- `LazyOwnToolRegistry.c2_command` (method) `toposwarm_lazyown_orchestrator.py:340` `def c2_command(arg)`
+- `LazyOwnToolRegistry.run_api` (method) `toposwarm_lazyown_orchestrator.py:344` `def run_api(arg)`
+- `LazyOwnToolRegistry.list_sessions` (method) `toposwarm_lazyown_orchestrator.py:348` `def list_sessions(_)`
+- `LazyOwnToolRegistry.read_session_file` (method) `toposwarm_lazyown_orchestrator.py:356` `def read_session_file(arg)`
+- `LazyOwnToolRegistry.c2_status` (method) `toposwarm_lazyown_orchestrator.py:363` `def c2_status(_)`
+- `LazyOwnToolRegistry.create_addon` (method) `toposwarm_lazyown_orchestrator.py:367` `def create_addon(arg)`
+- `LazyOwnToolRegistry.list_addons` (method) `toposwarm_lazyown_orchestrator.py:371` `def list_addons(_)`
+- `LazyOwnToolRegistry.list_plugins` (method) `toposwarm_lazyown_orchestrator.py:378` `def list_plugins(_)`
+- `LazyOwnToolRegistry.poll_events` (method) `toposwarm_lazyown_orchestrator.py:385` `def poll_events(_)`
+- `LazyOwnToolRegistry.ack_event` (method) `toposwarm_lazyown_orchestrator.py:389` `def ack_event(arg)`
+- `LazyOwnToolRegistry.add_rule` (method) `toposwarm_lazyown_orchestrator.py:393` `def add_rule(arg)`
+- `LazyOwnToolRegistry.list_event_rules` (method) `toposwarm_lazyown_orchestrator.py:397` `def list_event_rules(_)`
+- `LazyOwnToolRegistry.heartbeat_status` (method) `toposwarm_lazyown_orchestrator.py:401` `def heartbeat_status(_)`
+- `LazyOwnToolRegistry.session_init` (method) `toposwarm_lazyown_orchestrator.py:405` `def session_init(arg)`
+- `LazyOwnToolRegistry.discover_commands` (method) `toposwarm_lazyown_orchestrator.py:409` `def discover_commands(arg)`
+- `LazyOwnToolRegistry.phase_guide` (method) `toposwarm_lazyown_orchestrator.py:413` `def phase_guide(arg)`
+- `LazyOwnToolRegistry.command_help` (method) `toposwarm_lazyown_orchestrator.py:417` `def command_help(arg)`
+- `LazyOwnToolRegistry.add_target` (method) `toposwarm_lazyown_orchestrator.py:421` `def add_target(arg)`
+- `LazyOwnToolRegistry.list_targets` (method) `toposwarm_lazyown_orchestrator.py:427` `def list_targets(_)`
+- `LazyOwnToolRegistry.run_agent` (method) `toposwarm_lazyown_orchestrator.py:431` `def run_agent(arg)`
+- `LazyOwnToolRegistry.agent_status` (method) `toposwarm_lazyown_orchestrator.py:435` `def agent_status(arg)`
+- `LazyOwnToolRegistry.agent_result` (method) `toposwarm_lazyown_orchestrator.py:439` `def agent_result(arg)`
+- `LazyOwnToolRegistry.list_agents` (method) `toposwarm_lazyown_orchestrator.py:443` `def list_agents(_)`
+- `LazyOwnToolRegistry.set_active_target` (method) `toposwarm_lazyown_orchestrator.py:447` `def set_active_target(arg)`
+- `LazyOwnToolRegistry.campaign_sitrep` (method) `toposwarm_lazyown_orchestrator.py:451` `def campaign_sitrep(_)`
+- `LazyOwnToolRegistry.c2_notes` (method) `toposwarm_lazyown_orchestrator.py:455` `def c2_notes(arg)`
+- `LazyOwnToolRegistry.credentials` (method) `toposwarm_lazyown_orchestrator.py:459` `def credentials(_)`
+- `LazyOwnToolRegistry.report_update` (method) `toposwarm_lazyown_orchestrator.py:463` `def report_update(arg)`
+- `LazyOwnToolRegistry.campaign_lessons` (method) `toposwarm_lazyown_orchestrator.py:467` `def campaign_lessons(_)`
+- `LazyOwnToolRegistry.auto_populate` (method) `toposwarm_lazyown_orchestrator.py:471` `def auto_populate(_)`
+- `LazyOwnToolRegistry.session_state` (method) `toposwarm_lazyown_orchestrator.py:475` `def session_state(_)`
+- `LazyOwnToolRegistry.recommend_next` (method) `toposwarm_lazyown_orchestrator.py:479` `def recommend_next(_)`
+- `LazyOwnToolRegistry.timeline` (method) `toposwarm_lazyown_orchestrator.py:483` `def timeline(_)`
+- `LazyOwnToolRegistry.c2_vuln_analysis` (method) `toposwarm_lazyown_orchestrator.py:487` `def c2_vuln_analysis(arg)`
+- `LazyOwnToolRegistry.c2_redop` (method) `toposwarm_lazyown_orchestrator.py:491` `def c2_redop(arg)`
+- `LazyOwnToolRegistry.c2_search_agent` (method) `toposwarm_lazyown_orchestrator.py:495` `def c2_search_agent(arg)`
+- `LazyOwnToolRegistry.c2_script` (method) `toposwarm_lazyown_orchestrator.py:499` `def c2_script(arg)`
+- `LazyOwnToolRegistry.c2_adversary` (method) `toposwarm_lazyown_orchestrator.py:503` `def c2_adversary(arg)`
+- `LazyOwnToolRegistry.policy_status` (method) `toposwarm_lazyown_orchestrator.py:507` `def policy_status(_)`
+- `LazyOwnToolRegistry.auto_loop` (method) `toposwarm_lazyown_orchestrator.py:511` `def auto_loop(arg)`
+- `LazyOwnToolRegistry.create_tool` (method) `toposwarm_lazyown_orchestrator.py:515` `def create_tool(arg)`
+- `LazyOwnToolRegistry.llm_ask` (method) `toposwarm_lazyown_orchestrator.py:519` `def llm_ask(arg)`
+- `LazyOwnToolRegistry.inject_objective` (method) `toposwarm_lazyown_orchestrator.py:523` `def inject_objective(arg)`
+- `LazyOwnToolRegistry.next_objective` (method) `toposwarm_lazyown_orchestrator.py:527` `def next_objective(_)`
+- `LazyOwnToolRegistry.read_prompt` (method) `toposwarm_lazyown_orchestrator.py:531` `def read_prompt(arg)`
+- `LazyOwnToolRegistry.infer_lazyown_tool` (method) `toposwarm_lazyown_orchestrator.py:540` `def infer_lazyown_tool(prompt)` -- Map a natural-language security prompt to a (tool_name, tool_arg) pair.
+- `LazyOwnOrchestrator.__init__` (method) `toposwarm_lazyown_orchestrator.py:629` `def __init__(self, cfg, agent_cfg, bridge, logger, load_model, meta_cfg)`
+- `LazyOwnOrchestrator.run` (method) `toposwarm_lazyown_orchestrator.py:737` `def run(self, prompt)` -- Route prompt → LazyOwn tool → answer.
+- `LazyOwnOrchestrator.generate_dataset` (method) `toposwarm_lazyown_orchestrator.py:962` `def generate_dataset(output_path, bridge)` -- Generate a rich ToolBench-format JSONL for fine-tuning the TopoSwarm router.
+- `LazyOwnOrchestrator.finetune_on_lazyown` (method) `toposwarm_lazyown_orchestrator.py:1043` `def finetune_on_lazyown(dataset_path, agent_cfg, logger)` -- Fine-tune the TopoSwarm router on the full LazyOwn tool dataset using EWC + Experience Replay to prevent...
+- `LazyOwnOrchestrator.run_mcp_server` (method) `toposwarm_lazyown_orchestrator.py:1120` `def run_mcp_server(orchestrator)` -- Expose the TopoSwarm→LazyOwn orchestrator as an MCP stdio server.
+- `LazyOwnOrchestrator.list_tools` (method) `toposwarm_lazyown_orchestrator.py:1143` `def list_tools()`
+- `LazyOwnOrchestrator.call_tool` (method) `toposwarm_lazyown_orchestrator.py:1177` `def call_tool(name, arguments)`
+- `LazyOwnOrchestrator.main` (method) `toposwarm_lazyown_orchestrator.py:1216` `def main()`
+
+## toposwarm_lazyown_sweep.py
+Depends on: `topo_swarm_agent.py`, `toposwarm_lazyown_orchestrator.py`
+- `generate_prompts` (function) `toposwarm_lazyown_sweep.py:130` `def generate_prompts(n)` -- Generate N diverse pentesting prompts.
+- `setup_logger` (function) `toposwarm_lazyown_sweep.py:145` `def setup_logger()`
+- `run_sweep` (function) `toposwarm_lazyown_sweep.py:155` `def run_sweep(prompts, bridge, logger)` -- Execute prompts against LazyOwn and collect results.
+- `write_results` (function) `toposwarm_lazyown_sweep.py:189` `def write_results(results, out_path)` -- Write results as JSONL for continual trainer.
+- `main` (function) `toposwarm_lazyown_sweep.py:223` `def main()`
+
+## toposwarm_meta_harness.py
+Imported by: `meta_harness_proposer.py`, `toposwarm_coevolve.py`
+- `MetaHarnessLogger.__init__` (method) `toposwarm_meta_harness.py:138` `def __init__(self, cfg, logger)`
+- `MetaHarnessLogger.log_run` (method) `toposwarm_meta_harness.py:176` `def log_run(self, harness_snapshot, trace_steps, score, reasoning)` -- Persist one complete harness evaluation.
+- `MetaHarnessLogger.list_runs` (method) `toposwarm_meta_harness.py:229` `def list_runs(self, n)` -- Return run directories newest-first.
+- `MetaHarnessLogger.grep_traces` (method) `toposwarm_meta_harness.py:238` `def grep_traces(self, pattern, max_results)` -- Simple regex search across all trace.jsonl files.
+- `MetaHarnessLogger.get_scores` (method) `toposwarm_meta_harness.py:257` `def get_scores(self)` -- Load every score.json into a list.
+- `MetaHarnessLogger.get_pareto_runs` (method) `toposwarm_meta_harness.py:269` `def get_pareto_runs(self, metrics)` -- Return run directories that are on the Pareto frontier.
+- `DenseMemoryRetriever.__init__` (method) `toposwarm_meta_harness.py:335` `def __init__(self, logger)`
+- `DenseMemoryRetriever.add` (method) `toposwarm_meta_harness.py:362` `def add(self, text, episode)`
+- `DenseMemoryRetriever.bulk_index` (method) `toposwarm_meta_harness.py:376` `def bulk_index(self, texts, episodes)`
+- `DenseMemoryRetriever.search` (method) `toposwarm_meta_harness.py:392` `def search(self, query, top_k)`
+- `MetaHarnessMemory.__init__` (method) `toposwarm_meta_harness.py:441` `def __init__(self, logger, capacity, dense)`
+- `MetaHarnessMemory.store` (method) `toposwarm_meta_harness.py:493` `def store(self, score, traces)` -- Index a newly logged episode.
+- `MetaHarnessMemory.retrieve_similar` (method) `toposwarm_meta_harness.py:505` `def retrieve_similar(self, prompt, tool_hint, top_k, min_score)` -- Retrieve the top-k most similar prior episodes.
+- `MetaHarnessMemory.retrieve_confirmers_and_challengers` (method) `toposwarm_meta_harness.py:549` `def retrieve_confirmers_and_challengers(self, draft_tool, prompt, top_k)` -- Split retrieved episodes into confirmers (same tool, success) and challengers (different tool or failure).
+- `EnvironmentBootstrapper.__init__` (method) `toposwarm_meta_harness.py:592` `def __init__(self, cfg, logger)`
+- `EnvironmentBootstrapper.gather_snapshot` (method) `toposwarm_meta_harness.py:596` `def gather_snapshot(self, bridge)` -- Collect environment state via the LazyOwnBridge.
+- `EnvironmentBootstrapper.format_snapshot` (method) `toposwarm_meta_harness.py:687` `def format_snapshot(self, snapshot, max_chars)` -- Render the snapshot as a compact [Environment Snapshot] block suitable for injection into a prompt.
+- `DraftVerifier.__init__` (method) `toposwarm_meta_harness.py:754` `def __init__(self, cfg, memory, keyword_router, logger)`
+- `DraftVerifier.route` (method) `toposwarm_meta_harness.py:766` `def route(self, prompt, snapshot_text)` -- Draft-verify routing with semantic evidence weighting.
+- `ParetoFrontier.__init__` (method) `toposwarm_meta_harness.py:890` `def __init__(self, cfg, logger)`
+- `ParetoFrontier.add` (method) `toposwarm_meta_harness.py:899` `def add(self, config, metrics)` -- Add a candidate to the population and return True if it lies on the current Pareto frontier.
+- `ParetoFrontier.select_best` (method) `toposwarm_meta_harness.py:919` `def select_best(self, preference)` -- Select the best harness config according to a scalarised preference.
+- `ParetoFrontier.frontier_configs` (method) `toposwarm_meta_harness.py:951` `def frontier_configs(self)` -- Return all configs currently on the Pareto frontier.
+- `MetaHarnessOptimizer.__init__` (method) `toposwarm_meta_harness.py:1009` `def __init__(self, cfg)`
+- `MetaHarnessOptimizer.set_router` (method) `toposwarm_meta_harness.py:1024` `def set_router(self, keyword_router)` -- Bind the draft verifier to the existing keyword router.
+- `MetaHarnessOptimizer.log_run` (method) `toposwarm_meta_harness.py:1030` `def log_run(self, harness_snapshot, trace_steps, score, reasoning)` -- Persist one run and update in-memory indexes.
+- `MetaHarnessOptimizer.get_best_harness_config` (method) `toposwarm_meta_harness.py:1043` `def get_best_harness_config(self)` -- Return the current Pareto-best harness configuration.
+- `MetaHarnessOptimizer.query_experience` (method) `toposwarm_meta_harness.py:1047` `def query_experience(self, prompt, tool_hint, top_k)` -- Ad-hoc retrieval of prior episodes for prompt engineering.
+
+## ts_utils.py
+Imported by: `debug_routing.py`, `diagnose_accuracy.py`, `topo_swarm_agent.py`, `toposwarm_continual_trainer.py`
+- `setup_logger` (function) `ts_utils.py:25` `def setup_logger(name, level)` -- Return an idempotent logger with a single StreamHandler.
+- `safe_eval` (function) `ts_utils.py:42` `def safe_eval(expr)` -- Evaluate a numeric expression via AST — never calls eval() on arbitrary code.
+- `import_module` (function) `ts_utils.py:62` `def import_module(name)` -- Load a Python file as a named module.
+- `make_cached_encode` (function) `ts_utils.py:86` `def make_cached_encode(tokenizer)` -- Return a cached version of tokenizer.encode().
+- `make_cached_tool_token` (function) `ts_utils.py:100` `def make_cached_tool_token(tokenizer)` -- Return a cached version of tokenizer.tool_token().

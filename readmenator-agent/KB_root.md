@@ -1,0 +1,383 @@
+# Subsystem: root (page 1 of 3)
+Pages: [KB_root.md](KB_root.md), [KB_root_p2.md](KB_root_p2.md), [KB_root_p3.md](KB_root_p3.md)
+
+## debug_routing.py
+- Doc: Debug _routing_accuracy by calling it directly on a ContinualTrainer
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_import` (function, line 14) `def _import(name, filename)`
+- Depends on: `topo_swarm_agent.py`, `ts_utils.py`
+
+## diagnose_accuracy.py
+- Doc: Diagnose why routing accuracy is 0%
+- Layer: utility
+- Language: py
+- Symbols:
+  - `load_model` (function, line 13) `def load_model()`
+  - `main` (function, line 33) `def main()`
+- Depends on: `topo_swarm_agent.py`, `ts_utils.py`
+
+## fix_sweep_format.py
+- Doc: Convert existing sweep data to correct training format.
+- Layer: utility
+- Language: py
+
+## lazyown_bridge.py
+- Doc: LazyOwn Bridge — SOLID subprocess integration for TopoSwarm.
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_EnvKey` (class, line 41) `class _EnvKey(str, Enum)`
+  - `_FileName` (class, line 47) `class _FileName(str, Enum)`
+  - `_Defaults` (class, line 56) `class _Defaults`
+  - `ExecutionResult` (class, line 74) `class ExecutionResult`
+  - `LazyOwnPathResolver` (class, line 90) `class LazyOwnPathResolver`
+  - `LazyOwnPayloadManager` (class, line 162) `class LazyOwnPayloadManager`
+  - `LazyOwnCommandBuilder` (class, line 220) `class LazyOwnCommandBuilder`
+  - `LazyOwnProcessExecutor` (class, line 294) `class LazyOwnProcessExecutor`
+  - `LazyOwnOutputSanitizer` (class, line 505) `class LazyOwnOutputSanitizer`
+  - `LazyOwnBridge` (class, line 542) `class LazyOwnBridge`
+  - `__init__` (method, line 104) `def __init__(self)`
+  - `resolve` (method, line 107) `def resolve(self)`
+  - `_from_env` (method, line 133) `def _from_env(self)`
+  - `_from_repo_sibling` (method, line 140) `def _from_repo_sibling(self)`
+  - `_from_home` (method, line 148) `def _from_home(self)`
+  - `_from_cwd` (method, line 152) `def _from_cwd(self)`
+  - `__init__` (method, line 171) `def __init__(self, lazyown_dir)`
+  - `payload_path` (method, line 176) `def payload_path(self)`
+  - `read` (method, line 179) `def read(self)`
+  - `write` (method, line 189) `def write(self, data)`
+  - `get` (method, line 198) `def get(self, key, default)`
+  - `set` (method, line 202) `def set(self, key, value)`
+  - `update` (method, line 208) `def update(self, mapping)`
+  - `__init__` (method, line 237) `def __init__(self, lazyown_dir)`
+  - `build_argv` (method, line 242) `def build_argv(self, command)`
+  - `_validate_command` (method, line 276) `def _validate_command(command)`
+  - `__init__` (method, line 331) `def __init__(self, lazyown_dir)`
+  - `execute` (method, line 343) `def execute(self, argv, stdin_payload, timeout)`
+  - `_resolve_timeout` (method, line 375) `def _resolve_timeout(self, argv, override)`
+  - `_execute_with_pty` (method, line 387) `def _execute_with_pty(self, argv, stdin_payload, timeout, env)`
+  - `_drain_pty` (method, line 451) `def _drain_pty(self, master_fd, chunks)`
+  - `_execute_with_pipe` (method, line 464) `def _execute_with_pipe(self, argv, stdin_payload, timeout, env)`
+  - `_wait_or_kill` (method, line 491) `def _wait_or_kill(self, proc)`
+  - `sanitize` (method, line 527) `def sanitize(self, text)`
+  - `__init__` (method, line 556) `def __init__(self)`
+  - `lazyown_dir` (method, line 565) `def lazyown_dir(self)`
+  - `payload` (method, line 571) `def payload(self)`
+  - `builder` (method, line 577) `def builder(self)`
+  - `executor` (method, line 583) `def executor(self)`
+  - `available` (method, line 589) `def available(self)`
+  - `run` (method, line 598) `def run(self, command, timeout)`
+  - `run_clean` (method, line 634) `def run_clean(self, command, timeout)`
+  - `get_config` (method, line 642) `def get_config(self)`
+  - `set_config` (method, line 646) `def set_config(self, key, value)`
+  - `set_target` (method, line 655) `def set_target(self, ip)`
+  - `get_target` (method, line 659) `def get_target(self)`
+
+## lazyown_dataset_enhancer.py
+- Doc: LazyOwn Dataset Enhancer — Enrich training data with real execution traces
+- Layer: data_access
+- Language: py
+- Symbols:
+  - `_difficulty` (function, line 64) `def _difficulty(record)`
+  - `ExperienceStoreReader` (class, line 87) `class ExperienceStoreReader`
+  - `_sanitize_output` (method, line 136) `def _sanitize_output(text)`
+  - `_build_toolbench_record` (method, line 149) `def _build_toolbench_record(instruction, tool_name, arg, answer, domain)`
+  - `DatasetEnhancer` (class, line 165) `class DatasetEnhancer`
+  - `print_stats` (method, line 442) `def print_stats(records)`
+  - `main` (method, line 469) `def main()`
+  - `__init__` (method, line 88) `def __init__(self, log_dir)`
+  - `list_runs` (method, line 91) `def list_runs(self)`
+  - `read_trace` (method, line 98) `def read_trace(self, run_dir)`
+  - `read_score` (method, line 113) `def read_score(self, run_dir)`
+  - `read_harness` (method, line 122) `def read_harness(self, run_dir)`
+  - `__init__` (method, line 166) `def __init__(self, log_dir, max_runs)`
+  - `enhance` (method, line 171) `def enhance(self)`
+  - `_generate_recovery_records` (method, line 239) `def _generate_recovery_records(prompt, tool, arg, output)`
+  - `_generate_prerequisite_records` (method, line 301) `def _generate_prerequisite_records(prompt, tool, arg, output, ok)`
+  - `add_negative_examples` (method, line 330) `def add_negative_examples(self, records, n)`
+  - `curriculum_sort` (method, line 355) `def curriculum_sort(self, records)`
+  - `deduplicate` (method, line 359) `def deduplicate(self, records)`
+  - `augment_simple` (method, line 370) `def augment_simple(self, records, multiplier)`
+  - `run` (method, line 395) `def run(self, merge_with)`
+
+## lazyown_dataset_generator.py
+- Doc: LazyOwn Dataset Generator for TopoSwarm Continual Learning
+- Layer: data_access
+- Language: py
+- Symbols:
+  - `_make_record` (function, line 3321) `def _make_record(tool_name, desc, category, instruction, arg)`
+  - `_apply_pentest_synonyms` (function, line 3414) `def _apply_pentest_synonyms(instr)`
+  - `_expand` (function, line 3430) `def _expand(tool_name, phrasings)`
+  - `_is_noisy_phrasing` (function, line 3554) `def _is_noisy_phrasing(instruction, arg)`
+  - `build_dataset` (function, line 3571) `def build_dataset()`
+  - `write_jsonl` (function, line 3595) `def write_jsonl(records, path)`
+  - `print_stats` (function, line 3602) `def print_stats(records)`
+  - `main` (function, line 3616) `def main()`
+
+## meta_harness_proposer.py
+- Doc: Meta-Harness Proposer: Coding-Agent that diagnoses harness failures and edits code.
+- Layer: utility
+- Language: py
+- Symbols:
+  - `_setup_logger` (function, line 58) `def _setup_logger(name, level)`
+  - `LLMConfig` (class, line 75) `class LLMConfig`
+  - `LLMClient` (class, line 86) `class LLMClient`
+  - `ExperienceReader` (class, line 150) `class ExperienceReader`
+  - `PatchEngine` (class, line 243) `class PatchEngine`
+  - `MetaHarnessProposer` (class, line 392) `class MetaHarnessProposer`
+  - `main` (method, line 572) `def main()`
+  - `__init__` (method, line 93) `def __init__(self, cfg, logger)`
+  - `_try_chat` (method, line 97) `def _try_chat(self, api_url, model, system, user)`
+  - `chat` (method, line 121) `def chat(self, system, user)`
+  - `__init__` (method, line 153) `def __init__(self, log_dir, logger)`
+  - `list_runs` (method, line 157) `def list_runs(self, n)`
+  - `load_run` (method, line 165) `def load_run(self, run_dir)`
+  - `build_diagnostic_context` (method, line 193) `def build_diagnostic_context(self, top_k)`
+  - `__init__` (method, line 246) `def __init__(self, logger)`
+  - `validate_syntax` (method, line 249) `def validate_syntax(self, code)`
+  - `apply_full_rewrite` (method, line 265) `def apply_full_rewrite(self, target_path, new_code, dry_run)`
+  - `_strip_line_numbers` (method, line 283) `def _strip_line_numbers(self, s)`
+  - `apply_line_range` (method, line 287) `def apply_line_range(self, target_path, line_start, line_end, new_string, dry_run)`
+  - `apply_diff_hunk` (method, line 316) `def apply_diff_hunk(self, target_path, old_string, new_string, dry_run)`
+  - `__init__` (method, line 434) `def __init__(self, log_dir, llm_cfg, logger)`
+  - `propose_patch` (method, line 445) `def propose_patch(self, target_path, top_k, dry_run)`
+  - `_log_proposal` (method, line 538) `def _log_proposal(self, target_path, response, applied, diag)`
+  - `_norm` (method, line 331) `def _norm(s)`
+- Depends on: `toposwarm_meta_harness.py`
+
+## neurologos_tricameral_loss2.7.py
+- Doc: LanguageMetrics: Métricas de calidad de generación
+- Layer: utility
+- Language: py
+- Symbols:
+  - `setup_flickr8k_with_audio` (function, line 53) `def setup_flickr8k_with_audio(data_dir)`
+  - `build_vocab_flickr` (function, line 241) `def build_vocab_flickr(captions_file, vocab_size)`
+  - `HierarchicalEpisodicMemory` (class, line 265) `class HierarchicalEpisodicMemory`
+  - `NeurocognitiveSystem` (class, line 496) `class NeurocognitiveSystem`
+  - `LanguageMetrics` (class, line 693) `class LanguageMetrics`
+  - `LinguisticFeedbackLoop` (class, line 767) `class LinguisticFeedbackLoop`
+  - `LanguageMetrics` (class, line 884) `class LanguageMetrics`
+  - `CausalReasoningEngine` (class, line 927) `class CausalReasoningEngine(Module)`
+  - `LanguageMetrics` (class, line 1006) `class LanguageMetrics`
+  - `StableLiquidNeuron` (class, line 1053) `class StableLiquidNeuron(Module)`
+  - `TriangulatedMedicalSystem` (class, line 1192) `class TriangulatedMedicalSystem`
+  - `LeftHemisphere` (class, line 1343) `class LeftHemisphere(Module)`
+  - `AudioEncoder` (class, line 1652) `class AudioEncoder(Module)`
+  - `RightHemisphereTricameral` (class, line 1702) `class RightHemisphereTricameral(Module)`
+  - `CorpusCallosumTrimodal` (class, line 1786) `class CorpusCallosumTrimodal(Module)`
+  - `EnhancedDiagnosticsTricameral` (class, line 1939) `class EnhancedDiagnosticsTricameral`
+  - `NeuroLogosTricameral` (class, line 2215) `class NeuroLogosTricameral(Module)`
+  - `Flickr8kMultimodalDataset` (class, line 2250) `class Flickr8kMultimodalDataset(Dataset)`
+  - `compute_alignment_loss` (method, line 2354) `def compute_alignment_loss(visual_features, channels, alpha, epoch)`
+  - `compute_tricameral_loss` (method, line 2382) `def compute_tricameral_loss(logits, captions, gate, vocab, visual_post, audio_post, mtp_loss, linguistic_reward...`
+  - `train_tricameral` (method, line 2429) `def train_tricameral()`
+  - `__init__` (method, line 266) `def __init__(self, working_capacity, short_term_capacity, importance_threshold)`
+  - `compute_surprise` (method, line 292) `def compute_surprise(self, predicted_logits, ground_truth, gate_mean)`
+  - `calculate_importance` (method, line 302) `def calculate_importance(self, episode, surprise_score)`
+  - `_calculate_novelty` (method, line 314) `def _calculate_novelty(self, episode)`
+  - `store_episode` (method, line 335) `def store_episode(self, image, audio, caption, surprise_score)`
+  - `_update_unified_buffer` (method, line 373) `def _update_unified_buffer(self)`
+  - `add` (method, line 385) `def add(self, image, audio, caption, surprise_score)`
+  - `apply_forgetting_curve` (method, line 388) `def apply_forgetting_curve(self)`
+  - `_purge_low_score_memories` (method, line 404) `def _purge_low_score_memories(self)`
+  - `sample` (method, line 430) `def sample(self, batch_size, memory_level)`
+  - `_sample_from_buffer` (method, line 460) `def _sample_from_buffer(self, buffer, scores, batch_size)`
+  - `get_total_size` (method, line 488) `def get_total_size(self)`
+  - `__init__` (method, line 497) `def __init__(self)`
+  - `assess_reasoning_state` (method, line 517) `def assess_reasoning_state(self, mtp_loss, reasoning_steps, logical_coherence, epoch)`
+  - `assess_cognitive_state` (method, line 561) `def assess_cognitive_state(self, cider_score, spice_score, combined_reward, epoch)`
+  - `apply_cognitive_intervention` (method, line 607) `def apply_cognitive_intervention(self, model, issues, severity, confidence, epoch, diagnostics)`
+  - `sentence_bleu` (method, line 697) `def sentence_bleu(reference, hypothesis, weights)`
+  - `_get_ngrams` (method, line 731) `def _get_ngrams(tokens, n)`
+  - `token_accuracy` (method, line 740) `def token_accuracy(reference, hypothesis)`
+  - `word_overlap` (method, line 753) `def word_overlap(reference, hypothesis)`
+  - `__init__` (method, line 768) `def __init__(self, alpha, beta)`
+  - `_get_ngrams_cached` (method, line 782) `def _get_ngrams_cached(sentence, n)`
+  - `compute_linguistic_reward` (method, line 791) `def compute_linguistic_reward(self, references, hypotheses)`
+  - `compute_cider` (method, line 830) `def compute_cider(self, reference, hypothesis)`
+  - `compute_spice` (method, line 844) `def compute_spice(self, reference, hypothesis)`
+  - `get_cache_stats` (method, line 856) `def get_cache_stats(self)`
+  - `sentence_bleu` (method, line 886) `def sentence_bleu(reference, hypothesis, weights)`
+  - `token_accuracy` (method, line 909) `def token_accuracy(reference, hypothesis)`
+  - `word_overlap` (method, line 919) `def word_overlap(reference, hypothesis)`
+  - `__init__` (method, line 928) `def __init__(self, hidden_dim)`
+  - `reason_causally` (method, line 955) `def reason_causally(self, observation, context)`
+  - `_predict_interventions` (method, line 969) `def _predict_interventions(self, hypothesis, confidence)`
+  - `update_knowledge_graph` (method, line 986) `def update_knowledge_graph(self, cause, effect, strength)`
+  - `query_causal_chain` (method, line 992) `def query_causal_chain(self, start_node, end_node)`
+  - `sentence_bleu` (method, line 1008) `def sentence_bleu(reference, hypothesis, weights)`
+  - `token_accuracy` (method, line 1031) `def token_accuracy(reference, hypothesis)`
+  - `word_overlap` (method, line 1041) `def word_overlap(reference, hypothesis)`
+  - `__init__` (method, line 1054) `def __init__(self, in_dim, out_dim)`
+  - `forward` (method, line 1096) `def forward(self, x)`
+  - `_calculate_homeostasis_metric` (method, line 1112) `def _calculate_homeostasis_metric(self, output)`
+  - `hebbian_update` (method, line 1121) `def hebbian_update(self, post, pre, plasticity)`
+  - `update_physiology_advanced` (method, line 1159) `def update_physiology_advanced(self, loss_value)`
+  - `__init__` (method, line 1193) `def __init__(self)`
+  - `triangulate_signals` (method, line 1200) `def triangulate_signals(self, health_score, liquid_norm, gate_mean, gate_std, callosal_flow)`
+  - `count_convergent_signals` (method, line 1211) `def count_convergent_signals(self, signals, pattern)`
+  - `diagnose_with_triangulation` (method, line 1214) `def diagnose_with_triangulation(self, health_score, liquid_norm, gate_mean, gate_std, callosal_flow, epoch)`
+  - `apply_triangulated_intervention` (method, line 1259) `def apply_triangulated_intervention(self, model, issues, severity, confidence, epoch)`
+  - `_reset_liquid_neuron` (method, line 1328) `def _reset_liquid_neuron(self, liquid_neuron)`
+  - `__init__` (method, line 1344) `def __init__(self, vocab_size, embed_dim, hidden_dim)`
+  - `forward` (method, line 1426) `def forward(self, visual_context, captions, channels, max_len, epoch)`
+  - `_apply_chain_of_thought` (method, line 1473) `def _apply_chain_of_thought(self, hidden_states, visual_context, use_reasoning)`
+  - `_greedy_decode` (method, line 1513) `def _greedy_decode(self, visual_context, channels, max_len, epoch)`
+  - `_apply_multi_token_prediction` (method, line 1574) `def _apply_multi_token_prediction(self, hidden_states, input_ids)`
+  - `_apply_structural_attention` (method, line 1616) `def _apply_structural_attention(self, lstm_out, channels, visual_context)`
+  - `_get_init_state` (method, line 1637) `def _get_init_state(self, visual_context)`
+  - `__init__` (method, line 1655) `def __init__(self, output_dim)`
+  - `forward` (method, line 1689) `def forward(self, mel_spec)`
+  - `__init__` (method, line 1705) `def __init__(self, output_dim)`
+  - `forward` (method, line 1745) `def forward(self, image, audio)`
+  - `__init__` (method, line 1787) `def __init__(self, dim)`
+  - `forward` (method, line 1835) `def forward(self, right_features)`
+  - `update_channel_fatigue` (method, line 1896) `def update_channel_fatigue(self, visual_channel, audio_channel, semantic_channel)`
+  - `adjust_gates_by_fatigue` (method, line 1918) `def adjust_gates_by_fatigue(self)`
+  - `__init__` (method, line 1940) `def __init__(self)`
+  - `_get_cached_norm` (method, line 1962) `def _get_cached_norm(self, tensor, dim)`
+  - `measure_callosal_flow` (method, line 1980) `def measure_callosal_flow(self, right_features, left_context, channels)`
+  - `evaluate_reasoning_quality` (method, line 2010) `def evaluate_reasoning_quality(self, generated_texts, reference_texts, reasoning_steps)`
+  - `calculate_synergy` (method, line 2047) `def calculate_synergy(self, visual_node, audio_node, callosal_flow, left_gate_mean, left_gate_std)`
+  - `calculate_health` (method, line 2058) `def calculate_health(self, visual_node, audio_node, callosal_flow, left_gate_mean, left_gate_std, liquid_norm)`
+  - `update` (method, line 2067) `def update(self)`
+  - `get_recent_avg` (method, line 2084) `def get_recent_avg(self, key, n)`
+  - `visualize_fatigue_distribution` (method, line 2100) `def visualize_fatigue_distribution(self, epoch)`
+  - `visualize_reasoning_metrics` (method, line 2124) `def visualize_reasoning_metrics(self, epoch)`
+  - `report` (method, line 2136) `def report(self, epoch)`
+  - `__init__` (method, line 2218) `def __init__(self, vocab_size)`
+  - `forward` (method, line 2224) `def forward(self, image, audio, captions, epoch)`
+  - `__init__` (method, line 2253) `def __init__(self, images_dir, audio_dir, captions_file, vocab, img_transform, max_len, sample_rate)`
+  - `__len__` (method, line 2301) `def __len__(self)`
+  - `__getitem__` (method, line 2305) `def __getitem__(self, idx)`
+
+## test_full_pipeline.py
+- Doc: Full pipeline test: regenerate dataset, retrain, evaluate, live test.
+- Layer: testing
+- Language: py
+- Symbols:
+  - `_Paths` (class, line 23) `class _Paths`
+  - `_run` (method, line 36) `def _run(cmd, timeout)`
+  - `step1_regenerate_dataset` (method, line 53) `def step1_regenerate_dataset()`
+  - `step2_train` (method, line 84) `def step2_train(epochs)`
+  - `step3_evaluate` (method, line 108) `def step3_evaluate()`
+  - `step4_live_test` (method, line 134) `def step4_live_test()`
+  - `step5_validate_logs` (method, line 168) `def step5_validate_logs()`
+  - `main` (method, line 208) `def main()`
+
+## topo_swarm_agent.py
+- Doc: TopoSwarm: Minimal Quaternionic Toroidal Swarm Agent for Tool Use.
+- Layer: utility
+- Language: py
+- Symbols:
+  - `SwarmConfig` (class, line 85) `class SwarmConfig`
+  - `_setup_logger` (method, line 265) `def _setup_logger(name, level)`
+  - `_set_seed` (method, line 283) `def _set_seed(seed, device)`
+  - `_param_count` (method, line 293) `def _param_count(module)`
+  - `_get_torus_positions` (method, line 304) `def _get_torus_positions(n_angular, n_radial, device)`
+  - `QuaternionOps` (class, line 322) `class QuaternionOps`
+  - `QuaternionLinear` (class, line 370) `class QuaternionLinear(Module)`
+  - `SpectralBottleneck` (class, line 434) `class SpectralBottleneck(Module)`
+  - `RMSNorm` (class, line 505) `class RMSNorm(Module)`
+  - `RotaryEmbedding` (class, line 529) `class RotaryEmbedding(Module)`
+  - `SwiGLU` (class, line 588) `class SwiGLU(Module)`
+  - `SwarmMoEGate` (class, line 627) `class SwarmMoEGate(Module)`
+  - `SwarmMoE` (class, line 648) `class SwarmMoE(Module)`
+  - `SwarmMoEAdapter` (class, line 706) `class SwarmMoEAdapter(Module)`
+  - `inject_moe_adapter` (method, line 790) `def inject_moe_adapter(model, n_experts, top_k, dropout, freeze_backbone, adapter_path)`
+  - `QuaternionTorusBrain` (class, line 848) `class QuaternionTorusBrain(Module)`
+  - `QuaternionAttention` (class, line 1039) `class QuaternionAttention(Module)`
+  - `HRMModule` (class, line 1144) `class HRMModule(Module)`
+  - `TopoSwarmLayer` (class, line 1246) `class TopoSwarmLayer(Module)`
+  - `TopoSwarmModel` (class, line 1314) `class TopoSwarmModel(Module)`
+  - `_chunked_ce` (method, line 1487) `def _chunked_ce(logits, targets, chunk_size)`
+  - `EpisodicMemory` (class, line 1529) `class EpisodicMemory`
+  - `SwarmOrchestrator` (class, line 1644) `class SwarmOrchestrator`
+  - `BPETokenizer` (class, line 1735) `class BPETokenizer`
+  - `ToolBenchDataset` (class, line 1853) `class ToolBenchDataset(Dataset)`
+  - `CheckpointManager` (class, line 2088) `class CheckpointManager`
+  - `KappaDetector` (class, line 2191) `class KappaDetector`
+  - `SwarmTrainer` (class, line 2234) `class SwarmTrainer`
+  - `build_dataloaders` (method, line 2551) `def build_dataloaders(cfg, tokenizer, logger)`
+  - `main` (method, line 2594) `def main()`
+  - `__post_init__` (method, line 212) `def __post_init__(self)`
+  - `hamilton_product` (method, line 329) `def hamilton_product(q1, q2)`
+  - `normalize` (method, line 344) `def normalize(q, eps)`
+  - `berry_phase_rotation` (method, line 349) `def berry_phase_rotation(q, phase)`
+  - `__init__` (method, line 381) `def __init__(self, in_features, out_features, bias, init_std)`
+  - `forward` (method, line 410) `def forward(self, x)`
+  - `__init__` (method, line 446) `def __init__(self, cfg)`
+  - `_filter` (method, line 468) `def _filter(self, x, kr, ki)`
+  - `forward` (method, line 476) `def forward(self, x)`
+  - `__init__` (method, line 508) `def __init__(self, d_model, eps)`
+  - `forward` (method, line 518) `def forward(self, x)`
+  - `__init__` (method, line 537) `def __init__(self, d_head, max_seq_len, base, ntk_factor)`
+  - `_build_cache` (method, line 562) `def _build_cache(self, seq_len)`
+  - `_rotate_half` (method, line 570) `def _rotate_half(self, x)`
+  - `forward` (method, line 574) `def forward(self, x, seq_len)`
+  - `__init__` (method, line 591) `def __init__(self, d_model, hidden_dim, dropout)`
+  - `forward` (method, line 606) `def forward(self, x)`
+  - `__init__` (method, line 630) `def __init__(self, d_model, n_experts, top_k)`
+  - `forward` (method, line 637) `def forward(self, x)`
+  - `__init__` (method, line 661) `def __init__(self, d_model, expert_hidden_dim, n_experts, top_k, dropout)`
+  - `forward` (method, line 678) `def forward(self, x)`
+  - `__init__` (method, line 720) `def __init__(self, d_model, n_experts, top_k, bottleneck, dropout)`
+  - `forward` (method, line 746) `def forward(self, x)`
+  - `save` (method, line 768) `def save(self, path)`
+  - `load` (method, line 779) `def load(cls, path)`
+  - `__init__` (method, line 866) `def __init__(self, cfg)`
+  - `_build_torus_graph` (method, line 896) `def _build_torus_graph(self)`
+  - `_torus_soft_assign` (method, line 928) `def _torus_soft_assign(self, phi1, phi2)`
+  - `_message_passing` (method, line 950) `def _message_passing(self, node_feat)`
+  - `forward` (method, line 981) `def forward(self, x, berry_phase)`
+  - `__init__` (method, line 1047) `def __init__(self, cfg)`
+  - `_head_filter` (method, line 1080) `def _head_filter(self, x)`
+  - `forward` (method, line 1086) `def forward(self, x, is_causal)`
+  - `__init__` (method, line 1160) `def __init__(self, cfg)`
+  - `_l_step` (method, line 1197) `def _l_step(self, x, state)`
+  - `_h_step` (method, line 1204) `def _h_step(self, z)`
+  - `forward` (method, line 1208) `def forward(self, x)`
+  - `__init__` (method, line 1254) `def __init__(self, cfg)`
+  - `_attn_fn` (method, line 1278) `def _attn_fn(self, x)`
+  - `forward` (method, line 1281) `def forward(self, x, berry_phase)`
+  - `__init__` (method, line 1329) `def __init__(self, cfg)`
+  - `forward` (method, line 1353) `def forward(self, input_ids, berry_phase, targets)`
+  - `generate` (method, line 1434) `def generate(self, input_ids, max_new_tokens, temperature, top_k, berry_phase, act_halt_threshold)`
+  - `__init__` (method, line 1539) `def __init__(self, cfg)`
+  - `compute_surprise` (method, line 1554) `def compute_surprise(logits, targets, gate_mean)`
+  - `store` (method, line 1579) `def store(self, episode, surprise)`
+  - `sample` (method, line 1600) `def sample(self, n)`
+  - `_decay` (method, line 1633) `def _decay(self)`
+  - `__init__` (method, line 1664) `def __init__(self, model, cfg)`
+  - `infer` (method, line 1682) `def infer(self, input_ids, tokenizer, max_new_tokens, temperature, top_k)`
+  - `__init__` (method, line 1743) `def __init__(self, cfg)`
+  - `encode` (method, line 1781) `def encode(self, text)`
+  - `decode` (method, line 1793) `def decode(self, ids)`
+  - `tool_token` (method, line 1798) `def tool_token(self, tool_name)`
+  - `encode_tool_trace` (method, line 1820) `def encode_tool_trace(self, instruction, tool_name, result)`
+  - `__init__` (method, line 1866) `def __init__(self, cfg, tokenizer, split, logger)`
+  - `_load` (method, line 1888) `def _load(self, split)`
+  - `_encode_record` (method, line 1969) `def _encode_record(self, rec)`
+  - `_synthetic_stubs` (method, line 2026) `def _synthetic_stubs(self, n)`
+  - `__len__` (method, line 2059) `def __len__(self)`
+  - `__getitem__` (method, line 2062) `def __getitem__(self, idx)`
+  - `__init__` (method, line 2096) `def __init__(self, cfg, logger)`
+  - `save` (method, line 2108) `def save(self, model, optimizer, meta, force)`
+  - `load` (method, line 2150) `def load(self, model, optimizer, device)`
+  - `__init__` (method, line 2201) `def __init__(self, cfg)`
+  - `update` (method, line 2209) `def update(self, loss)`
+  - `__init__` (method, line 2248) `def __init__(self, model, cfg, tokenizer, logger)`
+  - `_make_optimizer` (method, line 2275) `def _make_optimizer(self, lr)`
+  - `_warmup_cosine_lr` (method, line 2305) `def _warmup_cosine_lr(self, optimizer, step, total_steps, warmup_steps, base_lr)`
+  - `_train_one_batch` (method, line 2322) `def _train_one_batch(self, optimizer, input_ids, targets, accum_step, berry_phase)`
+  - `_phase0_calibrate` (method, line 2364) `def _phase0_calibrate(self, dataloader, n_steps)`
+  - `train` (method, line 2405) `def train(self, train_dl, val_dl, resume)`
+  - `_evaluate` (method, line 2518) `def _evaluate(self, val_dl)`
+  - `_manual_attn` (method, line 1113) `def _manual_attn()`
+- Depends on: `ts_utils.py`
+- Imported by: `debug_routing.py`, `diagnose_accuracy.py`, `toposwarm_coevolve.py`, `toposwarm_lazyown_sweep.py`
+
+
+Next: [KB_root_p2.md](KB_root_p2.md)

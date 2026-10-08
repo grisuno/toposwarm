@@ -1,0 +1,2660 @@
+{
+  "concepts": [
+    {
+      "name": "load",
+      "files": [
+        "diagnose_accuracy.py",
+        "meta_harness_proposer.py",
+        "tests/test_dataset_enhancer.py",
+        "tests/test_dataset_generator.py",
+        "tests/test_model_config.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 47,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "model",
+      "files": [
+        "diagnose_accuracy.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "test_full_pipeline.py",
+        "tests/test_model_config.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 125,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "run",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 63,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "build",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "neurologos_tricameral_loss2.7.py",
+        "tests/test_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 25,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "setup",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "meta_harness_proposer.py",
+        "neurologos_tricameral_loss2.7.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 14,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "topo",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 65,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "output",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "neurologos_tricameral_loss2.7.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 58,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "list",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 33,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "tool",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "test_full_pipeline.py",
+        "topo_swarm_agent.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 243,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "own",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "tests/test_orchestrator.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 99,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "swarm",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 93,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "returns",
+      "files": [
+        "lazyown_bridge.py",
+        "meta_harness_proposer.py",
+        "neurologos_tricameral_loss2.7.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 61,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "prompt",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 57,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "dataset",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "neurologos_tricameral_loss2.7.py",
+        "test_full_pipeline.py",
+        "tests/test_dataset_enhancer.py",
+        "tests/test_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py"
+      ],
+      "mentions": 49,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "all",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 38,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "logger",
+      "files": [
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 35,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "via",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 33,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "config",
+      "files": [
+        "lazyown_bridge.py",
+        "tests/test_model_config.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 32,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "python",
+      "files": [
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 25,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "evaluate",
+      "files": [
+        "meta_harness_proposer.py",
+        "neurologos_tricameral_loss2.7.py",
+        "test_full_pipeline.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "ts_utils.py"
+      ],
+      "mentions": 20,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "routing",
+      "files": [
+        "debug_routing.py",
+        "diagnose_accuracy.py",
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 39,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "toposwarm",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 38,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "return",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 37,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "orchestrator",
+      "files": [
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 35,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "only",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "topo_swarm_agent.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 23,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "when",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 20,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "not",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "lazy",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "tests/test_orchestrator.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 97,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "name",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 47,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "lazyown",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 43,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "text",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "meta_harness_proposer.py",
+        "tests/test_dataset_enhancer.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 36,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "arg",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "tests/test_dataset_generator.py",
+        "tests/test_orchestrator.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 30,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "get",
+      "files": [
+        "lazyown_bridge.py",
+        "neurologos_tricameral_loss2.7.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 28,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "each",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 26,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "full",
+      "files": [
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py"
+      ],
+      "mentions": 26,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "generate",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py"
+      ],
+      "mentions": 26,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "update",
+      "files": [
+        "lazyown_bridge.py",
+        "neurologos_tricameral_loss2.7.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 21,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "path",
+      "files": [
+        "lazyown_bridge.py",
+        "test_full_pipeline.py",
+        "tests/test_orchestrator.py",
+        "topo_swarm_agent.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 20,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "format",
+      "files": [
+        "fix_sweep_format.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 15,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "without",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_enhancer.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "usage",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 9,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "args",
+      "files": [
+        "lazyown_bridge.py",
+        "neurologos_tricameral_loss2.7.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_meta_harness.py",
+        "ts_utils.py"
+      ],
+      "mentions": 65,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "meta",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "meta_harness_proposer.py",
+        "test_full_pipeline.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 46,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "training",
+      "files": [
+        "fix_sweep_format.py",
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py"
+      ],
+      "mentions": 37,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "state",
+      "files": [
+        "lazyown_bridge.py",
+        "neurologos_tricameral_loss2.7.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 29,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "api",
+      "files": [
+        "lazyown_bridge.py",
+        "lazyown_dataset_generator.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py"
+      ],
+      "mentions": 28,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "call",
+      "files": [
+        "lazyown_dataset_enhancer.py",
+        "lazyown_dataset_generator.py",
+        "topo_swarm_agent.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_lazyown_sweep.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 25,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "weights",
+      "files": [
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 25,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "raw",
+      "files": [
+        "lazyown_bridge.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "topogpt2_1.py",
+        "toposwarm_hybrid.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 23,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "every",
+      "files": [
+        "lazyown_bridge.py",
+        "meta_harness_proposer.py",
+        "topo_swarm_agent.py",
+        "toposwarm_coevolve.py",
+        "toposwarm_continual_trainer.py",
+        "toposwarm_infer.py",
+        "toposwarm_lazyown_orchestrator.py",
+        "toposwarm_meta_harness.py"
+      ],
+      "mentions": 20,
+      "confidence": "EXTRACTED"
+    }
+  ],
+  "relations": [
+    {
+      "source": "load",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "run",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "logger",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "logger",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "logger",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "logger",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "logger",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "logger",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "logger",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "logger",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "own",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "setup",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "setup",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "setup",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "setup",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "setup",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "setup",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "setup",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "setup",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "toposwarm",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 0.9,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "lazy",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "args",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "evaluate",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "not",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "path",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "load",
+      "target": "return",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "each",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "logger",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "python",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "setup",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "swarm",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "tool",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "topo",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "meta",
+      "target": "via",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "model",
+      "target": "evaluate",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "diagnose_accuracy.py->topo_swarm_agent.py",
+        "diagnose_accuracy.py->ts_utils.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "topo_swarm_agent.py->ts_utils.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_continual_trainer.py->ts_utils.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "all",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "build",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "call",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "config",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "every",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "get",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    },
+    {
+      "source": "orchestrator",
+      "target": "list",
+      "verb": "depends_on",
+      "strength": 0.8,
+      "confidence": "INFERRED",
+      "evidence": [
+        "meta_harness_proposer.py->toposwarm_meta_harness.py",
+        "tests/test_orchestrator.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->topo_swarm_agent.py",
+        "toposwarm_coevolve.py->toposwarm_infer.py",
+        "toposwarm_coevolve.py->toposwarm_lazyown_orchestrator.py",
+        "toposwarm_coevolve.py->toposwarm_meta_harness.py",
+        "toposwarm_lazyown_sweep.py->topo_swarm_agent.py",
+        "toposwarm_lazyown_sweep.py->toposwarm_lazyown_orchestrator.py"
+      ]
+    }
+  ],
+  "dialectic": [
+    "Thesis: `all` centralizes 11 files; Antithesis: `api` pulls 8 files with 7 shared (Jaccard 0.58); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `arg` pulls 9 files with 6 shared (Jaccard 0.43); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `args` pulls 8 files with 6 shared (Jaccard 0.46); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `build` pulls 14 files with 11 shared (Jaccard 0.79); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `call` pulls 8 files with 7 shared (Jaccard 0.58); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `config` pulls 11 files with 8 shared (Jaccard 0.57); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `dataset` pulls 11 files with 6 shared (Jaccard 0.38); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `each` pulls 9 files with 7 shared (Jaccard 0.54); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `evaluate` pulls 11 files with 7 shared (Jaccard 0.47); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `all` centralizes 11 files; Antithesis: `every` pulls 8 files with 7 shared (Jaccard 0.58); Synthesis: should they merge, split by layer, or keep `bridges` explicit?"
+  ]
+}
