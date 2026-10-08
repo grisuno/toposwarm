@@ -237,14 +237,14 @@ Taint analysis traces how dangerous imports propagate through the codebase via t
   Path: test_full_pipeline.py
 - `toposwarm_coevolve.py` imports `subprocess` (0 hop to `toposwarm_coevolve.py`) [high]
   Path: toposwarm_coevolve.py
-- `toposwarm_coevolve.py` imports `subprocess` (1 hop to `toposwarm_meta_harness.py`) [high]
-  Path: toposwarm_coevolve.py -> toposwarm_meta_harness.py
 - `toposwarm_coevolve.py` imports `subprocess` (1 hop to `toposwarm_infer.py`) [high]
   Path: toposwarm_coevolve.py -> toposwarm_infer.py
-- `toposwarm_coevolve.py` imports `subprocess` (1 hop to `topo_swarm_agent.py`) [high]
-  Path: toposwarm_coevolve.py -> topo_swarm_agent.py
+- `toposwarm_coevolve.py` imports `subprocess` (1 hop to `toposwarm_meta_harness.py`) [high]
+  Path: toposwarm_coevolve.py -> toposwarm_meta_harness.py
 - `toposwarm_coevolve.py` imports `subprocess` (1 hop to `toposwarm_lazyown_orchestrator.py`) [high]
   Path: toposwarm_coevolve.py -> toposwarm_lazyown_orchestrator.py
+- `toposwarm_coevolve.py` imports `subprocess` (1 hop to `topo_swarm_agent.py`) [high]
+  Path: toposwarm_coevolve.py -> topo_swarm_agent.py
 - `toposwarm_coevolve.py` imports `subprocess` (2 hops to `ts_utils.py`) [high]
   Path: toposwarm_coevolve.py -> topo_swarm_agent.py -> ts_utils.py
 - `toposwarm_hybrid.py` imports `urllib.request` (0 hop to `toposwarm_hybrid.py`) [medium]
