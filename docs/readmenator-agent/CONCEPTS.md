@@ -1,0 +1,120 @@
+# Concepts
+
+Nouns map atomically to file sets (EXTRACTED); verbs aggregate structural edges (INFERRED).
+
+- `load` | files=15 | mentions=47 | `diagnose_accuracy.py`, `meta_harness_proposer.py`, `tests/test_dataset_enhancer.py`, `tests/test_dataset_generator.py`, `tests/test_model_config.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`
+- `model` | files=14 | mentions=125 | `diagnose_accuracy.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `test_full_pipeline.py`, `tests/test_model_config.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`
+- `run` | files=14 | mentions=63 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `meta_harness_proposer.py`, `test_full_pipeline.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`
+- `build` | files=14 | mentions=25 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `neurologos_tricameral_loss2.7.py`, `tests/test_dataset_generator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`
+- `setup` | files=13 | mentions=14 | `lazyown_dataset_enhancer.py`, `meta_harness_proposer.py`, `neurologos_tricameral_loss2.7.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`
+- `topo` | files=12 | mentions=65 | `lazyown_bridge.py`, `lazyown_dataset_generator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`
+- `output` | files=12 | mentions=58 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `neurologos_tricameral_loss2.7.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`
+- `list` | files=12 | mentions=33 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`
+- `tool` | files=11 | mentions=243 | `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `test_full_pipeline.py`, `topo_swarm_agent.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `own` | files=11 | mentions=99 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `tests/test_orchestrator.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`
+- `swarm` | files=11 | mentions=93 | `lazyown_bridge.py`, `lazyown_dataset_generator.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `returns` | files=11 | mentions=61 | `lazyown_bridge.py`, `meta_harness_proposer.py`, `neurologos_tricameral_loss2.7.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`
+- `prompt` | files=11 | mentions=57 | `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`
+- `dataset` | files=11 | mentions=49 | `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `neurologos_tricameral_loss2.7.py`, `test_full_pipeline.py`, `tests/test_dataset_enhancer.py`, `tests/test_dataset_generator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_lazyown_orchestrator.py`
+- `all` | files=11 | mentions=38 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`
+- `logger` | files=11 | mentions=35 | `meta_harness_proposer.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `via` | files=11 | mentions=33 | `lazyown_bridge.py`, `lazyown_dataset_generator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `config` | files=11 | mentions=32 | `lazyown_bridge.py`, `tests/test_model_config.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`
+- `python` | files=11 | mentions=25 | `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `test_full_pipeline.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `evaluate` | files=11 | mentions=20 | `meta_harness_proposer.py`, `neurologos_tricameral_loss2.7.py`, `test_full_pipeline.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`
+- `routing` | files=10 | mentions=39 | `debug_routing.py`, `diagnose_accuracy.py`, `meta_harness_proposer.py`, `test_full_pipeline.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `toposwarm` | files=10 | mentions=38 | `lazyown_dataset_enhancer.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `return` | files=10 | mentions=37 | `lazyown_bridge.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_meta_harness.py`, `ts_utils.py`
+- `orchestrator` | files=10 | mentions=35 | `meta_harness_proposer.py`, `test_full_pipeline.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `only` | files=10 | mentions=23 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `meta_harness_proposer.py`, `test_full_pipeline.py`, `topo_swarm_agent.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `when` | files=10 | mentions=20 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `not` | files=10 | mentions=12 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_meta_harness.py`, `ts_utils.py`
+- `lazy` | files=9 | mentions=97 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `tests/test_orchestrator.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `name` | files=9 | mentions=47 | `lazyown_bridge.py`, `lazyown_dataset_generator.py`, `topo_swarm_agent.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `lazyown` | files=9 | mentions=43 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `test_full_pipeline.py`, `toposwarm_coevolve.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `text` | files=9 | mentions=36 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `meta_harness_proposer.py`, `tests/test_dataset_enhancer.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_meta_harness.py`
+- `arg` | files=9 | mentions=30 | `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `tests/test_dataset_generator.py`, `tests/test_orchestrator.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `get` | files=9 | mentions=28 | `lazyown_bridge.py`, `neurologos_tricameral_loss2.7.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `each` | files=9 | mentions=26 | `lazyown_bridge.py`, `lazyown_dataset_generator.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`, `ts_utils.py`
+- `full` | files=9 | mentions=26 | `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `test_full_pipeline.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`
+- `generate` | files=9 | mentions=26 | `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`
+- `update` | files=9 | mentions=21 | `lazyown_bridge.py`, `neurologos_tricameral_loss2.7.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `path` | files=9 | mentions=20 | `lazyown_bridge.py`, `test_full_pipeline.py`, `tests/test_orchestrator.py`, `topo_swarm_agent.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_meta_harness.py`, `ts_utils.py`
+- `format` | files=9 | mentions=15 | `fix_sweep_format.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `without` | files=9 | mentions=12 | `lazyown_bridge.py`, `lazyown_dataset_enhancer.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `usage` | files=9 | mentions=9 | `lazyown_bridge.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `test_full_pipeline.py`, `toposwarm_coevolve.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `args` | files=8 | mentions=65 | `lazyown_bridge.py`, `neurologos_tricameral_loss2.7.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_meta_harness.py`, `ts_utils.py`
+- `meta` | files=8 | mentions=46 | `lazyown_dataset_enhancer.py`, `meta_harness_proposer.py`, `test_full_pipeline.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `training` | files=8 | mentions=37 | `fix_sweep_format.py`, `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_continual_trainer.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`
+- `state` | files=8 | mentions=29 | `lazyown_bridge.py`, `neurologos_tricameral_loss2.7.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_hybrid.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `api` | files=8 | mentions=28 | `lazyown_bridge.py`, `lazyown_dataset_generator.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `toposwarm_continual_trainer.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`
+- `call` | files=8 | mentions=25 | `lazyown_dataset_enhancer.py`, `lazyown_dataset_generator.py`, `topo_swarm_agent.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_lazyown_sweep.py`, `toposwarm_meta_harness.py`
+- `weights` | files=8 | mentions=25 | `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `raw` | files=8 | mentions=23 | `lazyown_bridge.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `topogpt2_1.py`, `toposwarm_hybrid.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+- `every` | files=8 | mentions=20 | `lazyown_bridge.py`, `meta_harness_proposer.py`, `topo_swarm_agent.py`, `toposwarm_coevolve.py`, `toposwarm_continual_trainer.py`, `toposwarm_infer.py`, `toposwarm_lazyown_orchestrator.py`, `toposwarm_meta_harness.py`
+
+## Verb Edges
+
+- `load` --depends_on--> `each` (strength 1.00)
+- `load` --depends_on--> `logger` (strength 1.00)
+- `load` --depends_on--> `python` (strength 1.00)
+- `load` --depends_on--> `setup` (strength 1.00)
+- `load` --depends_on--> `swarm` (strength 1.00)
+- `load` --depends_on--> `tool` (strength 1.00)
+- `load` --depends_on--> `topo` (strength 1.00)
+- `load` --depends_on--> `via` (strength 1.00)
+- `run` --depends_on--> `each` (strength 1.00)
+- `run` --depends_on--> `load` (strength 1.00)
+- `run` --depends_on--> `logger` (strength 1.00)
+- `run` --depends_on--> `python` (strength 1.00)
+- `run` --depends_on--> `setup` (strength 1.00)
+- `run` --depends_on--> `swarm` (strength 1.00)
+- `run` --depends_on--> `tool` (strength 1.00)
+- `run` --depends_on--> `topo` (strength 1.00)
+- `run` --depends_on--> `via` (strength 1.00)
+- `logger` --depends_on--> `each` (strength 0.90)
+- `logger` --depends_on--> `load` (strength 0.90)
+- `logger` --depends_on--> `python` (strength 0.90)
+- `logger` --depends_on--> `setup` (strength 0.90)
+- `logger` --depends_on--> `swarm` (strength 0.90)
+- `logger` --depends_on--> `tool` (strength 0.90)
+- `logger` --depends_on--> `topo` (strength 0.90)
+- `logger` --depends_on--> `via` (strength 0.90)
+- `model` --depends_on--> `each` (strength 0.90)
+- `model` --depends_on--> `load` (strength 0.90)
+- `model` --depends_on--> `logger` (strength 0.90)
+- `model` --depends_on--> `python` (strength 0.90)
+- `model` --depends_on--> `setup` (strength 0.90)
+- `model` --depends_on--> `swarm` (strength 0.90)
+- `model` --depends_on--> `tool` (strength 0.90)
+- `model` --depends_on--> `topo` (strength 0.90)
+- `model` --depends_on--> `via` (strength 0.90)
+- `orchestrator` --depends_on--> `each` (strength 0.90)
+- `orchestrator` --depends_on--> `load` (strength 0.90)
+- `orchestrator` --depends_on--> `logger` (strength 0.90)
+- `orchestrator` --depends_on--> `python` (strength 0.90)
+- `orchestrator` --depends_on--> `setup` (strength 0.90)
+- `orchestrator` --depends_on--> `swarm` (strength 0.90)
+- `orchestrator` --depends_on--> `tool` (strength 0.90)
+- `orchestrator` --depends_on--> `topo` (strength 0.90)
+- `orchestrator` --depends_on--> `via` (strength 0.90)
+- `own` --depends_on--> `each` (strength 0.90)
+- `own` --depends_on--> `load` (strength 0.90)
+- `own` --depends_on--> `logger` (strength 0.90)
+- `own` --depends_on--> `python` (strength 0.90)
+- `own` --depends_on--> `setup` (strength 0.90)
+- `own` --depends_on--> `swarm` (strength 0.90)
+- `own` --depends_on--> `tool` (strength 0.90)
+
+## Dialectic
+
+- Thesis: `all` centralizes 11 files; Antithesis: `api` pulls 8 files with 7 shared (Jaccard 0.58); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `arg` pulls 9 files with 6 shared (Jaccard 0.43); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `args` pulls 8 files with 6 shared (Jaccard 0.46); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `build` pulls 14 files with 11 shared (Jaccard 0.79); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `call` pulls 8 files with 7 shared (Jaccard 0.58); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `config` pulls 11 files with 8 shared (Jaccard 0.57); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `dataset` pulls 11 files with 6 shared (Jaccard 0.38); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `each` pulls 9 files with 7 shared (Jaccard 0.54); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `evaluate` pulls 11 files with 7 shared (Jaccard 0.47); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `all` centralizes 11 files; Antithesis: `every` pulls 8 files with 7 shared (Jaccard 0.58); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
